@@ -1,0 +1,175 @@
+[
+  {
+    "id": "sig-nvda-001",
+    "ticker": "NVDA",
+    "company": "NVIDIA",
+    "direction": "Bullish",
+    "horizon_days": 20,
+    "confidence": 0.74,
+    "published_at": "2026-03-02T14:00:00Z",
+    "reasoning": "AI infrastructure demand remains the dominant catalyst, and supplier commentary suggests near-term revenue visibility despite valuation risk.",
+    "catalyst": "AI accelerator demand and cloud capex",
+    "citations": [
+      {
+        "source": "Yahoo Finance",
+        "title": "Cloud providers continue AI infrastructure spending",
+        "url": "https://finance.yahoo.com/",
+        "excerpt": "Large cloud buyers described AI compute as a priority area for the next spending cycle.",
+        "credibility_weight": 0.72
+      },
+      {
+        "source": "Reuters",
+        "title": "Chip suppliers point to sustained accelerator demand",
+        "url": "https://www.reuters.com/",
+        "excerpt": "Component suppliers reported strong orders tied to accelerator production schedules.",
+        "credibility_weight": 0.84
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "Retrieved cloud capex and supplier-order evidence tied to NVDA."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "Mapped evidence to positive near-term earnings revision risk."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Issued bullish 20-day signal with medium-high confidence."
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Bearish"
+  },
+  {
+    "id": "sig-tsla-001",
+    "ticker": "TSLA",
+    "company": "Tesla",
+    "direction": "Bearish",
+    "horizon_days": 5,
+    "confidence": 0.63,
+    "published_at": "2026-03-05T15:30:00Z",
+    "reasoning": "Delivery concerns and pricing pressure create negative short-horizon risk even though long-term product narratives remain positive.",
+    "catalyst": "Delivery softness and margin pressure",
+    "citations": [
+      {
+        "source": "CNBC",
+        "title": "EV pricing pressure remains in focus",
+        "url": "https://www.cnbc.com/",
+        "excerpt": "Analysts pointed to incentives and discounting as a margin headwind.",
+        "credibility_weight": 0.68
+      },
+      {
+        "source": "Yahoo Finance",
+        "title": "Investors watch delivery estimates",
+        "url": "https://finance.yahoo.com/",
+        "excerpt": "Consensus delivery estimates moved lower after regional registration data.",
+        "credibility_weight": 0.70
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "Found delivery and pricing articles with consistent near-term pressure."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "Separated short-term margin risk from long-term product optimism."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Issued bearish 5-day signal with moderate confidence."
+      }
+    ],
+    "baseline_sentiment": "Neutral",
+    "baseline_random": "Bearish"
+  },
+  {
+    "id": "sig-msft-001",
+    "ticker": "MSFT",
+    "company": "Microsoft",
+    "direction": "Bullish",
+    "horizon_days": 20,
+    "confidence": 0.69,
+    "published_at": "2026-03-09T13:45:00Z",
+    "reasoning": "Enterprise AI adoption and cloud resilience support relative strength versus broader software peers.",
+    "catalyst": "Cloud and AI software demand",
+    "citations": [
+      {
+        "source": "Reuters",
+        "title": "Enterprise AI budgets continue expanding",
+        "url": "https://www.reuters.com/",
+        "excerpt": "Technology executives described AI tooling as resilient within enterprise software budgets.",
+        "credibility_weight": 0.82
+      },
+      {
+        "source": "Yahoo Finance",
+        "title": "Cloud software demand remains resilient",
+        "url": "https://finance.yahoo.com/",
+        "excerpt": "Analysts highlighted stable cloud demand as a defensive growth factor.",
+        "credibility_weight": 0.73
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "Retrieved enterprise AI and cloud demand evidence."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "Framed MSFT as a relative-strength signal within software."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Issued bullish 20-day signal with medium confidence."
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Bullish"
+  },
+  {
+    "id": "sig-amd-001",
+    "ticker": "AMD",
+    "company": "Advanced Micro Devices",
+    "direction": "Bearish",
+    "horizon_days": 5,
+    "confidence": 0.58,
+    "published_at": "2026-03-10T16:00:00Z",
+    "reasoning": "Positive AI narrative appears priced in, while channel checks imply slower near-term ramp than investor expectations.",
+    "catalyst": "Priced-in AI expectations",
+    "citations": [
+      {
+        "source": "Yahoo Finance",
+        "title": "Chip stocks digest AI expectations",
+        "url": "https://finance.yahoo.com/",
+        "excerpt": "Investors debated whether near-term accelerator shipments could meet elevated expectations.",
+        "credibility_weight": 0.66
+      },
+      {
+        "source": "CNBC",
+        "title": "Semiconductor rally faces valuation questions",
+        "url": "https://www.cnbc.com/",
+        "excerpt": "Strategists warned that the sector's rally leaves little room for execution misses.",
+        "credibility_weight": 0.64
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "Found bullish headlines but also valuation and ramp-risk caveats."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "Flagged sentiment-price divergence as a contrarian setup."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Issued bearish 5-day signal with moderate confidence."
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Bullish"
+  }
+]
+
