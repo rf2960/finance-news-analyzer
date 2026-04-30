@@ -43,9 +43,18 @@ st.markdown(
         --warn: #946200;
     }
     .block-container {
-        padding-top: 1.15rem;
+        padding-top: 0.45rem;
         padding-bottom: 2rem;
         max-width: 1380px;
+    }
+    [data-testid="stHeader"],
+    [data-testid="stToolbar"],
+    .stDeployButton,
+    #MainMenu,
+    footer {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
     }
     h1 {
         font-size: 1.65rem !important;
@@ -80,7 +89,8 @@ st.markdown(
         border-radius: 8px;
         background: linear-gradient(180deg, #fbfcfd 0%, #ffffff 42%);
         padding: 0.95rem 1rem;
-        margin-bottom: 0.8rem;
+        margin-top: 0.15rem;
+        margin-bottom: 0.75rem;
     }
     .eyebrow {
         color: var(--accent);
@@ -268,6 +278,50 @@ def selected_prices(prices: pd.DataFrame, ticker: str) -> pd.DataFrame:
     return prices[prices["ticker"] == ticker].sort_values("date").copy()
 
 
+PRODUCT_BENCHMARKS = [
+    {
+        "product": "AlphaSense",
+        "pattern": "Premium source library plus sentence-level citation and integrated workflow",
+        "fin_sight_translation": "Evidence Audit keeps every thesis linked to source cards and credibility scores.",
+    },
+    {
+        "product": "GNOMI",
+        "pattern": "Real-time intelligence layer with verification, context, and global event monitoring",
+        "fin_sight_translation": "Market Monitor separates raw sentiment from model conviction and watch items.",
+    },
+    {
+        "product": "Quartr",
+        "pattern": "Live earnings calls, transcripts, filings, reports, and LLM-ready event data",
+        "fin_sight_translation": "Agent packets are structured so future earnings transcripts can drop into the same UI.",
+    },
+    {
+        "product": "Fiscal.ai",
+        "pattern": "Fundamental terminal with dashboards, KPIs, AI summaries, auditability, estimates, and IR content",
+        "fin_sight_translation": "Thesis Workspace pairs qualitative claims with quant snapshots and valuation notes.",
+    },
+    {
+        "product": "Koyfin / YCharts",
+        "pattern": "Custom dashboards, watchlists, charts, portfolio context, and client-ready reports",
+        "fin_sight_translation": "Evaluation Lab turns generated ideas into presentation-ready metrics and charts.",
+    },
+    {
+        "product": "BloombergGPT literature",
+        "pattern": "Domain-specific financial LLM evaluation across NLP tasks and finance benchmarks",
+        "fin_sight_translation": "The project evaluates outputs against market returns, not only text quality.",
+    },
+]
+
+
+METHODOLOGY_CHECKS = [
+    ("Grounding", "Every final signal must cite retrieved evidence, source type, and timestamp."),
+    ("No look-ahead", "News timestamp must precede entry price and forward-return labels."),
+    ("Baseline discipline", "Compare RAG against random, sentiment, and eventually no-RAG LLM baselines."),
+    ("Calibration", "Bucket hit rate by confidence to test whether confidence means anything."),
+    ("Contrarian value", "Flag cases where sentiment and RAG direction disagree."),
+    ("Presentation maturity", "Show thesis, risk, source audit, and outcome in one continuous workflow."),
+]
+
+
 signals, prices, evaluated = load_demo_data()
 metrics = build_metric_table(evaluated)
 
@@ -293,7 +347,8 @@ if ticker_filter != "All":
     filtered = filtered[filtered["ticker"] == ticker_filter]
 if horizon_filter != "All":
     filtered = filtered[filtered["horizon_days"] == int(horizon_filter.replace("d", ""))]
-filtered = filtered[filtered["direction"].isin(direction_filter)]
+active_directions = direction_filter or ["Bullish", "Bearish", "Neutral"]
+filtered = filtered[filtered["direction"].isin(active_directions)]
 selected = signals.loc[signals["id"] == selected_id].iloc[0].to_dict()
 selected_eval = evaluated[evaluated["id"] == selected_id]
 
@@ -321,8 +376,8 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-tab_monitor, tab_thesis, tab_evidence, tab_evaluation = st.tabs(
-    ["Market Monitor", "Thesis Workspace", "Evidence Audit", "Evaluation Lab"]
+tab_monitor, tab_thesis, tab_evidence, tab_evaluation, tab_benchmark = st.tabs(
+    ["Market Monitor", "Thesis Workspace", "Evidence Audit", "Evaluation Lab", "Research Brief"]
 )
 
 with tab_monitor:
@@ -555,3 +610,79 @@ with tab_evaluation:
         if col in table:
             table[col] = table[col].map(lambda x: "" if pd.isna(x) else pct(x, 2))
     st.dataframe(table, width="stretch", hide_index=True)
+
+with tab_benchmark:
+    st.markdown("#### Product Benchmark")
+    st.markdown(
+        "<div class='section-note'>Competitive product patterns translated into the course-project demo scope.</div>",
+        unsafe_allow_html=True,
+    )
+    benchmark_df = pd.DataFrame(PRODUCT_BENCHMARKS)
+    st.dataframe(
+        benchmark_df.rename(
+            columns={
+                "product": "Reference",
+                "pattern": "Observed pattern",
+                "fin_sight_translation": "FinSight implementation",
+            }
+        ),
+        width="stretch",
+        hide_index=True,
+    )
+
+    left, right = st.columns([0.95, 1.05], gap="medium")
+    with left:
+        st.markdown("#### Methodology Ladder")
+        for title, body in METHODOLOGY_CHECKS:
+            st.markdown(
+                f"""
+                <div class="source-card">
+                  <div class="source-title">{title}</div>
+                  <div>{body}</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+    with right:
+        st.markdown("#### Publication-Style Upgrade Path")
+        roadmap = pd.DataFrame(
+            [
+                {
+                    "stage": "Course demo",
+                    "requirement": "Synthetic packets, working UI, baseline metrics, source audit.",
+                    "status": "Done",
+                },
+                {
+                    "stage": "Final project",
+                    "requirement": "Real news ingestion, real retrieval, agent outputs, yfinance labels.",
+                    "status": "Next",
+                },
+                {
+                    "stage": "Strong class paper",
+                    "requirement": "Ablation study: no-RAG, no-agent, no-source-weight, sentiment-only.",
+                    "status": "Planned",
+                },
+                {
+                    "stage": "Research-grade",
+                    "requirement": "Larger event window, sector-neutral returns, leakage audit, confidence calibration.",
+                    "status": "Stretch",
+                },
+                {
+                    "stage": "Publication-grade",
+                    "requirement": "Pre-registered protocol, robust statistical testing, reproducible dataset, external validation.",
+                    "status": "Future",
+                },
+            ]
+        )
+        st.dataframe(roadmap, width="stretch", hide_index=True)
+
+        st.markdown("#### Current Demo Positioning")
+        st.markdown(
+            """
+            <div class="analysis-box">
+            FinSight RAG is not trying to beat institutional terminals on data coverage. Its strongest academic angle is the evaluation loop:
+            generated theses are grounded in retrieved evidence, converted into structured signals, and scored against future market returns.
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )

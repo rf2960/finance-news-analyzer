@@ -69,6 +69,17 @@ The current data is intentionally synthetic and only exists to make the UI, metr
 - Thesis Workspace: selected signal, quantitative snapshot, price chart, thesis drivers, risks, and watch list.
 - Evidence Audit: source cards, credibility weights, and agent handoff path.
 - Evaluation Lab: directional hit rate, average signed return, and baseline comparison.
+- Research Brief: product benchmark and publication-style methodology roadmap.
+
+## Streamlit Choice
+
+Streamlit is free and open source for local demos. It does not require a subscription for a course presentation. Streamlit Community Cloud can be used for public hosting, but the simplest and most reliable presentation path is to run the app locally with:
+
+```bash
+streamlit run app.py
+```
+
+For this project, Streamlit is a good fit because the demo is a data/research dashboard built in Python. If this became a production product with login, collaboration, live streaming data, and custom interaction design, a React/FastAPI stack would eventually be stronger.
 
 ## Suggested Ownership
 
