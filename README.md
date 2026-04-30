@@ -38,6 +38,8 @@ The system follows the project proposal and final plan:
 |-- demo_data/
 |   |-- prices.csv
 |   `-- signals.json
+|-- docs/
+|   `-- research_notes.md
 |-- src/
 |   `-- finance_news_analyzer/
 |       |-- __init__.py
@@ -60,6 +62,13 @@ streamlit run app.py
 The final agent layer should write JSON records compatible with `demo_data/signals.json`. The evaluation layer expects market prices in the format shown by `demo_data/prices.csv`.
 
 The current data is intentionally synthetic and only exists to make the UI, metrics, and report visuals ready before full integration.
+
+## Demo Views
+
+- Market Monitor: signal queue, confidence, novelty, sentiment/model disagreement, and market pulse.
+- Thesis Workspace: selected signal, quantitative snapshot, price chart, thesis drivers, risks, and watch list.
+- Evidence Audit: source cards, credibility weights, and agent handoff path.
+- Evaluation Lab: directional hit rate, average signed return, and baseline comparison.
 
 ## Suggested Ownership
 
