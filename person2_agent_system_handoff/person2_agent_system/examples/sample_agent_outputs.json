@@ -1,0 +1,28 @@
+{
+  "analyst_output": {
+    "ticker": "NVDA",
+    "event_summary": "Evidence leans positive based on retrieved catalyst mentions.",
+    "supporting_evidence": [
+      {
+        "claim": "AI chip demand remains strong and management highlighted healthy enterprise orders",
+        "citation_ids": ["DOC1"]
+      }
+    ],
+    "contradicting_evidence": [
+      {
+        "claim": "Some analysts warned that valuation risk could limit upside after the recent surge",
+        "citation_ids": ["DOC2"]
+      }
+    ],
+    "uncertainties": []
+  },
+  "strategist_output": {
+    "ticker": "NVDA",
+    "direction": "neutral",
+    "horizon": "5d",
+    "thesis": "Retrieved evidence is balanced and does not support a strong directional view.",
+    "causal_chain": "The thesis is derived from extracted news catalysts, then translated into a short-horizon market view while accounting for contradicting evidence.",
+    "risks": ["Conflicting evidence may weaken the signal."],
+    "citations": ["DOC1", "DOC2"]
+  }
+}

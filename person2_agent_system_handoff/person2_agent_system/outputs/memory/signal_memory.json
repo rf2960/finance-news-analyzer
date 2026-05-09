@@ -1,0 +1,180 @@
+{
+  "signals": [
+    {
+      "ticker": "NVDA",
+      "query_date": "2026-05-01",
+      "direction": "bullish",
+      "confidence": 0.67,
+      "citations": [
+        "DOC1",
+        "DOC2"
+      ],
+      "outcome_label": null
+    },
+    {
+      "ticker": "NVDA",
+      "query_date": "2026-05-01",
+      "direction": "bullish",
+      "confidence": 0.67,
+      "citations": [
+        "DOC1",
+        "DOC2"
+      ],
+      "outcome_label": null
+    },
+    {
+      "ticker": "NVDA",
+      "query_date": "2026-05-04",
+      "direction": "bullish",
+      "confidence": 0.67,
+      "citations": [
+        "DOC100",
+        "DOC101"
+      ],
+      "outcome_label": null
+    },
+    {
+      "ticker": "NVDA",
+      "query_date": "2026-05-01",
+      "direction": "bullish",
+      "confidence": 0.67,
+      "citations": [
+        "DOC1",
+        "DOC2"
+      ],
+      "outcome_label": null
+    },
+    {
+      "ticker": "NVDA",
+      "query_date": "2026-05-04",
+      "direction": "bullish",
+      "confidence": 0.67,
+      "citations": [
+        "DOC100",
+        "DOC101"
+      ],
+      "outcome_label": null
+    },
+    {
+      "ticker": "NVDA",
+      "query_date": "2026-05-01",
+      "direction": "bullish",
+      "confidence": 0.67,
+      "citations": [
+        "DOC1",
+        "DOC2"
+      ],
+      "outcome_label": null
+    },
+    {
+      "ticker": "NVDA",
+      "query_date": "2026-05-01",
+      "direction": "bullish",
+      "confidence": 0.67,
+      "citations": [
+        "DOC1",
+        "DOC2"
+      ],
+      "outcome_label": null
+    },
+    {
+      "ticker": "MSFT",
+      "query_date": "2026-05-02",
+      "direction": "bullish",
+      "confidence": 0.67,
+      "citations": [
+        "DOC3",
+        "DOC4"
+      ],
+      "outcome_label": null
+    },
+    {
+      "ticker": "TSLA",
+      "query_date": "2026-05-03",
+      "direction": "neutral",
+      "confidence": 0.4,
+      "citations": [
+        "DOC5",
+        "DOC6"
+      ],
+      "outcome_label": null
+    },
+    {
+      "ticker": "NVDA",
+      "query_date": "2026-05-01",
+      "direction": "neutral",
+      "confidence": 0.7,
+      "citations": [
+        "DOC1",
+        "DOC2"
+      ],
+      "outcome_label": null
+    },
+    {
+      "ticker": "NVDA",
+      "query_date": "2026-05-01",
+      "direction": "neutral",
+      "confidence": 0.7,
+      "citations": [
+        "DOC1",
+        "DOC2"
+      ],
+      "outcome_label": null
+    },
+    {
+      "ticker": "MSFT",
+      "query_date": "2026-05-02",
+      "direction": "bullish",
+      "confidence": 0.85,
+      "citations": [
+        "DOC3",
+        "DOC4"
+      ],
+      "outcome_label": null
+    },
+    {
+      "ticker": "TSLA",
+      "query_date": "2026-05-03",
+      "direction": "bearish",
+      "confidence": 0.8,
+      "citations": [
+        "DOC5",
+        "DOC6"
+      ],
+      "outcome_label": null
+    },
+    {
+      "ticker": "NVDA",
+      "query_date": "2026-05-01",
+      "direction": "neutral",
+      "confidence": 0.5,
+      "citations": [
+        "DOC1",
+        "DOC2"
+      ],
+      "outcome_label": null
+    },
+    {
+      "ticker": "MSFT",
+      "query_date": "2026-05-02",
+      "direction": "bullish",
+      "confidence": 0.85,
+      "citations": [
+        "DOC3",
+        "DOC4"
+      ],
+      "outcome_label": null
+    },
+    {
+      "ticker": "TSLA",
+      "query_date": "2026-05-03",
+      "direction": "neutral",
+      "confidence": 0.45,
+      "citations": [
+        "DOC5",
+        "DOC6"
+      ],
+      "outcome_label": null
+    }
+  ]
+}

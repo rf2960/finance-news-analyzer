@@ -1,0 +1,7 @@
+backend: heuristic
+env_backend_key: AGENT_BACKEND
+env_model_key: OPENAI_MODEL
+supported_backends:
+  - heuristic
+  - langchain_openai
+default_model_note: Set OPENAI_MODEL in your environment to a model available in your account.

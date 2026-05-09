@@ -1,0 +1,60 @@
+{
+  "title": "analyst_output_schema",
+  "type": "object",
+  "required": [
+    "ticker",
+    "event_summary",
+    "supporting_evidence",
+    "contradicting_evidence",
+    "uncertainties",
+    "primary_catalysts",
+    "macro_context",
+    "staleness_flags",
+    "evidence_balance"
+  ],
+  "properties": {
+    "ticker": { "type": "string" },
+    "event_summary": { "type": "string" },
+    "supporting_evidence": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/evidenceItem" }
+    },
+    "contradicting_evidence": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/evidenceItem" }
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "primary_catalysts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "macro_context": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "staleness_flags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "evidence_balance": {
+      "type": "string",
+      "enum": ["supporting", "contradicting", "mixed"]
+    }
+  },
+  "$defs": {
+    "evidenceItem": {
+      "type": "object",
+      "required": ["claim", "citation_ids"],
+      "properties": {
+        "claim": { "type": "string" },
+        "citation_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

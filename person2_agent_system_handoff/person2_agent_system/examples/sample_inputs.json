@@ -1,0 +1,22 @@
+{
+  "ticker": "NVDA",
+  "query_date": "2026-05-01",
+  "chunks": [
+    {
+      "citation_id": "DOC1",
+      "source": "Yahoo Finance",
+      "title": "NVDA demand remains strong",
+      "published_at": "2026-05-01T14:00:00Z",
+      "ticker": "NVDA",
+      "text": "AI chip demand remains strong and management highlighted healthy enterprise orders."
+    },
+    {
+      "citation_id": "DOC2",
+      "source": "Reuters",
+      "title": "Investors watch valuation risk",
+      "published_at": "2026-05-01T15:30:00Z",
+      "ticker": "NVDA",
+      "text": "Some analysts warned that valuation risk could limit upside after the recent surge."
+    }
+  ]
+}

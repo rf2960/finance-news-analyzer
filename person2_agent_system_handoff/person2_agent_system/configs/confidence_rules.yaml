@@ -1,0 +1,8 @@
+confidence_rules:
+  base_score: 0.35
+  supporting_evidence_bonus: 0.12
+  contradiction_penalty: 0.10
+  citation_bonus: 0.08
+  missing_citation_penalty: 0.20
+  weak_reasoning_penalty: 0.15
+  abstain_threshold: 0.45

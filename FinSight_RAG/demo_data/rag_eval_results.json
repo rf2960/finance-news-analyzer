@@ -1,0 +1,147 @@
+{
+  "test_config": {
+    "top_k": 10,
+    "min_relevance_score": 0.3,
+    "min_source_diversity": 3,
+    "min_credibility_avg": 0.7
+  },
+  "results": [
+    {
+      "ticker": "AAPL",
+      "total_chunks": 105,
+      "retrieved_chunks": 10,
+      "avg_relevance_score": 0.904,
+      "source_diversity": 3,
+      "unique_sources": [
+        "Google News",
+        "CNBC",
+        "Yahoo Finance"
+      ],
+      "avg_credibility": 0.633,
+      "bloomberg_chunks": 0,
+      "retrieval_time_ms": 2496.56,
+      "coverage_ratio": 0.095
+    },
+    {
+      "ticker": "NVDA",
+      "total_chunks": 117,
+      "retrieved_chunks": 10,
+      "avg_relevance_score": 0.882,
+      "source_diversity": 2,
+      "unique_sources": [
+        "Google News",
+        "Seeking Alpha"
+      ],
+      "avg_credibility": 0.609,
+      "bloomberg_chunks": 0,
+      "retrieval_time_ms": 1271.86,
+      "coverage_ratio": 0.085
+    },
+    {
+      "ticker": "TSLA",
+      "total_chunks": 101,
+      "retrieved_chunks": 10,
+      "avg_relevance_score": 0.901,
+      "source_diversity": 1,
+      "unique_sources": [
+        "Google News"
+      ],
+      "avg_credibility": 0.604,
+      "bloomberg_chunks": 0,
+      "retrieval_time_ms": 1361.75,
+      "coverage_ratio": 0.099
+    },
+    {
+      "ticker": "MSFT",
+      "total_chunks": 118,
+      "retrieved_chunks": 10,
+      "avg_relevance_score": 0.922,
+      "source_diversity": 2,
+      "unique_sources": [
+        "Google News",
+        "Seeking Alpha"
+      ],
+      "avg_credibility": 0.574,
+      "bloomberg_chunks": 0,
+      "retrieval_time_ms": 4070.98,
+      "coverage_ratio": 0.085
+    },
+    {
+      "ticker": "GOOGL",
+      "total_chunks": 140,
+      "retrieved_chunks": 10,
+      "avg_relevance_score": 0.931,
+      "source_diversity": 1,
+      "unique_sources": [
+        "Google News"
+      ],
+      "avg_credibility": 0.657,
+      "bloomberg_chunks": 0,
+      "retrieval_time_ms": 1452.45,
+      "coverage_ratio": 0.071
+    },
+    {
+      "ticker": "AMZN",
+      "total_chunks": 82,
+      "retrieved_chunks": 10,
+      "avg_relevance_score": 0.934,
+      "source_diversity": 1,
+      "unique_sources": [
+        "Google News"
+      ],
+      "avg_credibility": 0.633,
+      "bloomberg_chunks": 0,
+      "retrieval_time_ms": 1351.37,
+      "coverage_ratio": 0.122
+    },
+    {
+      "ticker": "META",
+      "total_chunks": 210,
+      "retrieved_chunks": 10,
+      "avg_relevance_score": 0.986,
+      "source_diversity": 1,
+      "unique_sources": [
+        "Google News"
+      ],
+      "avg_credibility": 0.618,
+      "bloomberg_chunks": 0,
+      "retrieval_time_ms": 1388.82,
+      "coverage_ratio": 0.048
+    },
+    {
+      "ticker": "SPY",
+      "total_chunks": 93,
+      "retrieved_chunks": 10,
+      "avg_relevance_score": 0.913,
+      "source_diversity": 1,
+      "unique_sources": [
+        "Google News"
+      ],
+      "avg_credibility": 0.515,
+      "bloomberg_chunks": 0,
+      "retrieval_time_ms": 1328.68,
+      "coverage_ratio": 0.108
+    },
+    {
+      "ticker": "QQQ",
+      "total_chunks": 101,
+      "retrieved_chunks": 10,
+      "avg_relevance_score": 0.908,
+      "source_diversity": 1,
+      "unique_sources": [
+        "Google News"
+      ],
+      "avg_credibility": 0.547,
+      "bloomberg_chunks": 0,
+      "retrieval_time_ms": 1656.02,
+      "coverage_ratio": 0.099
+    }
+  ],
+  "summary": {
+    "total_tests": 9,
+    "passed_tests": 0,
+    "avg_relevance": 0.9199533333333333,
+    "avg_source_diversity": 1.4444444444444444,
+    "avg_credibility": 0.5988444444444444
+  }
+}

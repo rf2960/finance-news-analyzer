@@ -1,0 +1,10 @@
+project_name: multi_agent_rag_finance
+owner: person_2_agent_reasoning
+default_horizons:
+  - 5d
+  - 20d
+allow_neutral: false
+require_citations: true
+allow_abstain: true
+max_citations: 5
+trace_outputs: true

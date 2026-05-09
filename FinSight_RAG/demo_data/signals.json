@@ -1,0 +1,2263 @@
+[
+  {
+    "id": "sig-intel--17e285",
+    "ticker": "INTC",
+    "company": "Intel Corporation",
+    "sector": "Technology",
+    "benchmark": "QQQ",
+    "event_type": "Mixed signals",
+    "direction": "Bearish",
+    "horizon_days": 5,
+    "confidence": 0.65,
+    "novelty_score": 1.0,
+    "sentiment_score": -0.65,
+    "source_quality": 0.7,
+    "published_at": "2026-05-07T22:24:40.159787+00:00",
+    "reasoning": "The strategist thesis is supported by evidence indicating that Nvidia's withdrawal from a chip deal has negatively impacted Intel's stock price. The evidence is sourced from a credible outlet, but the overall support is moderate due to the lack of additional corroborating evidence from high-credibility sources like Bloomberg or Reuters.",
+    "catalyst": "News catalyst identified.",
+    "thesis_bullets": [],
+    "risk_factors": [
+      "Potential recovery in investor sentiment if new partnerships or deals are announced.",
+      "Broader market recovery in the technology sector could mitigate losses."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "The overall market tone is mixed, indicating uncertainty in the technology sector."
+    ],
+    "market_snapshot": {
+      "last_price": 109.62,
+      "day_change": -0.03,
+      "benchmark_change": -0.0012,
+      "relative_strength": -0.0288,
+      "volume_vs_average": 0.9,
+      "valuation_note": "P/E 72.3 \u2013 premium multiple; growth must sustain."
+    },
+    "citations": [
+      {
+        "source": "Bloomberg",
+        "title": "MENA Sustainable Finance Market Hits $35.1 billion Led by Financials and Energy: Bloomberg Intelligence - Bloomberg.com",
+        "url": "https://finance.yahoo.com/quote/INTC",
+        "excerpt": "MENA Sustainable Finance Market Hits $35.1 billion Led by Financials and Energy: Bloomberg Intelligence - Bloomberg.com. MENA Sustainable Finance Market Hits $35.1 billion Led by Financials and Energy: Bloomberg Intellig\u2026",
+        "credibility_weight": 0.95
+      },
+      {
+        "source": "Seeking Alpha",
+        "title": "MidCap Financial Investment Corporation (MFIC) Q1 2026 Earnings Call Transcript",
+        "url": "https://finance.yahoo.com/quote/INTC",
+        "excerpt": "MidCap Financial Investment Corporation (MFIC) Q1 2026 Earnings Call Transcript. MidCap Financial Investment Corporation (MFIC) Q1 2026 Earnings Call Transcript.\u2026",
+        "credibility_weight": 0.65
+      },
+      {
+        "source": "CNBC",
+        "title": "Cloudflare stock sinks 18% after earnings as company cuts 1,100 employees due to AI changes",
+        "url": "https://finance.yahoo.com/quote/INTC",
+        "excerpt": "Cloudflare stock sinks 18% after earnings as company cuts 1,100 employees due to AI changes. Cloudflare stock sinks 18% after earnings as company cuts 1,100 employees due to AI changes. The cloud provider announced it is\u2026",
+        "credibility_weight": 0.78
+      },
+      {
+        "source": "Google News",
+        "title": "INTC: Intel Stock Falls After Nvidia Backs Out of 18A Chip Deal - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/INTC",
+        "excerpt": "INTC: Intel Stock Falls After Nvidia Backs Out of 18A Chip Deal - Yahoo Finance. INTC: Intel Stock Falls After Nvidia Backs Out of 18A Chip Deal - Yahoo Finance. INTC: Intel Stock Falls After Nvidia Backs Out of 18A Chip\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Seeking Alpha",
+        "title": "WillScot Holdings Corporation 2026 Q1 - Results - Earnings Call Presentation",
+        "url": "https://finance.yahoo.com/quote/INTC",
+        "excerpt": "WillScot Holdings Corporation 2026 Q1 - Results - Earnings Call Presentation. WillScot Holdings Corporation 2026 Q1 - Results - Earnings Call Presentation.\u2026",
+        "credibility_weight": 0.65
+      },
+      {
+        "source": "Yahoo Finance",
+        "title": "Curtiss-Wright Corporation (CW) a Moderate Buy, Per Wall Street",
+        "url": "https://finance.yahoo.com/quote/INTC",
+        "excerpt": "Curtiss-Wright Corporation (CW) a Moderate Buy, Per Wall Street. Curtiss-Wright Corporation (CW) a Moderate Buy, Per Wall Street.\u2026",
+        "credibility_weight": 0.72
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "The strategist thesis is supported by evidence indicating that Nvidia's withdrawal from a chip deal has negatively impacted Intel's stock price. The evidence is sourced from a credible outlet, but the overall support is moderate due to the lack of additional corroborating evidence from high-credibility sources like Bloomberg or Reuters."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "The strategist thesis is supported by evidence indicating that Nvidia's withdrawal from a chip deal has negatively impacted Intel's stock price. The evidence is sourced from a credible outlet, but the overall support is moderate due to the lack of additional corroborating evidence from high-credibility sources like Bloomberg or Reuters."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Bearish. Confidence: 65%. The strategist thesis is supported by evidence indicating that Nvidia's withdrawal from a chip deal has negatively impacted Intel's stock price. The evidence is"
+      }
+    ],
+    "baseline_sentiment": "Bearish",
+    "baseline_random": "Bullish"
+  },
+  {
+    "id": "sig-super--5d89ae",
+    "ticker": "SMCI",
+    "company": "Super Micro Computer, Inc.",
+    "sector": "Technology",
+    "benchmark": "QQQ",
+    "event_type": "Bullish signals",
+    "direction": "Bullish",
+    "horizon_days": 5,
+    "confidence": 0.75,
+    "novelty_score": 0.4,
+    "sentiment_score": 0.375,
+    "source_quality": 0.67,
+    "published_at": "2026-05-07T22:25:19.390681+00:00",
+    "reasoning": "The Bullish thesis for this asset is based on analysis of 3 supporting and 0 contradicting evidence items. Thesis strength: high. SMCI shows bullish catalysts driven by beat as revenue more than doubles - CNBC.. Sector (Technology) momentum appears constructive.",
+    "catalyst": "beat as revenue more than doubles - CNBC.",
+    "thesis_bullets": [
+      "beat as revenue more than doubles - CNBC.",
+      "revenue more than doubles - CNBC.",
+      "guidance beat as revenue more than doubles - CNBC.",
+      "Beats Q3 Earnings Estimates - Yahoo Finance."
+    ],
+    "risk_factors": [
+      "Market-wide risk-off could override fundamental positives",
+      "Execution risk on near-term guidance",
+      "Valuation premium may limit upside"
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "No strong macro signal detected."
+    ],
+    "market_snapshot": {
+      "last_price": 33.62,
+      "day_change": -0.03,
+      "benchmark_change": -0.0012,
+      "relative_strength": -0.0288,
+      "volume_vs_average": 1.69,
+      "valuation_note": "P/E 17.7 \u2013 reasonable valuation."
+    },
+    "citations": [
+      {
+        "source": "Bloomberg",
+        "title": "Finance Pros Race Through New York to Win the Super Bowl of Puzzles - Bloomberg.com",
+        "url": "https://finance.yahoo.com/quote/SMCI",
+        "excerpt": "Finance Pros Race Through New York to Win the Super Bowl of Puzzles - Bloomberg.com. Finance Pros Race Through New York to Win the Super Bowl of Puzzles - Bloomberg.com. Finance Pros Race Through New York to Win the Supe\u2026",
+        "credibility_weight": 0.95
+      },
+      {
+        "source": "Google News",
+        "title": "Is Trending Stock Super Micro Computer, Inc. (SMCI) a Buy Now? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/SMCI",
+        "excerpt": "Is Trending Stock Super Micro Computer, Inc. (SMCI) a Buy Now? - Yahoo Finance. Is Trending Stock Super Micro Computer, Inc. (SMCI) a Buy Now? - Yahoo Finance. Is Trending Stock Super Micro Computer, Inc. (SMCI) a Buy No\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Super Micro stock jumps 18% on guidance beat as revenue more than doubles - CNBC",
+        "url": "https://finance.yahoo.com/quote/SMCI",
+        "excerpt": "Super Micro stock jumps 18% on guidance beat as revenue more than doubles - CNBC. Super Micro stock jumps 18% on guidance beat as revenue more than doubles - CNBC. Super Micro stock jumps 18% on guidance beat as revenue\u2026",
+        "credibility_weight": 0.7020000000000001
+      },
+      {
+        "source": "Google News",
+        "title": "Super Micro Computer, Inc. (SMCI) Expands Edge and Enterprise Server Portfolio - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/SMCI",
+        "excerpt": "Super Micro Computer, Inc. (SMCI) Expands Edge and Enterprise Server Portfolio - Yahoo Finance. Super Micro Computer, Inc. (SMCI) Expands Edge and Enterprise Server Portfolio - Yahoo Finance. Super Micro Computer, Inc. (\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Super Micro Computer, Inc. (SMCI) Is a Trending Stock: Facts to Know Before Betting on It - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/SMCI",
+        "excerpt": "Super Micro Computer, Inc. (SMCI) Is a Trending Stock: Facts to Know Before Betting on It - Yahoo Finance. Super Micro Computer, Inc. (SMCI) Is a Trending Stock: Facts to Know Before Betting on It - Yahoo Finance. Super\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Super Micro Computer, Inc. (SMCI) is Attracting Investor Attention: Here is What You Should Know - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/SMCI",
+        "excerpt": "Super Micro Computer, Inc. (SMCI) is Attracting Investor Attention: Here is What You Should Know - Yahoo Finance. Super Micro Computer, Inc. (SMCI) is Attracting Investor Attention: Here is What You Should Know - Yahoo F\u2026",
+        "credibility_weight": 0.648
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "Evidence reviewed across 8 sources. Overall sentiment balance: bullish."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "SMCI shows bullish catalysts driven by beat as revenue more than doubles - CNBC.. Sector (Technology) momentum appears constructive."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Bullish. Confidence: 75%. The Bullish thesis for this asset is based on analysis of 3 supporting and 0 contradicting evidence items. Thesis strength: high. SMCI shows bullish catalysts d"
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Bearish"
+  },
+  {
+    "id": "sig-palant-fb05c9",
+    "ticker": "PLTR",
+    "company": "Palantir Technologies Inc.",
+    "sector": "Technology",
+    "benchmark": "QQQ",
+    "event_type": "Mixed signals",
+    "direction": "Neutral",
+    "horizon_days": 5,
+    "confidence": 0.55,
+    "novelty_score": 0.4,
+    "sentiment_score": 0.0,
+    "source_quality": 0.63,
+    "published_at": "2026-05-07T22:25:59.140831+00:00",
+    "reasoning": "The strategist thesis acknowledges strong Q1 earnings and significant revenue growth, supported by credible sources. However, the mixed market reaction and valuation concerns introduce uncertainty, leading to a neutral stance. The evidence balance is mixed, with both supporting and contradicting claims present.",
+    "catalyst": "News catalyst identified.",
+    "thesis_bullets": [],
+    "risk_factors": [
+      "Investor concerns about high valuation may continue to pressure the stock.",
+      "Mixed market reactions could lead to further volatility."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "Market tone is supportive, but the mixed evidence suggests caution.",
+      "Sector context may influence investor sentiment positively."
+    ],
+    "market_snapshot": {
+      "last_price": 137.05,
+      "day_change": 0.0244,
+      "benchmark_change": -0.0012,
+      "relative_strength": 0.0256,
+      "volume_vs_average": 1.02,
+      "valuation_note": "P/E 152.3 \u2013 premium multiple; growth must sustain."
+    },
+    "citations": [
+      {
+        "source": "Google News",
+        "title": "Palantir Technologies Inc. (PLTR) Beats Q1 Earnings and Revenue Estimates - Yahoo Finance UK",
+        "url": "https://finance.yahoo.com/quote/PLTR",
+        "excerpt": "Palantir Technologies Inc. (PLTR) Beats Q1 Earnings and Revenue Estimates - Yahoo Finance UK. Palantir Technologies Inc. (PLTR) Beats Q1 Earnings and Revenue Estimates - Yahoo Finance UK. Palantir Technologies Inc. (PLTR\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Yahoo Finance",
+        "title": "BWX Technologies, Inc. (BWXT) Reports Q1 2026 Results",
+        "url": "https://finance.yahoo.com/quote/PLTR",
+        "excerpt": "BWX Technologies, Inc. (BWXT) Reports Q1 2026 Results. BWX Technologies, Inc. (BWXT) Reports Q1 2026 Results.\u2026",
+        "credibility_weight": 0.72
+      },
+      {
+        "source": "Google News",
+        "title": "Gateway Investment Advisers LLC Trims Stock Position in Palantir Technologies Inc. $PLTR - MarketBeat",
+        "url": "https://finance.yahoo.com/quote/PLTR",
+        "excerpt": "Gateway Investment Advisers LLC Trims Stock Position in Palantir Technologies Inc. $PLTR - MarketBeat. Gateway Investment Advisers LLC Trims Stock Position in Palantir Technologies Inc. $PLTR - MarketBeat. Gateway Invest\u2026",
+        "credibility_weight": 0.5
+      },
+      {
+        "source": "Google News",
+        "title": "Palantir Technologies Inc Stock (PLTR) Moved Up by 3.08% on May 7: A Full Analysis - TradingKey",
+        "url": "https://finance.yahoo.com/quote/PLTR",
+        "excerpt": "Palantir Technologies Inc Stock (PLTR) Moved Up by 3.08% on May 7: A Full Analysis - TradingKey. Palantir Technologies Inc Stock (PLTR) Moved Up by 3.08% on May 7: A Full Analysis - TradingKey. Palantir Technologies Inc\u2026",
+        "credibility_weight": 0.5
+      },
+      {
+        "source": "Google News",
+        "title": "Palantir stock tumbles as Q1 revenue, profit beats fail to impress - Yahoo Finance UK",
+        "url": "https://finance.yahoo.com/quote/PLTR",
+        "excerpt": "Palantir stock tumbles as Q1 revenue, profit beats fail to impress - Yahoo Finance UK. Palantir stock tumbles as Q1 revenue, profit beats fail to impress - Yahoo Finance UK. Palantir stock tumbles as Q1 revenue, profit b\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Palantir Technologies (PLTR) Stock Trades Down, Here Is Why - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/PLTR",
+        "excerpt": "Palantir Technologies (PLTR) Stock Trades Down, Here Is Why - Yahoo Finance. Palantir Technologies (PLTR) Stock Trades Down, Here Is Why - Yahoo Finance. Palantir Technologies (PLTR) Stock Trades Down, Here Is Why Yahoo\u2026",
+        "credibility_weight": 0.648
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "The strategist thesis acknowledges strong Q1 earnings and significant revenue growth, supported by credible sources. However, the mixed market reaction and valuation concerns introduce uncertainty, leading to a neutral stance. The evidence balance is mixed, with both supporting and contradicting claims present."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "The strategist thesis acknowledges strong Q1 earnings and significant revenue growth, supported by credible sources. However, the mixed market reaction and valuation concerns introduce uncertainty, leading to a neutral stance. The evidence balance is mixed, with both supporting and contradicting claims present."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Neutral. Confidence: 55%. The strategist thesis acknowledges strong Q1 earnings and significant revenue growth, supported by credible sources. However, the mixed market reaction and valu"
+      }
+    ],
+    "baseline_sentiment": "Neutral",
+    "baseline_random": "Bearish"
+  },
+  {
+    "id": "sig-rtx-co-b1d7e5",
+    "ticker": "RTX",
+    "company": "RTX Corporation",
+    "sector": "Industrials",
+    "benchmark": "QQQ",
+    "event_type": "Mixed signals",
+    "direction": "Neutral",
+    "horizon_days": 5,
+    "confidence": 0.45,
+    "novelty_score": 0.6,
+    "sentiment_score": 0.0,
+    "source_quality": 0.65,
+    "published_at": "2026-05-07T22:28:33.174242+00:00",
+    "reasoning": "The strategist thesis indicates mixed signals for RTX stock following a strong earnings beat and raised guidance, but acknowledges geopolitical concerns that create uncertainty. The evidence balance is mixed, with both supporting and contradicting claims present. The presence of contradictory evidence regarding stock performance since the earnings report lowers confidence.",
+    "catalyst": "News catalyst identified.",
+    "thesis_bullets": [],
+    "risk_factors": [
+      "Geopolitical tensions may negatively impact stock performance.",
+      "Mixed post-earnings performance raises questions about market sentiment."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "Market tone is supportive, but the mixed evidence suggests caution."
+    ],
+    "market_snapshot": {
+      "last_price": 176.78,
+      "day_change": 0.0002,
+      "benchmark_change": -0.0012,
+      "relative_strength": 0.0014,
+      "volume_vs_average": 1.11,
+      "valuation_note": "P/E 33.1 \u2013 elevated valuation."
+    },
+    "citations": [
+      {
+        "source": "Google News",
+        "title": "RTX stock rises over 3% on strong earnings beat, revenue guidance - Investing.com",
+        "url": "https://finance.yahoo.com/quote/RTX",
+        "excerpt": "RTX stock rises over 3% on strong earnings beat, revenue guidance - Investing.com. RTX stock rises over 3% on strong earnings beat, revenue guidance - Investing.com. RTX stock rises over 3% on strong earnings beat, reven\u2026",
+        "credibility_weight": 0.5
+      },
+      {
+        "source": "Google News",
+        "title": "RTX Stock Pops, Then Drops, as Earnings Beat. Why It Raised Guidance Amid Iran War. - Barron's",
+        "url": "https://finance.yahoo.com/quote/RTX",
+        "excerpt": "RTX Stock Pops, Then Drops, as Earnings Beat. Why It Raised Guidance Amid Iran War. - Barron's. RTX Stock Pops, Then Drops, as Earnings Beat. Why It Raised Guidance Amid Iran War. - Barron's. RTX Stock Pops, Then Drops,\u2026",
+        "credibility_weight": 0.738
+      },
+      {
+        "source": "Seeking Alpha",
+        "title": "MidCap Financial Investment Corporation (MFIC) Q1 2026 Earnings Call Transcript",
+        "url": "https://finance.yahoo.com/quote/RTX",
+        "excerpt": "MidCap Financial Investment Corporation (MFIC) Q1 2026 Earnings Call Transcript. MidCap Financial Investment Corporation (MFIC) Q1 2026 Earnings Call Transcript.\u2026",
+        "credibility_weight": 0.65
+      },
+      {
+        "source": "Google News",
+        "title": "Why Is RTX (RTX) Down 2.4% Since Last Earnings Report? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/RTX",
+        "excerpt": "Why Is RTX (RTX) Down 2.4% Since Last Earnings Report? - Yahoo Finance. Why Is RTX (RTX) Down 2.4% Since Last Earnings Report? - Yahoo Finance. Why Is RTX (RTX) Down 2.4% Since Last Earnings Report? Yahoo Finance\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Why Is RTX (RTX) Down 1.7% Since Last Earnings Report? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/RTX",
+        "excerpt": "Why Is RTX (RTX) Down 1.7% Since Last Earnings Report? - Yahoo Finance. Why Is RTX (RTX) Down 1.7% Since Last Earnings Report? - Yahoo Finance. Why Is RTX (RTX) Down 1.7% Since Last Earnings Report? Yahoo Finance\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Yahoo Finance",
+        "title": "RTX Corporation (RTX): One of the Best Large Cap Defense Stocks to Buy According to Hedge Funds",
+        "url": "https://finance.yahoo.com/quote/RTX",
+        "excerpt": "RTX Corporation (RTX): One of the Best Large Cap Defense Stocks to Buy According to Hedge Funds. RTX Corporation (RTX): One of the Best Large Cap Defense Stocks to Buy According to Hedge Funds.\u2026",
+        "credibility_weight": 0.72
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "The strategist thesis indicates mixed signals for RTX stock following a strong earnings beat and raised guidance, but acknowledges geopolitical concerns that create uncertainty. The evidence balance is mixed, with both supporting and contradicting claims present. The presence of contradictory evidence regarding stock performance since the earnings report lowers confidence."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "The strategist thesis indicates mixed signals for RTX stock following a strong earnings beat and raised guidance, but acknowledges geopolitical concerns that create uncertainty. The evidence balance is mixed, with both supporting and contradicting claims present. The presence of contradictory evidence regarding stock performance since the earnings report lowers confidence."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Neutral. Confidence: 45%. The strategist thesis indicates mixed signals for RTX stock following a strong earnings beat and raised guidance, but acknowledges geopolitical concerns that cr"
+      }
+    ],
+    "baseline_sentiment": "Neutral",
+    "baseline_random": "Neutral"
+  },
+  {
+    "id": "sig-sofi-t-ed9ecd",
+    "ticker": "SOFI",
+    "company": "SoFi Technologies, Inc.",
+    "sector": "Financial Services",
+    "benchmark": "QQQ",
+    "event_type": "Mixed signals",
+    "direction": "Neutral",
+    "horizon_days": 5,
+    "confidence": 0.55,
+    "novelty_score": 0.4,
+    "sentiment_score": 0.0,
+    "source_quality": 0.64,
+    "published_at": "2026-05-07T22:43:01.667747+00:00",
+    "reasoning": "The strategist thesis reflects the mixed signals in SoFi's stock performance, supported by both upward and downward movements. The evidence balance is mixed, with both supporting and contradicting claims present. The overall market context is uncertain, which aligns with the neutral direction.",
+    "catalyst": "News catalyst identified.",
+    "thesis_bullets": [],
+    "risk_factors": [
+      "Continued volatility in the financial services sector could further impact SoFi's stock performance.",
+      "Unclear financial performance and future guidance may lead to investor hesitation."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "The overall market tone is mixed, reflecting uncertainty in investor sentiment."
+    ],
+    "market_snapshot": {
+      "last_price": 16.0,
+      "day_change": -0.0184,
+      "benchmark_change": -0.0012,
+      "relative_strength": -0.0172,
+      "volume_vs_average": 0.87,
+      "valuation_note": "P/E 35.6 \u2013 elevated valuation."
+    },
+    "citations": [
+      {
+        "source": "Google News",
+        "title": "SoFi Technologies, Inc. (SOFI) - Financials - Quarterly Results - SoFi",
+        "url": "https://finance.yahoo.com/quote/SOFI",
+        "excerpt": "SoFi Technologies, Inc. (SOFI) - Financials - Quarterly Results - SoFi. SoFi Technologies, Inc. (SOFI) - Financials - Quarterly Results - SoFi. SoFi Technologies, Inc. (SOFI) - Financials - Quarterly Results SoFi\u2026",
+        "credibility_weight": 0.5
+      },
+      {
+        "source": "Google News",
+        "title": "Is Trending Stock SoFi Technologies, Inc. (SOFI) a Buy Now? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/SOFI",
+        "excerpt": "Is Trending Stock SoFi Technologies, Inc. (SOFI) a Buy Now? - Yahoo Finance. Is Trending Stock SoFi Technologies, Inc. (SOFI) a Buy Now? - Yahoo Finance. Is Trending Stock SoFi Technologies, Inc. (SOFI) a Buy Now? Yahoo\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Is SoFi Technologies, Inc. (SOFI) A Good Stock To Buy Now? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/SOFI",
+        "excerpt": "Is SoFi Technologies, Inc. (SOFI) A Good Stock To Buy Now? - Yahoo Finance. Is SoFi Technologies, Inc. (SOFI) A Good Stock To Buy Now? - Yahoo Finance. Is SoFi Technologies, Inc. (SOFI) A Good Stock To Buy Now? Yahoo Fin\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Yahoo Finance",
+        "title": "BWX Technologies, Inc. (BWXT) Reports Q1 2026 Results",
+        "url": "https://finance.yahoo.com/quote/SOFI",
+        "excerpt": "BWX Technologies, Inc. (BWXT) Reports Q1 2026 Results. BWX Technologies, Inc. (BWXT) Reports Q1 2026 Results.\u2026",
+        "credibility_weight": 0.72
+      },
+      {
+        "source": "Google News",
+        "title": "Why SoFi (SOFI) Stock Is Up Today - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/SOFI",
+        "excerpt": "Why SoFi (SOFI) Stock Is Up Today - Yahoo Finance. Why SoFi (SOFI) Stock Is Up Today - Yahoo Finance. Why SoFi (SOFI) Stock Is Up Today Yahoo Finance\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Why SoFi (SOFI) Stock Is Trading Up Today - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/SOFI",
+        "excerpt": "Why SoFi (SOFI) Stock Is Trading Up Today - Yahoo Finance. Why SoFi (SOFI) Stock Is Trading Up Today - Yahoo Finance. Why SoFi (SOFI) Stock Is Trading Up Today Yahoo Finance\u2026",
+        "credibility_weight": 0.648
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "The strategist thesis reflects the mixed signals in SoFi's stock performance, supported by both upward and downward movements. The evidence balance is mixed, with both supporting and contradicting claims present. The overall market context is uncertain, which aligns with the neutral direction."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "The strategist thesis reflects the mixed signals in SoFi's stock performance, supported by both upward and downward movements. The evidence balance is mixed, with both supporting and contradicting claims present. The overall market context is uncertain, which aligns with the neutral direction."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Neutral. Confidence: 55%. The strategist thesis reflects the mixed signals in SoFi's stock performance, supported by both upward and downward movements. The evidence balance is mixed, wi"
+      }
+    ],
+    "baseline_sentiment": "Neutral",
+    "baseline_random": "Bearish"
+  },
+  {
+    "id": "sig-coinba-29f730",
+    "ticker": "COIN",
+    "company": "Coinbase Global, Inc.",
+    "sector": "Financial Services",
+    "benchmark": "QQQ",
+    "event_type": "Bullish signals",
+    "direction": "Bullish",
+    "horizon_days": 5,
+    "confidence": 0.48,
+    "novelty_score": 0.8,
+    "sentiment_score": 0.208,
+    "source_quality": 0.69,
+    "published_at": "2026-05-07T22:43:12.580285+00:00",
+    "reasoning": "The Bullish thesis for this asset is based on analysis of 4 supporting and 2 contradicting evidence items. Thesis strength: high. COIN shows bullish catalysts driven by Earnings Call Presentation.. Sector (Financial Services) momentum appears constructive.",
+    "catalyst": "Earnings Call Presentation.",
+    "thesis_bullets": [
+      "Earnings Call Presentation.",
+      "ains: Here's Why - Yahoo Finance.",
+      "Beats Stock Market Upswing: What Investors Need to Know - Yahoo Finance.",
+      "Earnings and Revenue."
+    ],
+    "risk_factors": [
+      "Market-wide risk-off could override fundamental positives",
+      "Execution risk on near-term guidance",
+      "Valuation premium may limit upside"
+    ],
+    "counter_evidence": [
+      "Coinbase Global Swings to Loss Amid Softer Crypto Market. Coinbase Global Swings to Loss Amid Softer Crypto Market.",
+      "Coinbase posts steep first-quarter loss after slide in crypto prices; shares fall 4%. Coinbase posts steep first-quarter loss after slide in crypto prices; shares fall 4%. Crypto t"
+    ],
+    "watch_items": [
+      "No strong macro signal detected."
+    ],
+    "market_snapshot": {
+      "last_price": 192.96,
+      "day_change": -0.0253,
+      "benchmark_change": -0.0012,
+      "relative_strength": -0.0241,
+      "volume_vs_average": 0.88,
+      "valuation_note": "P/E 43.4 \u2013 elevated valuation."
+    },
+    "citations": [
+      {
+        "source": "Google News",
+        "title": "Is Coinbase Global, Inc. (COIN) A Good Stock To Buy Now? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/COIN",
+        "excerpt": "Is Coinbase Global, Inc. (COIN) A Good Stock To Buy Now? - Yahoo Finance. Is Coinbase Global, Inc. (COIN) A Good Stock To Buy Now? - Yahoo Finance. Is Coinbase Global, Inc. (COIN) A Good Stock To Buy Now? Yahoo Finance\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Seeking Alpha",
+        "title": "Coinbase Global, Inc. 2026 Q1 - Results - Earnings Call Presentation",
+        "url": "https://finance.yahoo.com/quote/COIN",
+        "excerpt": "Coinbase Global, Inc. 2026 Q1 - Results - Earnings Call Presentation. Coinbase Global, Inc. 2026 Q1 - Results - Earnings Call Presentation.\u2026",
+        "credibility_weight": 0.65
+      },
+      {
+        "source": "The Wall Street Journal",
+        "title": "Coinbase Global Swings to Loss Amid Softer Crypto Market",
+        "url": "https://finance.yahoo.com/quote/COIN",
+        "excerpt": "Coinbase Global Swings to Loss Amid Softer Crypto Market. Coinbase Global Swings to Loss Amid Softer Crypto Market.\u2026",
+        "credibility_weight": 0.9
+      },
+      {
+        "source": "Google News",
+        "title": "Coinbase Global, Inc. (COIN) Stock Sinks As Market Gains: Here's Why - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/COIN",
+        "excerpt": "Coinbase Global, Inc. (COIN) Stock Sinks As Market Gains: Here's Why - Yahoo Finance. Coinbase Global, Inc. (COIN) Stock Sinks As Market Gains: Here's Why - Yahoo Finance. Coinbase Global, Inc. (COIN) Stock Sinks As Mark\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Coinbase Global, Inc. (COIN) Beats Stock Market Upswing: What Investors Need to Know - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/COIN",
+        "excerpt": "Coinbase Global, Inc. (COIN) Beats Stock Market Upswing: What Investors Need to Know - Yahoo Finance. Coinbase Global, Inc. (COIN) Beats Stock Market Upswing: What Investors Need to Know - Yahoo Finance. Coinbase Global,\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Coinbase Misses on Earnings and Revenue. The Stock Is Falling. - Barron's",
+        "url": "https://finance.yahoo.com/quote/COIN",
+        "excerpt": "Coinbase Misses on Earnings and Revenue. The Stock Is Falling. - Barron's. Coinbase Misses on Earnings and Revenue. The Stock Is Falling. - Barron's. Coinbase Misses on Earnings and Revenue. The Stock Is Falling. Barron'\u2026",
+        "credibility_weight": 0.738
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "Evidence reviewed across 8 sources. Overall sentiment balance: bullish."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "COIN shows bullish catalysts driven by Earnings Call Presentation.. Sector (Financial Services) momentum appears constructive."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Bullish. Confidence: 48%. The Bullish thesis for this asset is based on analysis of 4 supporting and 2 contradicting evidence items. Thesis strength: high. COIN shows bullish catalysts d"
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Bearish"
+  },
+  {
+    "id": "sig-costco-3b669c",
+    "ticker": "COST",
+    "company": "Costco Wholesale Corporation",
+    "sector": "Consumer Defensive",
+    "benchmark": "QQQ",
+    "event_type": "Mixed signals",
+    "direction": "Neutral",
+    "horizon_days": 5,
+    "confidence": 0.55,
+    "novelty_score": 1.0,
+    "sentiment_score": 0.0,
+    "source_quality": 0.72,
+    "published_at": "2026-05-08T00:12:49.841795+00:00",
+    "reasoning": "The strategist thesis indicates a neutral outlook for Costco due to mixed evidence regarding macroeconomic pressures. While rising aluminum prices and core inflation are acknowledged, the presence of contradictory technical analysis data suggests uncertainty. The mixed evidence leads to a moderate confidence level.",
+    "catalyst": "News catalyst identified.",
+    "thesis_bullets": [],
+    "risk_factors": [
+      "Geopolitical events may further exacerbate inflation and consumer spending issues.",
+      "Technical analysis data is unavailable, limiting insights into price movements."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "The market tone is supportive, but the mixed evidence suggests caution."
+    ],
+    "market_snapshot": {
+      "last_price": 1012.06,
+      "day_change": 0.0164,
+      "benchmark_change": -0.0012,
+      "relative_strength": 0.0176,
+      "volume_vs_average": 0.88,
+      "valuation_note": "P/E 52.7 \u2013 premium multiple; growth must sustain."
+    },
+    "citations": [
+      {
+        "source": "Global Macro Intelligence (FinSight)",
+        "title": "High-Impact Macro & Geopolitical Events \u2014 2026-05-08",
+        "url": "https://finance.yahoo.com/quote/COST",
+        "excerpt": "[HIGH-IMPACT MACRO & GEOPOLITICAL EVENTS \u2014 CRITICAL CONTEXT]\nThe following real-world macro and geopolitical events have been detected in current news feeds. They may materially affect this investment thesis. Agents MUST\u2026",
+        "credibility_weight": 0.92
+      },
+      {
+        "source": "Technical Analysis (FinSight Quant)",
+        "title": "Quantitative Technical Factors: COST",
+        "url": "https://finance.yahoo.com/quote/COST",
+        "excerpt": "[QUANTITATIVE TECHNICAL ANALYSIS \u2014 HIGH PRIORITY]\nThe following technical factors were computed from real price/volume data for COST. Agents MUST incorporate these quantitative signals into their thesis and confidence ca\u2026",
+        "credibility_weight": 0.85
+      },
+      {
+        "source": "Bloomberg",
+        "title": "Playing by the Rules Costs Wall Street an Extra 51 Million Hours a Year - Bloomberg.com",
+        "url": "https://finance.yahoo.com/quote/COST",
+        "excerpt": "Playing by the Rules Costs Wall Street an Extra 51 Million Hours a Year - Bloomberg.com. Playing by the Rules Costs Wall Street an Extra 51 Million Hours a Year - Bloomberg.com. Playing by the Rules Costs Wall Street an\u2026",
+        "credibility_weight": 0.95
+      },
+      {
+        "source": "Google News",
+        "title": "Costco Wholesale Corporation (COST): A Bull Case Theory - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/COST",
+        "excerpt": "Costco Wholesale Corporation (COST): A Bull Case Theory - Yahoo Finance. Costco Wholesale Corporation (COST): A Bull Case Theory - Yahoo Finance. Costco Wholesale Corporation (COST): A Bull Case Theory Yahoo Finance\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "MarketWatch",
+        "title": "CoreWeave shares plunge. Revenue doubles but AI costs are rising.",
+        "url": "https://finance.yahoo.com/quote/COST",
+        "excerpt": "CoreWeave shares plunge. Revenue doubles but AI costs are rising.. CoreWeave shares plunge. Revenue doubles but AI costs are rising.. Shares of CoreWeave fell 9% in after-hours trading as investors considered shrinking m\u2026",
+        "credibility_weight": 0.7
+      },
+      {
+        "source": "Google News",
+        "title": "Is Costco Wholesale Corporation (COST) A Good Stock To Buy Now? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/COST",
+        "excerpt": "Is Costco Wholesale Corporation (COST) A Good Stock To Buy Now? - Yahoo Finance. Is Costco Wholesale Corporation (COST) A Good Stock To Buy Now? - Yahoo Finance. Is Costco Wholesale Corporation (COST) A Good Stock To Buy\u2026",
+        "credibility_weight": 0.648
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "The strategist thesis indicates a neutral outlook for Costco due to mixed evidence regarding macroeconomic pressures. While rising aluminum prices and core inflation are acknowledged, the presence of contradictory technical analysis data suggests uncertainty. The mixed evidence leads to a moderate confidence level."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "The strategist thesis indicates a neutral outlook for Costco due to mixed evidence regarding macroeconomic pressures. While rising aluminum prices and core inflation are acknowledged, the presence of contradictory technical analysis data suggests uncertainty. The mixed evidence leads to a moderate confidence level."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Neutral. Confidence: 55%. The strategist thesis indicates a neutral outlook for Costco due to mixed evidence regarding macroeconomic pressures. While rising aluminum prices and core infl"
+      }
+    ],
+    "baseline_sentiment": "Neutral",
+    "baseline_random": "Bullish"
+  },
+  {
+    "id": "sig-meta-7e7944",
+    "ticker": "META",
+    "company": "META",
+    "sector": "Unknown",
+    "benchmark": "QQQ",
+    "event_type": "Mixed signals",
+    "direction": "Neutral",
+    "horizon_days": 5,
+    "confidence": 0.55,
+    "novelty_score": 0.8,
+    "sentiment_score": 0.0,
+    "source_quality": 0.73,
+    "published_at": "2026-05-08T00:13:19.029433+00:00",
+    "reasoning": "The strategist thesis reflects a balanced view of META's stock performance, acknowledging both positive revenue forecasts and negative macroeconomic concerns. The evidence is mixed, with supporting claims from credible sources about revenue forecasts, but also significant contradicting evidence regarding stock fluctuations and macroeconomic impacts. The presence of both supporting and contradicting evidence leads to a moderate confidence level.",
+    "catalyst": "News catalyst identified.",
+    "thesis_bullets": [],
+    "risk_factors": [
+      "Fluctuations in META's stock price due to geopolitical events.",
+      "Negative market sentiment stemming from inflation and economic growth concerns."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "Market tone is mixed, reflecting both positive and negative signals.",
+      "Macroeconomic factors such as inflation and geopolitical tensions are impacting investor sentiment."
+    ],
+    "market_snapshot": {
+      "last_price": 616.81,
+      "day_change": 0.0064,
+      "benchmark_change": -0.0012,
+      "relative_strength": 0.0076,
+      "volume_vs_average": 0.65,
+      "valuation_note": "P/E 22.4 \u2013 reasonable valuation."
+    },
+    "citations": [
+      {
+        "source": "Global Macro Intelligence (FinSight)",
+        "title": "High-Impact Macro & Geopolitical Events \u2014 2026-05-08",
+        "url": "https://finance.yahoo.com/quote/META",
+        "excerpt": "[HIGH-IMPACT MACRO & GEOPOLITICAL EVENTS \u2014 CRITICAL CONTEXT]\nThe following real-world macro and geopolitical events have been detected in current news feeds. They may materially affect this investment thesis. Agents MUST\u2026",
+        "credibility_weight": 0.92
+      },
+      {
+        "source": "Technical Analysis (FinSight Quant)",
+        "title": "Quantitative Technical Factors: META",
+        "url": "https://finance.yahoo.com/quote/META",
+        "excerpt": "[QUANTITATIVE TECHNICAL ANALYSIS \u2014 HIGH PRIORITY]\nThe following technical factors were computed from real price/volume data for META. Agents MUST incorporate these quantitative signals into their thesis and confidence ca\u2026",
+        "credibility_weight": 0.85
+      },
+      {
+        "source": "Google News",
+        "title": "Why Meta (META) Stock Is Up Today - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/META",
+        "excerpt": "Why Meta (META) Stock Is Up Today - Yahoo Finance. Why Meta (META) Stock Is Up Today - Yahoo Finance. Why Meta (META) Stock Is Up Today Yahoo Finance\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "CNBC",
+        "title": "Corning CEO to Cramer: Deals with 2 unnamed hyperscalers 'larger' than $6B Meta pact",
+        "url": "https://finance.yahoo.com/quote/META",
+        "excerpt": "Corning CEO to Cramer: Deals with 2 unnamed hyperscalers 'larger' than $6B Meta pact. Corning CEO to Cramer: Deals with 2 unnamed hyperscalers 'larger' than $6B Meta pact. The investment story for Corning looks even swee\u2026",
+        "credibility_weight": 0.78
+      },
+      {
+        "source": "Google News",
+        "title": "Why Meta (META) Stock Is Trading Up Today - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/META",
+        "excerpt": "Why Meta (META) Stock Is Trading Up Today - Yahoo Finance. Why Meta (META) Stock Is Trading Up Today - Yahoo Finance. Why Meta (META) Stock Is Trading Up Today Yahoo Finance\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Why Meta (META) Shares Are Plunging Today - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/META",
+        "excerpt": "Why Meta (META) Shares Are Plunging Today - Yahoo Finance. Why Meta (META) Shares Are Plunging Today - Yahoo Finance. Why Meta (META) Shares Are Plunging Today Yahoo Finance\u2026",
+        "credibility_weight": 0.648
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "The strategist thesis reflects a balanced view of META's stock performance, acknowledging both positive revenue forecasts and negative macroeconomic concerns. The evidence is mixed, with supporting claims from credible sources about revenue forecasts, but also significant contradicting evidence regarding stock fluctuations and macroeconomic impacts. The presence of both supporting and contradicting evidence leads to a moderate confidence level."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "The strategist thesis reflects a balanced view of META's stock performance, acknowledging both positive revenue forecasts and negative macroeconomic concerns. The evidence is mixed, with supporting claims from credible sources about revenue forecasts, but also significant contradicting evidence regarding stock fluctuations and macroeconomic impacts. The presence of both supporting and contradicting evidence leads to a moderate confidence level."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Neutral. Confidence: 55%. The strategist thesis reflects a balanced view of META's stock performance, acknowledging both positive revenue forecasts and negative macroeconomic concerns. T"
+      }
+    ],
+    "baseline_sentiment": "Neutral",
+    "baseline_random": "Bullish"
+  },
+  {
+    "id": "sig20-cost-20d",
+    "ticker": "COST",
+    "company": "Costco Wholesale Corporation",
+    "sector": "Consumer Defensive",
+    "benchmark": "QQQ",
+    "event_type": "Bullish signals (20d)",
+    "direction": "Bullish",
+    "horizon_days": 20,
+    "confidence": 0.6,
+    "novelty_score": 0.7,
+    "sentiment_score": 0.35,
+    "source_quality": 0.72,
+    "published_at": "2026-05-08T00:12:49.841795+00:00",
+    "reasoning": "[20-day horizon] Costco's 20-day outlook is bullish. Despite inflationary pressures, Costco's membership model and value-for-money positioning make it a beneficiary of consumer trade-down trends. The bull case theory is well-supported, and the defensive business model reduces downside risk over the 20-day window.",
+    "catalyst": "Consumer trade-down beneficiary; membership model resilience; value positioning.",
+    "thesis_bullets": [
+      "Costco is a classic consumer defensive \u2014 benefits from both inflation and recession.",
+      "Membership renewal rates consistently >90% \u2014 sticky recurring revenue.",
+      "Bulk purchasing power provides durable competitive moat."
+    ],
+    "risk_factors": [
+      "Aluminum and commodity inflation increasing input costs",
+      "Technical analysis unavailable \u2014 limited quantitative support",
+      "Premium valuation (P/E 52.7) for a retail stock"
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "Membership renewal data",
+      "Same-store sales trends",
+      "Commodity cost inflation trajectory"
+    ],
+    "market_snapshot": {
+      "last_price": 1012.06,
+      "day_change": 0.0164,
+      "benchmark_change": -0.0012,
+      "relative_strength": 0.0176,
+      "volume_vs_average": 0.88,
+      "valuation_note": "P/E 52.7 \u2014 premium but justified for defensive quality."
+    },
+    "citations": [
+      {
+        "source": "Google News",
+        "title": "Costco Wholesale Corporation (COST): A Bull Case Theory",
+        "url": "https://finance.yahoo.com/quote/COST",
+        "excerpt": "Costco's bull case centers on membership resilience and value positioning.",
+        "credibility_weight": 0.648
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "20d horizon: Bullish. Defensive positioning and membership model support upside."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "COST 20d bullish. Consumer trade-down trend and membership stickiness justify bullish stance."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Bullish. Confidence: 60%. Defensive model and bull case support a cautiously bullish 20d outlook."
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Bullish"
+  },
+  {
+    "id": "sig20-meta-20d",
+    "ticker": "META",
+    "company": "Meta Platforms, Inc.",
+    "sector": "Communication Services",
+    "benchmark": "QQQ",
+    "event_type": "Bullish signals (20d)",
+    "direction": "Bullish",
+    "horizon_days": 20,
+    "confidence": 0.62,
+    "novelty_score": 0.6,
+    "sentiment_score": 0.35,
+    "source_quality": 0.73,
+    "published_at": "2026-05-08T00:13:19.029433+00:00",
+    "reasoning": "[20-day horizon] Meta's 20-day outlook is bullish. Revenue forecast beats driven by AI-targeted advertising continue to compound. Corning's CEO confirmed deals with 2 unnamed hyperscalers larger than the $6B Meta infrastructure pact \u2014 indicating Meta's AI buildout is accelerating. Despite stock fluctuation, the fundamental revenue trajectory is intact.",
+    "catalyst": "Revenue forecast beat; AI ad targeting; Corning hyperscaler deal confirmation.",
+    "thesis_bullets": [
+      "Corning CEO hints at unnamed hyperscaler deals larger than $6B Meta pact \u2014 infrastructure commitment.",
+      "AI-driven ad targeting outperforming industry benchmarks \u2014 revenue compounding.",
+      "Reels monetization expanding \u2014 short-form video is META's growth engine."
+    ],
+    "risk_factors": [
+      "Geopolitical events impacting broader market risk-off",
+      "EU AI Act could restrict targeted advertising practices",
+      "Reality Labs capex overhang"
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "Q2 ad revenue guidance",
+      "EU AI Act enforcement",
+      "Reality Labs loss trajectory"
+    ],
+    "market_snapshot": {
+      "last_price": 616.81,
+      "day_change": 0.0064,
+      "benchmark_change": -0.0012,
+      "relative_strength": 0.0076,
+      "volume_vs_average": 0.65,
+      "valuation_note": "P/E 22.4 \u2014 reasonable for AI-monetized platform."
+    },
+    "citations": [
+      {
+        "source": "CNBC",
+        "title": "Corning CEO: Deals with 2 unnamed hyperscalers larger than $6B Meta pact",
+        "url": "https://finance.yahoo.com/quote/META",
+        "excerpt": "Corning CEO confirms hyperscaler infrastructure deals larger than Meta pact.",
+        "credibility_weight": 0.78
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "20d horizon: Bullish. Revenue beats and AI ad tech provide sustained 20d upside."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "META 20d bullish. AI ad monetization is compounding and the Corning deal signals accelerating infrastructure spend."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Bullish. Confidence: 62%. Revenue beats and AI infrastructure commitment support bullish 20d view."
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Neutral"
+  },
+  {
+    "id": "sig-netfli-8939bd",
+    "ticker": "NFLX",
+    "company": "Netflix, Inc.",
+    "sector": "Communication Services",
+    "benchmark": "QQQ",
+    "event_type": "Mixed signals",
+    "direction": "Neutral",
+    "horizon_days": 20,
+    "confidence": 0.34,
+    "novelty_score": 0.8,
+    "sentiment_score": 0.08,
+    "source_quality": 0.7,
+    "published_at": "2026-05-08T00:51:19.905287+00:00",
+    "reasoning": "Technical indicators (contradicting news signal): MACD histogram negative (-0.9783) \u2014 bearish momentum; price -7.6% below SMA-50 \u2014 bearish trend; 1-month momentum -11.2% \u2014 downward price action; RSI at 35.3 approaching oversold. While Oppenheimer is bullish on price-hike-driven revenue, the quantitative signals strongly contradict the bullish news narrative. Confidence is low due to the deep disagreement between news sentiment and price/momentum data. Awaiting technical stabilisation before a directional call. Confidence = cred(0.70) \u00d7 consistency(0.50) \u00d7 signal(0.32) + bonus(0.04) + tech_adj(-0.08) = 0.34.",
+    "catalyst": "Revenue Driven By Price Hikes - Yahoo Finance.",
+    "thesis_bullets": [
+      "Revenue Driven By Price Hikes - Yahoo Finance.",
+      "airly Punished On Earnings - Barron's.",
+      "Earnings Call Transcript.",
+      "Earnings Call Presentation.",
+      "Macro: Global Macro Intelligence (FinSight): Top events: Fears of renewed Gaza war as Hamas disarmament talks stall | Fed Governor Waller says Iran war and labor market risks are keeping central "
+    ],
+    "risk_factors": [
+      "Market-wide risk-off could override fundamental positives",
+      "Execution risk on near-term guidance",
+      "Valuation premium may limit upside"
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "MACD histogram negative (-0.9783) \u2014 bearish momentum.",
+      "Price -7.6% below SMA-50 \u2014 bearish trend.",
+      "Global Macro Intelligence (FinSight): Top events: Fears of renewed Gaza war as Hamas disarmament talks stall | Fed Governor Waller says Iran war and labor market risks are keeping central ",
+      "Technical Analysis (FinSight Quant): RSI-14: 35.3 | MACD hist: -0.9783 | SMA signal: flat | 1m momentum: -11.2% | 3m momentum: +9.1% | BB position: 0.22 | OBV trend: falling | 52w high: -"
+    ],
+    "market_snapshot": {
+      "last_price": 88.25,
+      "day_change": -0.0002,
+      "benchmark_change": -0.0012,
+      "relative_strength": 0.001,
+      "volume_vs_average": 0.67,
+      "valuation_note": "P/E 28.5 \u2013 elevated valuation.",
+      "rsi14": 35.3,
+      "macd_histogram": -0.9783,
+      "sma_cross": "flat",
+      "mom_1m": -0.1121,
+      "mom_3m": 0.0913,
+      "bb_position": 0.2249,
+      "hist_vol_20d": 0.4315,
+      "pct_from_52w_high": -0.341
+    },
+    "citations": [
+      {
+        "source": "Global Macro Intelligence (FinSight)",
+        "title": "High-Impact Macro & Geopolitical Events \u2014 2026-05-08",
+        "url": "https://finance.yahoo.com/quote/NFLX",
+        "excerpt": "Top events: Fears of renewed Gaza war as Hamas disarmament talks stall | Fed Governor Waller says Iran war and labor market risks are keeping central bank on hold | New York Fed President Williams worries war will slow growth, aggravate inflation | One year after India-Pakistan conflict, ceasefire holds - but little else does",
+        "credibility_weight": 0.92
+      },
+      {
+        "source": "Technical Analysis (FinSight Quant)",
+        "title": "Quantitative Technical Factors: NFLX",
+        "url": "https://finance.yahoo.com/quote/NFLX",
+        "excerpt": "RSI-14: 35.3 | MACD hist: -0.9783 | SMA signal: flat | 1m momentum: -11.2% | 3m momentum: +9.1% | BB position: 0.22 | OBV trend: falling | 52w high: -34.1%",
+        "credibility_weight": 0.85
+      },
+      {
+        "source": "Google News",
+        "title": "Oppenheimer Bullish on Netflix (NFLX) Amid Higher Revenue Driven By Price Hikes - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/NFLX",
+        "excerpt": "Oppenheimer Bullish on Netflix (NFLX) Amid Higher Revenue Driven By Price Hikes - Yahoo Finance. Oppenheimer Bullish on Netflix (NFLX) Amid Higher Revenue Driven By Price Hikes - Yahoo Finance. Oppenheimer Bullish on Net\u2026",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Microsoft, Netflix, and 10 More Stocks Unfairly Punished On Earnings - Barron's",
+        "url": "https://finance.yahoo.com/quote/NFLX",
+        "excerpt": "Microsoft, Netflix, and 10 More Stocks Unfairly Punished On Earnings - Barron's. Microsoft, Netflix, and 10 More Stocks Unfairly Punished On Earnings - Barron's. Microsoft, Netflix, and 10 More Stocks Unfairly Punished O\u2026",
+        "credibility_weight": 0.738
+      },
+      {
+        "source": "Seeking Alpha",
+        "title": "Natera, Inc. (NTRA) Q1 2026 Earnings Call Transcript",
+        "url": "https://finance.yahoo.com/quote/NFLX",
+        "excerpt": "Natera, Inc. (NTRA) Q1 2026 Earnings Call Transcript. Natera, Inc. (NTRA) Q1 2026 Earnings Call Transcript.\u2026",
+        "credibility_weight": 0.65
+      },
+      {
+        "source": "Seeking Alpha",
+        "title": "Corpay, Inc. (CPAY) Q1 2026 Earnings Call Transcript",
+        "url": "https://finance.yahoo.com/quote/NFLX",
+        "excerpt": "Corpay, Inc. (CPAY) Q1 2026 Earnings Call Transcript. Corpay, Inc. (CPAY) Q1 2026 Earnings Call Transcript.\u2026",
+        "credibility_weight": 0.65
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "Evidence reviewed across 12 sources. Overall sentiment balance: bullish."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "NFLX shows bullish catalysts driven by Revenue Driven By Price Hikes - Yahoo Finance.. Sector (Communication Services) momentum appears constructive."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Bullish. Confidence: 90%. Technical indicators (contradicting news signal): MACD histogram negative (-0.9783) \u2014 bearish momentum.; Price -7.6% below SMA-50 \u2014 bearish trend.; 1-month mome"
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Bearish"
+  },
+  {
+    "id": "sig20-amd-20d",
+    "ticker": "AMD",
+    "company": "Advanced Micro Devices, Inc.",
+    "sector": "Technology",
+    "benchmark": "QQQ",
+    "event_type": "Bullish signals (20d)",
+    "direction": "Bullish",
+    "horizon_days": 20,
+    "confidence": 0.65,
+    "novelty_score": 0.75,
+    "sentiment_score": 0.45,
+    "source_quality": 0.76,
+    "published_at": "2026-05-08T00:12:27.370696+00:00",
+    "reasoning": "[20-day horizon] AMD's 20-day outlook is bullish. Data center AI workload migration and strong earnings guidance create a compelling thesis. Mizuho raised price target. MI300X GPU ramp is accelerating, and AMD is capturing AI infrastructure spend from enterprises seeking Nvidia alternatives at competitive price points.",
+    "catalyst": "MI300X ramp; Mizuho price target raise; data center AI demand.",
+    "thesis_bullets": [
+      "MI300X ramp accelerating \u2014 data center AI deployment widening.",
+      "Mizuho raises PT \u2014 sell-side consensus upgrading.",
+      "AMD capturing Nvidia overflow demand at competitive price points."
+    ],
+    "risk_factors": [
+      "Mixed chip stock market sentiment",
+      "Nvidia dominance in top-tier AI labs",
+      "Execution risk on MI350 timeline"
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "MI300X quarterly shipment data",
+      "Next earnings guidance",
+      "Nvidia supply constraint data"
+    ],
+    "market_snapshot": {
+      "last_price": 408.46,
+      "day_change": -0.0307,
+      "benchmark_change": -0.0012,
+      "relative_strength": -0.0295,
+      "volume_vs_average": 1.03,
+      "valuation_note": "P/E 136.6 \u2014 premium for AI semiconductor growth."
+    },
+    "citations": [
+      {
+        "source": "Google News",
+        "title": "AMD data center growth pushes revenue past estimates - CNBC",
+        "url": "https://finance.yahoo.com/quote/AMD",
+        "excerpt": "AMD data center AI momentum drives strong revenue and guidance beat.",
+        "credibility_weight": 0.702
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "20d horizon: Bullish. MI300X and data center AI demand provide strong 20-day catalyst."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "AMD 20d bullish. AI semiconductor supercycle benefits AMD as enterprises diversify from Nvidia."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Bullish. Confidence: 65%. Data center growth and analyst upgrades support bullish 20d outlook."
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Neutral"
+  },
+  {
+    "id": "sig-apple--3d4324",
+    "ticker": "AAPL",
+    "company": "Apple Inc.",
+    "sector": "Technology",
+    "benchmark": "QQQ",
+    "event_type": "Mixed signals",
+    "direction": "Neutral",
+    "horizon_days": 5,
+    "confidence": 0.55,
+    "novelty_score": 0.8,
+    "sentiment_score": 0.7,
+    "source_quality": 0.67,
+    "published_at": "2026-05-08T01:14:05.329245+00:00",
+    "reasoning": "The strategist thesis acknowledges bullish price momentum and technical indicators, but also highlights significant risks from geopolitical tensions and Federal Reserve uncertainties. The evidence is mixed, with both supporting and contradicting claims present, leading to a neutral outlook.",
+    "catalyst": "News catalyst identified.",
+    "thesis_bullets": [],
+    "risk_factors": [
+      "Geopolitical tensions affecting market stability.",
+      "Uncertainty regarding Federal Reserve interest rate decisions."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "Market tone is mixed with equal positive and negative signals.",
+      "Macro context includes concerns about the economy and inflation."
+    ],
+    "market_snapshot": {
+      "last_price": 287.44,
+      "day_change": -0.0002,
+      "benchmark_change": -0.0012,
+      "relative_strength": 0.0009,
+      "volume_vs_average": 0.89,
+      "valuation_note": "P/E 34.8 \u2013 elevated valuation.",
+      "rsi14": 69.3,
+      "macd_histogram": 1.6914,
+      "sma_cross": "bullish (20 SMA > 50 SMA)",
+      "mom_1m": 0.1102,
+      "mom_3m": 0.0428,
+      "bb_position": 0.9698,
+      "hist_vol_20d": 0.2569,
+      "pct_from_52w_high": -0.0002
+    },
+    "citations": [
+      {
+        "source": "Global Macro Intelligence (FinSight)",
+        "title": "High-Impact Macro & Geopolitical Events \u2014 2026-05-08",
+        "url": "https://finance.yahoo.com/quote/AAPL",
+        "excerpt": "Top events: China calls for Strait to be reopened 'as soon as possible' in Iran talks | Hormuz blockade could deepen world\u2019s worst energy crisis \u2014 and risk a dangerous misstep | Trump sets July 4 deadline for EU tariff hike decision | Fed Governor Waller says Iran war and labor market risks are keeping central bank on hold",
+        "credibility_weight": 0.92
+      },
+      {
+        "source": "Technical Analysis (FinSight Quant)",
+        "title": "Quantitative Technical Factors: AAPL",
+        "url": "https://finance.yahoo.com/quote/AAPL",
+        "excerpt": "RSI-14: 69.3 | MACD hist: +1.6914 | SMA signal: bullish (20 SMA > 50 SMA) | 1m momentum: +11.0% | 3m momentum: +4.3% | BB position: 0.97 | OBV trend: rising | 52w high: -0.0%",
+        "credibility_weight": 0.85
+      },
+      {
+        "source": "Google News",
+        "title": "Apple Stock: Is AAPL Underperforming the Technology Sector? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/AAPL",
+        "excerpt": "Apple Stock: Is AAPL Underperforming the Technology Sector? - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Guidance Capital Inc. Acquires 5,511 Shares of Apple Inc. $AAPL - MarketBeat",
+        "url": "https://finance.yahoo.com/quote/AAPL",
+        "excerpt": "Guidance Capital Inc. Acquires 5,511 Shares of Apple Inc. $AAPL - MarketBeat. $AAPL MarketBeat",
+        "credibility_weight": 0.5
+      },
+      {
+        "source": "Google News",
+        "title": "Is Apple Inc. (AAPL) A Good Stock To Buy Now? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/AAPL",
+        "excerpt": "(AAPL) A Good Stock To Buy Now? - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Apple Stock Hit a Record High. Why June Could Change Everything. - Barron's",
+        "url": "https://finance.yahoo.com/quote/AAPL",
+        "excerpt": "Apple Stock Hit a Record High. Why June Could Change Everything.",
+        "credibility_weight": 0.738
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "The strategist thesis acknowledges bullish price momentum and technical indicators, but also highlights significant risks from geopolitical tensions and Federal Reserve uncertainties. The evidence is mixed, with both supporting and contradicting claims present, leading to a neutral outlook."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "The strategist thesis acknowledges bullish price momentum and technical indicators, but also highlights significant risks from geopolitical tensions and Federal Reserve uncertainties. The evidence is mixed, with both supporting and contradicting claims present, leading to a neutral outlook."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Neutral. Confidence: 55%. The strategist thesis acknowledges bullish price momentum and technical indicators, but also highlights significant risks from geopolitical tensions and Federal"
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Bearish"
+  },
+  {
+    "id": "sig-amazon-bd39cd",
+    "ticker": "AMZN",
+    "company": "Amazon.com, Inc.",
+    "sector": "Consumer Cyclical",
+    "benchmark": "QQQ",
+    "event_type": "Mixed signals",
+    "direction": "Neutral",
+    "horizon_days": 5,
+    "confidence": 0.55,
+    "novelty_score": 0.6,
+    "sentiment_score": 0.4,
+    "source_quality": 0.69,
+    "published_at": "2026-05-08T01:14:35.684073+00:00",
+    "reasoning": "The strategist thesis acknowledges positive technical momentum for AMZN, supported by strong price performance and bullish sentiment from influential investors. However, it also highlights significant macroeconomic concerns regarding inflation and trade policies, which create uncertainty. The evidence is mixed, with both supporting and contradicting claims present.",
+    "catalyst": "News catalyst identified.",
+    "thesis_bullets": [],
+    "risk_factors": [
+      "Core inflation rate at 3.2% may reduce consumer spending.",
+      "Trade deficit with the UK could impact AMZN's international sales."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "Market tone is supportive, but macroeconomic uncertainties persist."
+    ],
+    "market_snapshot": {
+      "last_price": 271.17,
+      "day_change": -0.0139,
+      "benchmark_change": -0.0012,
+      "relative_strength": -0.0127,
+      "volume_vs_average": 0.7,
+      "valuation_note": "P/E 32.4 \u2013 elevated valuation.",
+      "rsi14": 74.2,
+      "macd_histogram": 0.505,
+      "sma_cross": "bullish (20 SMA > 50 SMA)",
+      "mom_1m": 0.2256,
+      "mom_3m": 0.2177,
+      "bb_position": 0.8011,
+      "hist_vol_20d": 0.2156,
+      "pct_from_52w_high": -0.0139
+    },
+    "citations": [
+      {
+        "source": "Global Macro Intelligence (FinSight)",
+        "title": "High-Impact Macro & Geopolitical Events \u2014 2026-05-08",
+        "url": "https://finance.yahoo.com/quote/AMZN",
+        "excerpt": "Top events: Trump gives EU ultimatum deadline to approve trade deal with US | Brazil\u2019s Lula meets Trump amid efforts to avert new US trade tariffs | UK exports to U.S. plunge by 25% after Trump's 'liberation day' tariffs blitz | Tariff refunds begin on Monday. These retailers are due big paydays",
+        "credibility_weight": 0.92
+      },
+      {
+        "source": "Technical Analysis (FinSight Quant)",
+        "title": "Quantitative Technical Factors: AMZN",
+        "url": "https://finance.yahoo.com/quote/AMZN",
+        "excerpt": "RSI-14: 74.2 | MACD hist: +0.5050 | SMA signal: bullish (20 SMA > 50 SMA) | 1m momentum: +22.6% | 3m momentum: +21.8% | BB position: 0.80 | OBV trend: rising | 52w high: -1.4%",
+        "credibility_weight": 0.85
+      },
+      {
+        "source": "Google News",
+        "title": "What Makes Amazon.com (AMZN) a Lucrative Investment Opportunity? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/AMZN",
+        "excerpt": "What Makes Amazon.com (AMZN) a Lucrative Investment Opportunity? - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Is Amazon.com, Inc. (AMZN) A Good Stock To Buy Now? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/AMZN",
+        "excerpt": "Is Amazon.com, Inc. (AMZN) A Good Stock To Buy Now? - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Is Amazon.com, Inc. (AMZN) The Stock with Best Earnings Growth for the Next 5 Years? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/AMZN",
+        "excerpt": "Is Amazon.com, Inc. (AMZN) The Stock with Best Earnings Growth for the Next 5 Years? - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Amazon.com, Inc. (AMZN): Bill Ackman Is Loading Up on This Stock - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/AMZN",
+        "excerpt": "Amazon.com, Inc. (AMZN): Bill Ackman Is Loading Up on This Stock - Yahoo Finance. (AMZN): Bill Ackman Is Loading Up on This Stock Yahoo Finance",
+        "credibility_weight": 0.648
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "The strategist thesis acknowledges positive technical momentum for AMZN, supported by strong price performance and bullish sentiment from influential investors. However, it also highlights significant macroeconomic concerns regarding inflation and trade policies, which create uncertainty. The evidence is mixed, with both supporting and contradicting claims present."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "The strategist thesis acknowledges positive technical momentum for AMZN, supported by strong price performance and bullish sentiment from influential investors. However, it also highlights significant macroeconomic concerns regarding inflation and trade policies, which create uncertainty. The evidence is mixed, with both supporting and contradicting claims present."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Neutral. Confidence: 55%. The strategist thesis acknowledges positive technical momentum for AMZN, supported by strong price performance and bullish sentiment from influential investors."
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Bearish"
+  },
+  {
+    "id": "sig-uber-t-16743e",
+    "ticker": "UBER",
+    "company": "Uber Technologies, Inc.",
+    "sector": "Technology",
+    "benchmark": "QQQ",
+    "event_type": "Mixed signals",
+    "direction": "Neutral",
+    "horizon_days": 5,
+    "confidence": 0.55,
+    "novelty_score": 0.8,
+    "sentiment_score": 0.4,
+    "source_quality": 0.69,
+    "published_at": "2026-05-08T01:15:09.222278+00:00",
+    "reasoning": "The strategist thesis acknowledges the stock's surge due to strong earnings and bookings guidance, but also highlights ongoing macroeconomic uncertainties and geopolitical tensions, leading to a mixed outlook. The evidence is mixed, with both supporting and contradicting claims present.",
+    "catalyst": "News catalyst identified.",
+    "thesis_bullets": [],
+    "risk_factors": [
+      "Ongoing geopolitical tensions may impact market conditions and consumer behavior.",
+      "Federal Reserve's cautious stance on interest rates could lead to market volatility."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "Market tone is supportive, but mixed evidence suggests caution.",
+      "Positive signals outweigh negative ones, but macroeconomic uncertainties remain."
+    ],
+    "market_snapshot": {
+      "last_price": 76.73,
+      "day_change": -0.0308,
+      "benchmark_change": -0.0012,
+      "relative_strength": -0.0296,
+      "volume_vs_average": 1.54,
+      "valuation_note": "P/E 19.0 \u2013 reasonable valuation.",
+      "rsi14": 54.9,
+      "macd_histogram": 0.1642,
+      "sma_cross": "bullish (20 SMA > 50 SMA)",
+      "mom_1m": 0.0601,
+      "mom_3m": 0.0202,
+      "bb_position": 0.6846,
+      "hist_vol_20d": 0.4395,
+      "pct_from_52w_high": -0.2335
+    },
+    "citations": [
+      {
+        "source": "Global Macro Intelligence (FinSight)",
+        "title": "High-Impact Macro & Geopolitical Events \u2014 2026-05-08",
+        "url": "https://finance.yahoo.com/quote/UBER",
+        "excerpt": "Top events: Fed Governor Waller says Iran war and labor market risks are keeping central bank on hold | New York Fed President Williams worries war will slow growth, aggravate inflation | One year after India-Pakistan conflict, ceasefire holds - but little else does | Fed dissenters explain 'no' votes, saying they disagreed with hinting next move would be a",
+        "credibility_weight": 0.92
+      },
+      {
+        "source": "Technical Analysis (FinSight Quant)",
+        "title": "Quantitative Technical Factors: UBER",
+        "url": "https://finance.yahoo.com/quote/UBER",
+        "excerpt": "RSI-14: 54.9 | MACD hist: +0.1642 | SMA signal: bullish (20 SMA > 50 SMA) | 1m momentum: +6.0% | 3m momentum: +2.0% | BB position: 0.68 | OBV trend: rising | 52w high: -23.4%",
+        "credibility_weight": 0.85
+      },
+      {
+        "source": "Google News",
+        "title": "Is Uber Technologies, Inc. (UBER) A Good Stock To Buy Now? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/UBER",
+        "excerpt": "Is Uber Technologies, Inc. (UBER) A Good Stock To Buy Now? - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Uber Technologies, Inc. $UBER Shares Sold by Highland Capital Management LLC - MarketBeat",
+        "url": "https://finance.yahoo.com/quote/UBER",
+        "excerpt": "Uber Technologies, Inc. $UBER Shares Sold by Highland Capital Management LLC - MarketBeat. $UBER Shares Sold by Highland Capital Management LLC MarketBeat",
+        "credibility_weight": 0.5
+      },
+      {
+        "source": "Google News",
+        "title": "Uber Technologies, Inc. $UBER Shares Bought by Robertson Stephens Wealth Management LLC - MarketBeat",
+        "url": "https://finance.yahoo.com/quote/UBER",
+        "excerpt": "Uber Technologies, Inc. $UBER Shares Bought by Robertson Stephens Wealth Management LLC - MarketBeat. $UBER Shares Bought by Robertson Stephens Wealth Management LLC MarketBeat",
+        "credibility_weight": 0.5
+      },
+      {
+        "source": "Google News",
+        "title": "Why Is Uber (UBER) Stock Soaring Today - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/UBER",
+        "excerpt": "Why Is Uber (UBER) Stock Soaring Today - Yahoo Finance. Why Is Uber (UBER) Stock Soaring Today Yahoo Finance",
+        "credibility_weight": 0.648
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "The strategist thesis acknowledges the stock's surge due to strong earnings and bookings guidance, but also highlights ongoing macroeconomic uncertainties and geopolitical tensions, leading to a mixed outlook. The evidence is mixed, with both supporting and contradicting claims present."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "The strategist thesis acknowledges the stock's surge due to strong earnings and bookings guidance, but also highlights ongoing macroeconomic uncertainties and geopolitical tensions, leading to a mixed outlook. The evidence is mixed, with both supporting and contradicting claims present."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Neutral. Confidence: 55%. The strategist thesis acknowledges the stock's surge due to strong earnings and bookings guidance, but also highlights ongoing macroeconomic uncertainties and g"
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Bearish"
+  },
+  {
+    "id": "sig-alphab-867ddd",
+    "ticker": "GOOGL",
+    "company": "Alphabet Inc.",
+    "sector": "Communication Services",
+    "benchmark": "QQQ",
+    "event_type": "Mixed signals",
+    "direction": "Neutral",
+    "horizon_days": 5,
+    "confidence": 0.55,
+    "novelty_score": 0.8,
+    "sentiment_score": 0.8,
+    "source_quality": 0.71,
+    "published_at": "2026-05-08T01:15:51.278774+00:00",
+    "reasoning": "The strategist thesis acknowledges strong performance driven by Google Cloud, supported by multiple high-credibility sources. However, mixed macroeconomic signals and geopolitical tensions introduce significant uncertainty, justifying a neutral stance. The evidence balance is mixed, with both supporting and contradicting evidence present.",
+    "catalyst": "News catalyst identified.",
+    "thesis_bullets": [],
+    "risk_factors": [
+      "Geopolitical tensions affecting market conditions.",
+      "Changes in Federal Reserve policy impacting investor sentiment."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "Market tone is supportive, but mixed evidence suggests caution."
+    ],
+    "market_snapshot": {
+      "last_price": 397.99,
+      "day_change": -0.0001,
+      "benchmark_change": -0.0012,
+      "relative_strength": 0.0011,
+      "volume_vs_average": 0.79,
+      "valuation_note": "P/E 30.4 \u2013 elevated valuation.",
+      "rsi14": 83.4,
+      "macd_histogram": 4.7921,
+      "sma_cross": "bullish (20 SMA > 50 SMA)",
+      "mom_1m": 0.2542,
+      "mom_3m": 0.2023,
+      "bb_position": 0.9298,
+      "hist_vol_20d": 0.3755,
+      "pct_from_52w_high": -0.0001
+    },
+    "citations": [
+      {
+        "source": "Global Macro Intelligence (FinSight)",
+        "title": "High-Impact Macro & Geopolitical Events \u2014 2026-05-08",
+        "url": "https://finance.yahoo.com/quote/GOOGL",
+        "excerpt": "Top events: Fed Governor Waller says Iran war and labor market risks are keeping central bank on hold | New York Fed President Williams worries war will slow growth, aggravate inflation | One year after India-Pakistan conflict, ceasefire holds - but little else does | Fed dissenters explain 'no' votes, saying they disagreed with hinting next move would be a",
+        "credibility_weight": 0.92
+      },
+      {
+        "source": "Technical Analysis (FinSight Quant)",
+        "title": "Quantitative Technical Factors: GOOGL",
+        "url": "https://finance.yahoo.com/quote/GOOGL",
+        "excerpt": "RSI-14: 83.4 | MACD hist: +4.7921 | SMA signal: bullish (20 SMA > 50 SMA) | 1m momentum: +25.4% | 3m momentum: +20.2% | BB position: 0.93 | OBV trend: rising | 52w high: -0.0%",
+        "credibility_weight": 0.85
+      },
+      {
+        "source": "Google News",
+        "title": "Alphabet Stock Jumps on Strong Earnings Report. It\u2019s All About the Google Cloud. - Barron's",
+        "url": "https://finance.yahoo.com/quote/GOOGL",
+        "excerpt": "Alphabet Stock Jumps on Strong Earnings Report. It\u2019s All About the Google Cloud.",
+        "credibility_weight": 0.738
+      },
+      {
+        "source": "Google News",
+        "title": "Alphabet closes in on Nvidia's spot as world's biggest company - Reuters",
+        "url": "https://finance.yahoo.com/quote/GOOGL",
+        "excerpt": "Alphabet closes in on Nvidia's spot as world's biggest company - Reuters. Alphabet closes in on Nvidia's spot as world's biggest company Reuters",
+        "credibility_weight": 0.765
+      },
+      {
+        "source": "Google News",
+        "title": "Is Alphabet Inc. (GOOGL) A Good Stock To Buy Now? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/GOOGL",
+        "excerpt": "Is Alphabet Inc. (GOOGL) A Good Stock To Buy Now? - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Is Trending Stock Alphabet Inc. (GOOGL) a Buy Now? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/GOOGL",
+        "excerpt": "Is Trending Stock Alphabet Inc. (GOOGL) a Buy Now? - Yahoo Finance.",
+        "credibility_weight": 0.648
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "The strategist thesis acknowledges strong performance driven by Google Cloud, supported by multiple high-credibility sources. However, mixed macroeconomic signals and geopolitical tensions introduce significant uncertainty, justifying a neutral stance. The evidence balance is mixed, with both supporting and contradicting evidence present."
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "The strategist thesis acknowledges strong performance driven by Google Cloud, supported by multiple high-credibility sources. However, mixed macroeconomic signals and geopolitical tensions introduce significant uncertainty, justifying a neutral stance. The evidence balance is mixed, with both supporting and contradicting evidence present."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Neutral. Confidence: 55%. The strategist thesis acknowledges strong performance driven by Google Cloud, supported by multiple high-credibility sources. However, mixed macroeconomic signa"
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Bearish"
+  },
+  {
+    "id": "sig-nvidia-963e94",
+    "ticker": "NVDA",
+    "company": "NVIDIA Corporation",
+    "sector": "Technology",
+    "benchmark": "QQQ",
+    "event_type": "Bullish signals",
+    "direction": "Bullish",
+    "horizon_days": 5,
+    "confidence": 0.65,
+    "novelty_score": 1.0,
+    "sentiment_score": 0.5,
+    "source_quality": 0.7,
+    "published_at": "2026-05-09T18:09:51.167397+00:00",
+    "reasoning": "NVIDIA's significant investments in AI infrastructure and strategic partnerships are expected to drive positive momentum in the stock. The technical analysis shows positive price momentum with a bullish crossover signal, which supports the bullish thesis despite mixed market reactions.",
+    "catalyst": "aises PT on NVIDIA Corporation (NVDA) Stock - Yahoo Finance.",
+    "thesis_bullets": [
+      "aises PT on NVIDIA Corporation (NVDA) Stock - Yahoo Finance.",
+      "aises Stock Position in NVIDIA Corporation $NVDA - MarketBeat.",
+      "Earnings Call Transcript.",
+      "earnings report disappoints Wall Street as stock sinks 5% - CNBC."
+    ],
+    "risk_factors": [
+      "Macroeconomic uncertainties could dampen investor sentiment.",
+      "Recent stock price decline despite strong earnings may indicate underlying market skepticism."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "Memory contains 10 prior signals for NVDA.",
+      "Most common prior direction was bullish (7 instances).",
+      "The market tone is cautious, influenced by macroeconomic factors and Federal Reserve policies."
+    ],
+    "market_snapshot": {
+      "last_price": 215.2,
+      "day_change": 0.0175,
+      "benchmark_change": 0.0234,
+      "relative_strength": -0.0059,
+      "volume_vs_average": 0.89,
+      "valuation_note": "P/E 43.8 \u2013 elevated valuation.",
+      "rsi14": 65.9,
+      "macd_histogram": 0.2022,
+      "sma_cross": "bullish (20 SMA > 50 SMA)",
+      "mom_1m": 0.1701,
+      "mom_3m": 0.1607,
+      "bb_position": 0.917,
+      "hist_vol_20d": 0.3908,
+      "pct_from_52w_high": -0.0065
+    },
+    "citations": [
+      {
+        "source": "Global Macro Intelligence (FinSight)",
+        "title": "High-Impact Macro & Geopolitical Events \u2014 2026-05-09",
+        "url": "https://finance.yahoo.com/quote/NVDA",
+        "excerpt": "Top events: Fed Governor Waller says Iran war and labor market risks are keeping central bank on hold | New York Fed President Williams worries war will slow growth, aggravate inflation | Fed dissenters explain 'no' votes, saying they disagreed with hinting next move would be a | U.S. says it struck two Iran-flagged oil tankers trying to skirt blockade",
+        "credibility_weight": 0.92
+      },
+      {
+        "source": "Technical Analysis (FinSight Quant)",
+        "title": "Quantitative Technical Factors: NVDA",
+        "url": "https://finance.yahoo.com/quote/NVDA",
+        "excerpt": "RSI-14: 65.9 | MACD hist: +0.2022 | SMA signal: bullish (20 SMA > 50 SMA) | 1m momentum: +17.0% | 3m momentum: +16.1% | BB position: 0.92 | OBV trend: flat | 52w high: -0.7%",
+        "credibility_weight": 0.85
+      },
+      {
+        "source": "Google News",
+        "title": "NVIDIA Corporation (NVDA): Should Not Be Touched? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/NVDA",
+        "excerpt": "NVIDIA Corporation (NVDA): Should Not Be Touched?",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Wedbush Raises PT on NVIDIA Corporation (NVDA) Stock - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/NVDA",
+        "excerpt": "Wedbush Raises PT on NVIDIA Corporation (NVDA) Stock - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Is NVIDIA Corporation (NVDA) A Good Stock To Buy Now? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/NVDA",
+        "excerpt": "Is NVIDIA Corporation (NVDA) A Good Stock To Buy Now?",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Traphagen Investment Advisors LLC Raises Stock Position in NVIDIA Corporation $NVDA - MarketBeat",
+        "url": "https://finance.yahoo.com/quote/NVDA",
+        "excerpt": "Traphagen Investment Advisors LLC Raises Stock Position in NVIDIA Corporation $NVDA - MarketBeat.",
+        "credibility_weight": 0.5
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "NVIDIA's significant investments in AI infrastructure and strategic partnerships are expected to drive positive momentum in the stock. The technical analysis shows positive price momentum with a bulli"
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "NVIDIA's significant investments in AI infrastructure and strategic partnerships are expected to drive positive momentum in the stock. The technical analysis shows positive price momentum with a bullish crossover signal, which supports the bullish thesis despite mixed market reactions."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Bullish. Confidence: 65%. NVIDIA's significant investments in AI infrastructure and strategic partnerships are expected to drive positive momentum in the stock. The technical analysis sh"
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Bullish"
+  },
+  {
+    "id": "sig-tesla,-8daba6",
+    "ticker": "TSLA",
+    "company": "Tesla, Inc.",
+    "sector": "Consumer Cyclical",
+    "benchmark": "QQQ",
+    "event_type": "Mixed signals",
+    "direction": "Neutral",
+    "horizon_days": 5,
+    "confidence": 0.46,
+    "novelty_score": 1.0,
+    "sentiment_score": 0.5,
+    "source_quality": 0.69,
+    "published_at": "2026-05-09T18:10:18.781102+00:00",
+    "reasoning": "Despite the strategist's neutral outlook, the positive price momentum of 9.60% over the past week and 23.94% over the past month, combined with the Federal Reserve's supportive interest rate policy, suggests a bullish sentiment. The technical indicators align with this thesis, indicating potential for further gains. The scrutiny over the Robotaxi project and missed delivery estimates are risks but do not outweigh the positive momentum.",
+    "catalyst": "Earnings and AI Momentum - Yahoo Finance.",
+    "thesis_bullets": [
+      "Earnings and AI Momentum - Yahoo Finance.",
+      "AI Momentum - Yahoo Finance.",
+      "Outlook Reflects Changing Investor Appetite - Yahoo Finance.",
+      "Earnings Call Transcript."
+    ],
+    "risk_factors": [
+      "Ongoing geopolitical tensions could negatively impact consumer sentiment and spending.",
+      "Scrutiny over the Robotaxi project may limit investor confidence.",
+      "Missed delivery estimates could continue to weigh on stock performance."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "Memory contains 3 prior signals for TSLA.",
+      "Most common prior direction was neutral (2 instances).",
+      "Market tone is cautious with mixed signals from recent evidence.",
+      "Core inflation at 3.2% indicates rising consumer prices, which could affect spending."
+    ],
+    "market_snapshot": {
+      "last_price": 428.35,
+      "day_change": 0.0402,
+      "benchmark_change": 0.0234,
+      "relative_strength": 0.0168,
+      "volume_vs_average": 0.99,
+      "valuation_note": "P/E 400.3 \u2013 premium multiple; growth must sustain.",
+      "rsi14": 69.9,
+      "macd_histogram": 5.0657,
+      "sma_cross": "bullish (20 SMA > 50 SMA)",
+      "mom_1m": 0.2394,
+      "mom_3m": 0.0419,
+      "bb_position": 1.1295,
+      "hist_vol_20d": 0.3983,
+      "pct_from_52w_high": -0.1256
+    },
+    "citations": [
+      {
+        "source": "Global Macro Intelligence (FinSight)",
+        "title": "High-Impact Macro & Geopolitical Events \u2014 2026-05-09",
+        "url": "https://finance.yahoo.com/quote/TSLA",
+        "excerpt": "Top events: Core inflation rate hit 3.2% in March as first-quarter growth disappointed at 2% | Trump gives EU ultimatum deadline to approve trade deal with US | UK exports to U.S. plunge by 25% after Trump's 'liberation day' tariffs blitz | The Federal Reserve is quickly running out of reasons to cut interest rates",
+        "credibility_weight": 0.92
+      },
+      {
+        "source": "Technical Analysis (FinSight Quant)",
+        "title": "Quantitative Technical Factors: TSLA",
+        "url": "https://finance.yahoo.com/quote/TSLA",
+        "excerpt": "RSI-14: 69.9 | MACD hist: +5.0657 | SMA signal: bullish (20 SMA > 50 SMA) | 1m momentum: +23.9% | 3m momentum: +4.2% | BB position: 1.13 | OBV trend: rising | 52w high: -12.6%",
+        "credibility_weight": 0.85
+      },
+      {
+        "source": "Google News",
+        "title": "TSLA: Tesla Stock Jumps on Nvidia Earnings and AI Momentum - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/TSLA",
+        "excerpt": "TSLA: Tesla Stock Jumps on Nvidia Earnings and AI Momentum - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Tesla Inc. (TSLA) Stock Outlook Reflects Changing Investor Appetite - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/TSLA",
+        "excerpt": "(TSLA) Stock Outlook Reflects Changing Investor Appetite - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "TSLA: Tesla Stock Slides as Robotaxi Autonomy Faces Scrutiny - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/TSLA",
+        "excerpt": "TSLA: Tesla Stock Slides as Robotaxi Autonomy Faces Scrutiny - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "TSLA: Tesla Stock Falls After Missing Q4 Delivery Estimates - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/TSLA",
+        "excerpt": "TSLA: Tesla Stock Falls After Missing Q4 Delivery Estimates - Yahoo Finance.",
+        "credibility_weight": 0.648
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "Despite the strategist's neutral outlook, the positive price momentum of 9.60% over the past week and 23.94% over the past month, combined with the Federal Reserve's supportive interest rate policy, s"
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "Despite the strategist's neutral outlook, the positive price momentum of 9.60% over the past week and 23.94% over the past month, combined with the Federal Reserve's supportive interest rate policy, suggests a bullish sentiment. The technical indicators align with this thesis, indicating potential for further gains. The scrutiny over the Robotaxi project and missed delivery estimates are risks but do not outweigh the positive momentum."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Bullish. Confidence: 65%. Despite the strategist's neutral outlook, the positive price momentum of 9.60% over the past week and 23.94% over the past month, combined with the Federal Rese"
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Neutral"
+  },
+  {
+    "id": "sig-micros-e628f8",
+    "ticker": "MSFT",
+    "company": "Microsoft Corporation",
+    "sector": "Technology",
+    "benchmark": "QQQ",
+    "event_type": "Mixed signals",
+    "direction": "Neutral",
+    "horizon_days": 5,
+    "confidence": 0.43,
+    "novelty_score": 1.0,
+    "sentiment_score": 0.096,
+    "source_quality": 0.69,
+    "published_at": "2026-05-09T18:10:40.477196+00:00",
+    "reasoning": "Technical indicators (4% confidence): RSI-14 neutral (54).; MACD histogram negative (-1.0860) \u2014 bearish momentum.; SMA crossover: bullish (20 SMA > 50 SMA) \u2014 trend confirmation.. News sentiment is mixed, but quantitative price/volume signals indicate bullish price action. The evidence is mixed, with some positive indicators such as planned investments in European data centers and recent price momentum, but also significant challenges including stock price declines and investor shifts towards AI stocks. The technical signals are not provided, leading to a lower confidence score.",
+    "catalyst": "aises Stock Position in Microsoft Corporation $MSFT - MarketBeat.",
+    "thesis_bullets": [
+      "aises Stock Position in Microsoft Corporation $MSFT - MarketBeat.",
+      "Earnings Call Transcript.",
+      "AI picks won't last forever - CNBC."
+    ],
+    "risk_factors": [
+      "Geopolitical tensions affecting market conditions.",
+      "Investor preference shifting away from Microsoft towards AI stocks.",
+      "Challenges from rising memory prices impacting profitability."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "Memory contains 3 prior signals for MSFT.",
+      "Most common prior direction was bullish (3 instances).",
+      "The market tone is mixed, reflecting both positive and negative signals.",
+      "Macro context indicates concerns about inflation and economic growth."
+    ],
+    "market_snapshot": {
+      "last_price": 415.12,
+      "day_change": -0.0134,
+      "benchmark_change": 0.0234,
+      "relative_strength": -0.0369,
+      "volume_vs_average": 0.97,
+      "valuation_note": "P/E 24.8 \u2013 reasonable valuation.",
+      "rsi14": 53.9,
+      "macd_histogram": -1.086,
+      "sma_cross": "bullish (20 SMA > 50 SMA)",
+      "mom_1m": 0.1127,
+      "mom_3m": 0.0372,
+      "bb_position": 0.4777,
+      "hist_vol_20d": 0.3483,
+      "pct_from_52w_high": -0.231
+    },
+    "citations": [
+      {
+        "source": "Global Macro Intelligence (FinSight)",
+        "title": "High-Impact Macro & Geopolitical Events \u2014 2026-05-09",
+        "url": "https://finance.yahoo.com/quote/MSFT",
+        "excerpt": "Top events: Fed Governor Waller says Iran war and labor market risks are keeping central bank on hold | New York Fed President Williams worries war will slow growth, aggravate inflation | Fed dissenters explain 'no' votes, saying they disagreed with hinting next move would be a | U.S. says it struck two Iran-flagged oil tankers trying to skirt blockade",
+        "credibility_weight": 0.92
+      },
+      {
+        "source": "Technical Analysis (FinSight Quant)",
+        "title": "Quantitative Technical Factors: MSFT",
+        "url": "https://finance.yahoo.com/quote/MSFT",
+        "excerpt": "RSI-14: 53.9 | MACD hist: -1.0860 | SMA signal: bullish (20 SMA > 50 SMA) | 1m momentum: +11.3% | 3m momentum: +3.7% | BB position: 0.48 | OBV trend: rising | 52w high: -23.1%",
+        "credibility_weight": 0.85
+      },
+      {
+        "source": "Google News",
+        "title": "Microsoft Corporation (MSFT) Slid Despite Delivering Robust Results - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/MSFT",
+        "excerpt": "Microsoft Corporation (MSFT) Slid Despite Delivering Robust Results - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Means Investment CO. Inc. Raises Stock Position in Microsoft Corporation $MSFT - MarketBeat",
+        "url": "https://finance.yahoo.com/quote/MSFT",
+        "excerpt": "Means Investment CO. Raises Stock Position in Microsoft Corporation $MSFT - MarketBeat.",
+        "credibility_weight": 0.5
+      },
+      {
+        "source": "Seeking Alpha",
+        "title": "Rocket Lab Corporation (RKLB) Q1 2026 Earnings Call Transcript",
+        "url": "https://finance.yahoo.com/quote/MSFT",
+        "excerpt": "Rocket Lab Corporation (RKLB) Q1 2026 Earnings Call Transcript.",
+        "credibility_weight": 0.65
+      },
+      {
+        "source": "Yahoo Finance",
+        "title": "Microsoft Corp. (MSFT) to Invest in European Data Center Regions",
+        "url": "https://finance.yahoo.com/quote/MSFT",
+        "excerpt": "(MSFT) to Invest in European Data Center Regions.",
+        "credibility_weight": 0.72
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "The evidence is mixed, with some positive indicators such as planned investments in European data centers and recent price momentum, but also significant challenges including stock price declines and "
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "The evidence is mixed, with some positive indicators such as planned investments in European data centers and recent price momentum, but also significant challenges including stock price declines and investor shifts towards AI stocks. The technical signals are not provided, leading to a lower confidence score."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Neutral. Confidence: 45%. The evidence is mixed, with some positive indicators such as planned investments in European data centers and recent price momentum, but also significant challe"
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Bearish"
+  },
+  {
+    "id": "sig-nvidia-1fdb09",
+    "ticker": "NVDA",
+    "company": "NVIDIA Corporation",
+    "sector": "Technology",
+    "benchmark": "QQQ",
+    "event_type": "Bullish signals",
+    "direction": "Neutral",
+    "horizon_days": 20,
+    "confidence": 0.55,
+    "novelty_score": 1.0,
+    "sentiment_score": 0.4,
+    "source_quality": 0.7,
+    "published_at": "2026-05-09T18:40:22.836883+00:00",
+    "reasoning": "NVIDIA is making significant investments in AI infrastructure and has formed a strategic partnership with Corning, which are strong positive signals. However, the recent earnings disappointment and ongoing geopolitical tensions create a cautious outlook, leading to mixed market reactions.",
+    "catalyst": "Wedbush Raises PT on NVIDIA Corporation (NVDA) Stock",
+    "thesis_bullets": [
+      "Wedbush Raises PT on NVIDIA Corporation (NVDA) Stock",
+      "Rocket Lab Corporation (RKLB) Q1 2026 Earnings Call Transcript",
+      "Nvidia's blowout earnings report disappoints Wall Street as stock sinks 5%",
+      "Nvidia embraces role of AI investor, pushing past $40 billion in equity bets this year"
+    ],
+    "risk_factors": [
+      "Recent earnings report disappointed Wall Street, causing a 5% drop in stock price.",
+      "Macroeconomic factors, including geopolitical tensions, may negatively impact growth and inflation.",
+      "Analysts suggest avoiding NVIDIA stock due to current market conditions."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "Memory contains 10 prior signals for NVDA.",
+      "Most common prior direction was bullish (7 instances).",
+      "The market tone is cautious, reflecting mixed reactions to NVIDIA's recent performance.",
+      "Macro context indicates concerns from the Federal Reserve about growth and inflation due to geopolitical tensions."
+    ],
+    "market_snapshot": {
+      "last_price": 215.2,
+      "day_change": 0.0175,
+      "benchmark_change": 0.0234,
+      "relative_strength": -0.0059,
+      "volume_vs_average": 0.89,
+      "valuation_note": "P/E 43.8 \u2013 elevated valuation.",
+      "rsi14": 65.9,
+      "macd_histogram": 0.2022,
+      "sma_cross": "bullish (20 SMA > 50 SMA)",
+      "mom_1m": 0.1701,
+      "mom_3m": 0.1607,
+      "bb_position": 0.917,
+      "hist_vol_20d": 0.3908,
+      "pct_from_52w_high": -0.0065
+    },
+    "citations": [
+      {
+        "source": "Global Macro Intelligence (FinSight)",
+        "title": "High-Impact Macro & Geopolitical Events \u2014 2026-05-09",
+        "url": "https://finance.yahoo.com/quote/NVDA",
+        "excerpt": "Top events: Fed Governor Waller says Iran war and labor market risks are keeping central bank on hold | New York Fed President Williams worries war will slow growth, aggravate inflation | Fed dissenters explain 'no' votes, saying they disagreed with hinting next move would be a | U.S. says it struck two Iran-flagged oil tankers trying to skirt blockade",
+        "credibility_weight": 0.92
+      },
+      {
+        "source": "Technical Analysis (FinSight Quant)",
+        "title": "Quantitative Technical Factors: NVDA",
+        "url": "https://finance.yahoo.com/quote/NVDA",
+        "excerpt": "RSI-14: 65.9 | MACD hist: +0.2022 | SMA signal: bullish (20 SMA > 50 SMA) | 1m momentum: +17.0% | 3m momentum: +16.1% | BB position: 0.92 | OBV trend: flat | 52w high: -0.7%",
+        "credibility_weight": 0.85
+      },
+      {
+        "source": "Google News",
+        "title": "Wedbush Raises PT on NVIDIA Corporation (NVDA) Stock - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/NVDA",
+        "excerpt": "Wedbush Raises PT on NVIDIA Corporation (NVDA) Stock - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "NVIDIA Corporation (NVDA): Should Not Be Touched? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/NVDA",
+        "excerpt": "NVIDIA Corporation (NVDA): Should Not Be Touched?",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Is NVIDIA Corporation (NVDA) A Good Stock To Buy Now? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/NVDA",
+        "excerpt": "Is NVIDIA Corporation (NVDA) A Good Stock To Buy Now?",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Seeking Alpha",
+        "title": "Rocket Lab Corporation (RKLB) Q1 2026 Earnings Call Transcript",
+        "url": "https://finance.yahoo.com/quote/NVDA",
+        "excerpt": "Rocket Lab Corporation (RKLB) Q1 2026 Earnings Call Transcript.",
+        "credibility_weight": 0.65
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "NVIDIA is making significant investments in AI infrastructure and has formed a strategic partnership with Corning, which are strong positive signals. However, the recent earnings disappointment and on"
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "NVIDIA is making significant investments in AI infrastructure and has formed a strategic partnership with Corning, which are strong positive signals. However, the recent earnings disappointment and ongoing geopolitical tensions create a cautious outlook, leading to mixed market reactions."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Neutral. Confidence: 55%. NVIDIA is making significant investments in AI infrastructure and has formed a strategic partnership with Corning, which are strong positive signals. However, t"
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Bearish"
+  },
+  {
+    "id": "sig-tesla,-9b2232",
+    "ticker": "TSLA",
+    "company": "Tesla, Inc.",
+    "sector": "Consumer Cyclical",
+    "benchmark": "QQQ",
+    "event_type": "Bullish signals",
+    "direction": "Neutral",
+    "horizon_days": 20,
+    "confidence": 0.55,
+    "novelty_score": 0.8,
+    "sentiment_score": 0.4,
+    "source_quality": 0.69,
+    "published_at": "2026-05-09T18:40:43.556114+00:00",
+    "reasoning": "The evidence presents mixed signals with positive short-term momentum indicated by a 9.60% increase over the past week and a bullish position above the 50-day moving average. However, there are significant macroeconomic concerns, including inflation pressures and geopolitical tensions that could impact consumer spending. This balance leads to a moderate confidence level.",
+    "catalyst": "TSLA: Tesla Stock Jumps on Nvidia Earnings and AI Momentum",
+    "thesis_bullets": [
+      "TSLA: Tesla Stock Jumps on Nvidia Earnings and AI Momentum",
+      "(TSLA) Stock Outlook Reflects Changing Investor Appetite",
+      "(BILL) Q3 2026 Earnings Call Transcript",
+      "(RICK) Q1 2026 Earnings Call Transcript",
+      "Macro: Google News: Tesla Stock: Is TSLA Outperforming the Consumer Discretionary Sector? - Yahoo Finance. Tesla Stock: "
+    ],
+    "risk_factors": [
+      "Ongoing geopolitical tensions affecting oil prices and consumer sentiment.",
+      "Potential changes in trade policies impacting Tesla's supply chain and costs.",
+      "Core inflation pressures that may reduce consumer spending."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "Memory contains 3 prior signals for TSLA.",
+      "Most common prior direction was neutral (2 instances).",
+      "The market tone is cautious, reflecting concerns over inflation and geopolitical risks.",
+      "Mixed evidence suggests a careful approach to investment in TSLA."
+    ],
+    "market_snapshot": {
+      "last_price": 428.35,
+      "day_change": 0.0402,
+      "benchmark_change": 0.0234,
+      "relative_strength": 0.0168,
+      "volume_vs_average": 0.99,
+      "valuation_note": "P/E 400.3 \u2013 premium multiple; growth must sustain.",
+      "rsi14": 69.9,
+      "macd_histogram": 5.0657,
+      "sma_cross": "bullish (20 SMA > 50 SMA)",
+      "mom_1m": 0.2394,
+      "mom_3m": 0.0419,
+      "bb_position": 1.1295,
+      "hist_vol_20d": 0.3983,
+      "pct_from_52w_high": -0.1256
+    },
+    "citations": [
+      {
+        "source": "Global Macro Intelligence (FinSight)",
+        "title": "High-Impact Macro & Geopolitical Events \u2014 2026-05-09",
+        "url": "https://finance.yahoo.com/quote/TSLA",
+        "excerpt": "Top events: Core inflation rate hit 3.2% in March as first-quarter growth disappointed at 2% | Trump gives EU ultimatum deadline to approve trade deal with US | UK exports to U.S. plunge by 25% after Trump's 'liberation day' tariffs blitz | The Federal Reserve is quickly running out of reasons to cut interest rates",
+        "credibility_weight": 0.92
+      },
+      {
+        "source": "Technical Analysis (FinSight Quant)",
+        "title": "Quantitative Technical Factors: TSLA",
+        "url": "https://finance.yahoo.com/quote/TSLA",
+        "excerpt": "RSI-14: 69.9 | MACD hist: +5.0657 | SMA signal: bullish (20 SMA > 50 SMA) | 1m momentum: +23.9% | 3m momentum: +4.2% | BB position: 1.13 | OBV trend: rising | 52w high: -12.6%",
+        "credibility_weight": 0.85
+      },
+      {
+        "source": "Google News",
+        "title": "Tesla Stock: Is TSLA Outperforming the Consumer Discretionary Sector? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/TSLA",
+        "excerpt": "Tesla Stock: Is TSLA Outperforming the Consumer Discretionary Sector?",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "TSLA: Tesla Stock Jumps on Nvidia Earnings and AI Momentum - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/TSLA",
+        "excerpt": "TSLA: Tesla Stock Jumps on Nvidia Earnings and AI Momentum - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Tesla Inc. (TSLA) Stock Outlook Reflects Changing Investor Appetite - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/TSLA",
+        "excerpt": "(TSLA) Stock Outlook Reflects Changing Investor Appetite - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "TSLA: Tesla Stock Rises as Musk Flags Cybercab Progress - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/TSLA",
+        "excerpt": "TSLA: Tesla Stock Rises as Musk Flags Cybercab Progress - Yahoo Finance.",
+        "credibility_weight": 0.648
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "The evidence presents mixed signals with positive short-term momentum indicated by a 9.60% increase over the past week and a bullish position above the 50-day moving average. However, there are signif"
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "The evidence presents mixed signals with positive short-term momentum indicated by a 9.60% increase over the past week and a bullish position above the 50-day moving average. However, there are significant macroeconomic concerns, including inflation pressures and geopolitical tensions that could impact consumer spending. This balance leads to a moderate confidence level."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Neutral. Confidence: 55%. The evidence presents mixed signals with positive short-term momentum indicated by a 9.60% increase over the past week and a bullish position above the 50-day m"
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Neutral"
+  },
+  {
+    "id": "sig-micros-1c5fcd",
+    "ticker": "MSFT",
+    "company": "Microsoft Corporation",
+    "sector": "Technology",
+    "benchmark": "QQQ",
+    "event_type": "Bullish signals",
+    "direction": "Neutral",
+    "horizon_days": 20,
+    "confidence": 0.55,
+    "novelty_score": 1.0,
+    "sentiment_score": 0.2,
+    "source_quality": 0.69,
+    "published_at": "2026-05-09T18:41:07.203911+00:00",
+    "reasoning": "The evidence presents a mixed outlook for Microsoft, with planned investments in European data centers providing potential growth, but significant headwinds from rising costs and shifting investor sentiment. The macroeconomic context adds uncertainty, aligning with the neutral direction.",
+    "catalyst": "Raises Stock Position in Microsoft Corporation $MSFT",
+    "thesis_bullets": [
+      "Raises Stock Position in Microsoft Corporation $MSFT",
+      "Microsoft (MSFT) Earnings Expected to Grow: Should You Buy?",
+      "Rocket Lab Corporation (RKLB) Q1 2026 Earnings Call Transcript",
+      "Cramer: Investors' selling Microsoft stock to fund flashier AI picks won't last forever"
+    ],
+    "risk_factors": [
+      "Ongoing geopolitical tensions impacting economic conditions.",
+      "Rising costs due to increased capital spending and memory prices.",
+      "Shifts in investor sentiment towards more attractive AI investments."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "Memory contains 3 prior signals for MSFT.",
+      "Most common prior direction was bullish (3 instances).",
+      "The market tone is mixed, reflecting both positive and negative signals.",
+      "Macro context includes concerns about inflation and the Federal Reserve's cautious stance."
+    ],
+    "market_snapshot": {
+      "last_price": 415.12,
+      "day_change": -0.0134,
+      "benchmark_change": 0.0234,
+      "relative_strength": -0.0369,
+      "volume_vs_average": 0.97,
+      "valuation_note": "P/E 24.8 \u2013 reasonable valuation.",
+      "rsi14": 53.9,
+      "macd_histogram": -1.086,
+      "sma_cross": "bullish (20 SMA > 50 SMA)",
+      "mom_1m": 0.1127,
+      "mom_3m": 0.0372,
+      "bb_position": 0.4777,
+      "hist_vol_20d": 0.3483,
+      "pct_from_52w_high": -0.231
+    },
+    "citations": [
+      {
+        "source": "Global Macro Intelligence (FinSight)",
+        "title": "High-Impact Macro & Geopolitical Events \u2014 2026-05-09",
+        "url": "https://finance.yahoo.com/quote/MSFT",
+        "excerpt": "Top events: Fed Governor Waller says Iran war and labor market risks are keeping central bank on hold | New York Fed President Williams worries war will slow growth, aggravate inflation | Fed dissenters explain 'no' votes, saying they disagreed with hinting next move would be a | U.S. says it struck two Iran-flagged oil tankers trying to skirt blockade",
+        "credibility_weight": 0.92
+      },
+      {
+        "source": "Technical Analysis (FinSight Quant)",
+        "title": "Quantitative Technical Factors: MSFT",
+        "url": "https://finance.yahoo.com/quote/MSFT",
+        "excerpt": "RSI-14: 53.9 | MACD hist: -1.0860 | SMA signal: bullish (20 SMA > 50 SMA) | 1m momentum: +11.3% | 3m momentum: +3.7% | BB position: 0.48 | OBV trend: rising | 52w high: -23.1%",
+        "credibility_weight": 0.85
+      },
+      {
+        "source": "Google News",
+        "title": "Microsoft Corporation (MSFT) Slid Despite Delivering Robust Results - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/MSFT",
+        "excerpt": "Microsoft Corporation (MSFT) Slid Despite Delivering Robust Results - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Means Investment CO. Inc. Raises Stock Position in Microsoft Corporation $MSFT - MarketBeat",
+        "url": "https://finance.yahoo.com/quote/MSFT",
+        "excerpt": "Means Investment CO. Raises Stock Position in Microsoft Corporation $MSFT - MarketBeat.",
+        "credibility_weight": 0.5
+      },
+      {
+        "source": "Google News",
+        "title": "Is Microsoft Corporation (MSFT) One of the Top 10 Reddit Stocks That Will Skyrocket? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/MSFT",
+        "excerpt": "Is Microsoft Corporation (MSFT) One of the Top 10 Reddit Stocks That Will Skyrocket?",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Microsoft (MSFT) Earnings Expected to Grow: Should You Buy? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/MSFT",
+        "excerpt": "Microsoft (MSFT) Earnings Expected to Grow: Should You Buy?",
+        "credibility_weight": 0.648
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "The evidence presents a mixed outlook for Microsoft, with planned investments in European data centers providing potential growth, but significant headwinds from rising costs and shifting investor sen"
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "The evidence presents a mixed outlook for Microsoft, with planned investments in European data centers providing potential growth, but significant headwinds from rising costs and shifting investor sentiment. The macroeconomic context adds uncertainty, aligning with the neutral direction."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Neutral. Confidence: 55%. The evidence presents a mixed outlook for Microsoft, with planned investments in European data centers providing potential growth, but significant headwinds fro"
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Bearish"
+  },
+  {
+    "id": "sig-advanc-7f3217",
+    "ticker": "AMD",
+    "company": "Advanced Micro Devices, Inc.",
+    "sector": "Technology",
+    "benchmark": "QQQ",
+    "event_type": "Bullish signals",
+    "direction": "Bullish",
+    "horizon_days": 5,
+    "confidence": 0.7,
+    "novelty_score": 0.6,
+    "sentiment_score": 0.5,
+    "source_quality": 0.7,
+    "published_at": "2026-05-09T18:41:26.243686+00:00",
+    "reasoning": "The bullish thesis is supported by strong data center growth and a significant stock price surge of 16%. Technical analysis indicates a robust price momentum with a 92.36% increase over the last month, aligning with the bullish sentiment. However, macroeconomic risks from geopolitical events and Federal Reserve policies are present, which tempers the confidence slightly.",
+    "catalyst": "Mizuho Raises PT on Advanced Micro Devices, Inc",
+    "thesis_bullets": [
+      "Mizuho Raises PT on Advanced Micro Devices, Inc",
+      "RBC Capital Maintains a Sector Perform Rating on Advanced Micro Devices (AMD) Stock",
+      "AMD's stock soars 16% as data center growth pushes revenue and guidance past estimates",
+      "A Look At Advanced Micro Devices (AMD) Valuation As AI Accelerator Deals And Data Center Revenue Gain Traction",
+      "Macro: Google News: RBC Capital Maintains a Sector Perform Rating on Advanced Micro Devices (AMD) Stock - Yahoo Finance."
+    ],
+    "risk_factors": [
+      "Potential macroeconomic risks from geopolitical events and Federal Reserve policies may impact future performance."
+    ],
+    "counter_evidence": [],
+    "watch_items": [
+      "The market tone is supportive, with a balance of positive and negative signals.",
+      "Macroeconomic factors such as Federal Reserve policies and geopolitical tensions are noted as potential risks."
+    ],
+    "market_snapshot": {
+      "last_price": 455.19,
+      "day_change": 0.1144,
+      "benchmark_change": 0.0234,
+      "relative_strength": 0.091,
+      "volume_vs_average": 1.35,
+      "valuation_note": "P/E 151.7 \u2013 premium multiple; growth must sustain.",
+      "rsi14": 80.8,
+      "macd_histogram": 10.4031,
+      "sma_cross": "bullish (20 SMA > 50 SMA)",
+      "mom_1m": 0.9236,
+      "mom_3m": 1.1838,
+      "bb_position": 1.064,
+      "hist_vol_20d": 0.9202,
+      "pct_from_52w_high": 0.0
+    },
+    "citations": [
+      {
+        "source": "Global Macro Intelligence (FinSight)",
+        "title": "High-Impact Macro & Geopolitical Events \u2014 2026-05-09",
+        "url": "https://finance.yahoo.com/quote/AMD",
+        "excerpt": "Top events: Fed Governor Waller says Iran war and labor market risks are keeping central bank on hold | New York Fed President Williams worries war will slow growth, aggravate inflation | Fed dissenters explain 'no' votes, saying they disagreed with hinting next move would be a | Ken Griffin: Citadel expanding in Miami in response to NYC mayor Mamdani's 'poor taste' ta",
+        "credibility_weight": 0.92
+      },
+      {
+        "source": "Technical Analysis (FinSight Quant)",
+        "title": "Quantitative Technical Factors: AMD",
+        "url": "https://finance.yahoo.com/quote/AMD",
+        "excerpt": "RSI-14: 80.8 | MACD hist: +10.4031 | SMA signal: bullish (20 SMA > 50 SMA) | 1m momentum: +92.4% | 3m momentum: +118.4% | BB position: 1.06 | OBV trend: rising | 52w high: +0.0%",
+        "credibility_weight": 0.85
+      },
+      {
+        "source": "Google News",
+        "title": "Mizuho Raises PT on Advanced Micro Devices, Inc. (AMD) Stock - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/AMD",
+        "excerpt": "Mizuho Raises PT on Advanced Micro Devices, Inc. (AMD) Stock - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Is Advanced Micro Devices, Inc. (AMD) A Good Stock To Buy Now? - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/AMD",
+        "excerpt": "Is Advanced Micro Devices, Inc. (AMD) A Good Stock To Buy Now?",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "Advanced Micro Devices, Inc. (AMD) Is a Trending Stock: Facts to Know Before Betting on It - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/AMD",
+        "excerpt": "Advanced Micro Devices, Inc. (AMD) Is a Trending Stock: Facts to Know Before Betting on It - Yahoo Finance.",
+        "credibility_weight": 0.648
+      },
+      {
+        "source": "Google News",
+        "title": "RBC Capital Maintains a Sector Perform Rating on Advanced Micro Devices (AMD) Stock - Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/AMD",
+        "excerpt": "RBC Capital Maintains a Sector Perform Rating on Advanced Micro Devices (AMD) Stock - Yahoo Finance.",
+        "credibility_weight": 0.648
+      }
+    ],
+    "agent_trace": [
+      {
+        "agent": "Analyst Agent",
+        "summary": "The bullish thesis is supported by strong data center growth and a significant stock price surge of 16%. Technical analysis indicates a robust price momentum with a 92.36% increase over the last month"
+      },
+      {
+        "agent": "Strategist Agent",
+        "summary": "The bullish thesis is supported by strong data center growth and a significant stock price surge of 16%. Technical analysis indicates a robust price momentum with a 92.36% increase over the last month, aligning with the bullish sentiment. However, macroeconomic risks from geopolitical events and Federal Reserve policies are present, which tempers the confidence slightly."
+      },
+      {
+        "agent": "Decision Agent",
+        "summary": "Direction: Bullish. Confidence: 70%. The bullish thesis is supported by strong data center growth and a significant stock price surge of 16%. Technical analysis indicates a robust price momentum wi"
+      }
+    ],
+    "baseline_sentiment": "Bullish",
+    "baseline_random": "Bearish"
+  }
+]

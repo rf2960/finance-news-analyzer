@@ -1,0 +1,74 @@
+[
+  {
+    "ticker": "NVDA",
+    "query_date": "2026-05-01",
+    "sector": "Semiconductors",
+    "retrieval_query": "NVDA AI demand valuation risk",
+    "chunks": [
+      {
+        "citation_id": "DOC1",
+        "source": "Yahoo Finance",
+        "title": "NVDA demand remains strong",
+        "published_at": "2026-05-01T14:00:00Z",
+        "ticker": "NVDA",
+        "text": "AI chip demand remains strong and management highlighted healthy enterprise orders."
+      },
+      {
+        "citation_id": "DOC2",
+        "source": "Reuters",
+        "title": "Investors watch valuation risk",
+        "published_at": "2026-05-01T15:30:00Z",
+        "ticker": "NVDA",
+        "text": "Some analysts warned that valuation risk could limit upside after the recent surge."
+      }
+    ]
+  },
+  {
+    "ticker": "MSFT",
+    "query_date": "2026-05-02",
+    "sector": "Software",
+    "retrieval_query": "MSFT cloud demand enterprise growth",
+    "chunks": [
+      {
+        "citation_id": "DOC3",
+        "source": "Reuters",
+        "title": "Cloud growth improves",
+        "published_at": "2026-05-02T13:00:00Z",
+        "ticker": "MSFT",
+        "text": "Cloud growth remained strong and enterprise demand improved across major customer segments."
+      },
+      {
+        "citation_id": "DOC4",
+        "source": "CNBC",
+        "title": "Investors monitor AI spending",
+        "published_at": "2026-05-02T15:00:00Z",
+        "ticker": "MSFT",
+        "text": "Investors said sustained AI spending will be watched closely, but management commentary stayed upbeat."
+      }
+    ]
+  },
+  {
+    "ticker": "TSLA",
+    "query_date": "2026-05-03",
+    "sector": "Automotive",
+    "retrieval_query": "TSLA deliveries weak margin risk",
+    "chunks": [
+      {
+        "citation_id": "DOC5",
+        "source": "Yahoo Finance",
+        "title": "Delivery concerns rise",
+        "published_at": "2026-05-03T12:30:00Z",
+        "ticker": "TSLA",
+        "text": "Analysts cited weak delivery expectations and margin risk heading into the next update."
+      },
+      {
+        "citation_id": "DOC6",
+        "source": "Reuters",
+        "title": "Price cuts remain in focus",
+        "published_at": "2026-05-03T14:45:00Z",
+        "ticker": "TSLA",
+        "text": "Further price cuts could pressure profitability even if unit demand stabilizes."
+      }
+    ]
+  }
+]

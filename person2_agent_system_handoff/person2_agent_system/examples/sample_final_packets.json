@@ -1,0 +1,10 @@
+{
+  "ticker": "NVDA",
+  "direction": "neutral",
+  "horizon": "5d",
+  "confidence": 0.45,
+  "reasoning": "Retrieved evidence is balanced and does not support a strong directional view. The thesis is derived from extracted news catalysts, then translated into a short-horizon market view while accounting for contradicting evidence. Analyst summary: Mixed signals extracted from retrieved financial news.",
+  "risks": ["Conflicting evidence may weaken the signal."],
+  "citations": ["DOC1", "DOC2"],
+  "abstain": false
+}

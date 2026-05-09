@@ -1,0 +1,48 @@
+{
+  "title": "strategist_output_schema",
+  "type": "object",
+  "required": [
+    "ticker",
+    "direction",
+    "horizon",
+    "thesis",
+    "causal_chain",
+    "risks",
+    "citations",
+    "counterarguments",
+    "invalidation_conditions",
+    "thesis_strength",
+    "market_context_notes"
+  ],
+  "properties": {
+    "ticker": { "type": "string" },
+    "direction": { "type": "string", "enum": ["bullish", "bearish", "neutral"] },
+    "horizon": { "type": "string", "enum": ["5d", "20d"] },
+    "thesis": { "type": "string" },
+    "causal_chain": { "type": "string" },
+    "risks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "citations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "counterarguments": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "invalidation_conditions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "thesis_strength": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "market_context_notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
