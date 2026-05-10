@@ -1,147 +1,352 @@
 {
-  "test_config": {
-    "top_k": 10,
-    "min_relevance_score": 0.3,
-    "min_source_diversity": 3,
-    "min_credibility_avg": 0.7
-  },
-  "results": [
+  "tickers": [
     {
       "ticker": "AAPL",
-      "total_chunks": 105,
-      "retrieved_chunks": 10,
-      "avg_relevance_score": 0.904,
-      "source_diversity": 3,
-      "unique_sources": [
-        "Google News",
-        "CNBC",
-        "Yahoo Finance"
-      ],
-      "avg_credibility": 0.633,
-      "bloomberg_chunks": 0,
-      "retrieval_time_ms": 2496.56,
-      "coverage_ratio": 0.095
+      "retrieval": {
+        "recall_at_k": 100.0,
+        "precision_at_k": 60.2,
+        "mrr": 100.0,
+        "context_relevance": 60.2,
+        "retrieval_score": 86,
+        "relevant_count": 8,
+        "chunk_scores": [
+          0.771,
+          0.52,
+          0.49,
+          0.685,
+          0.674,
+          0.453,
+          0.515,
+          0.705
+        ],
+        "retrieval_time_ms": 3054.8,
+        "chunks_indexed": 103,
+        "chunks_retrieved": 8
+      },
+      "generation": {
+        "completeness": 100.0,
+        "correctness": 100.0,
+        "groundedness": 30.0,
+        "coherence": 100.0,
+        "generation_score": 79,
+        "label": "partial",
+        "direction": "Bullish",
+        "confidence": 0.72,
+        "generation_time_ms": 3491.4
+      },
+      "retrieval_pass": true,
+      "generation_pass": true,
+      "overall_pass": true
     },
     {
       "ticker": "NVDA",
-      "total_chunks": 117,
-      "retrieved_chunks": 10,
-      "avg_relevance_score": 0.882,
-      "source_diversity": 2,
-      "unique_sources": [
-        "Google News",
-        "Seeking Alpha"
-      ],
-      "avg_credibility": 0.609,
-      "bloomberg_chunks": 0,
-      "retrieval_time_ms": 1271.86,
-      "coverage_ratio": 0.085
+      "retrieval": {
+        "recall_at_k": 100.0,
+        "precision_at_k": 52.4,
+        "mrr": 100.0,
+        "context_relevance": 52.4,
+        "retrieval_score": 83,
+        "relevant_count": 8,
+        "chunk_scores": [
+          0.606,
+          0.612,
+          0.515,
+          0.487,
+          0.412,
+          0.573,
+          0.493,
+          0.493
+        ],
+        "retrieval_time_ms": 1424.9,
+        "chunks_indexed": 99,
+        "chunks_retrieved": 8
+      },
+      "generation": {
+        "completeness": 100.0,
+        "correctness": 100.0,
+        "groundedness": 45.5,
+        "coherence": 100.0,
+        "generation_score": 84,
+        "label": "partial",
+        "direction": "Bullish",
+        "confidence": 0.83,
+        "generation_time_ms": 2108.8
+      },
+      "retrieval_pass": true,
+      "generation_pass": true,
+      "overall_pass": true
     },
     {
       "ticker": "TSLA",
-      "total_chunks": 101,
-      "retrieved_chunks": 10,
-      "avg_relevance_score": 0.901,
-      "source_diversity": 1,
-      "unique_sources": [
-        "Google News"
-      ],
-      "avg_credibility": 0.604,
-      "bloomberg_chunks": 0,
-      "retrieval_time_ms": 1361.75,
-      "coverage_ratio": 0.099
+      "retrieval": {
+        "recall_at_k": 100.0,
+        "precision_at_k": 55.9,
+        "mrr": 100.0,
+        "context_relevance": 55.9,
+        "retrieval_score": 85,
+        "relevant_count": 8,
+        "chunk_scores": [
+          0.603,
+          0.526,
+          0.526,
+          0.526,
+          0.511,
+          0.566,
+          0.591,
+          0.625
+        ],
+        "retrieval_time_ms": 1477.5,
+        "chunks_indexed": 101,
+        "chunks_retrieved": 8
+      },
+      "generation": {
+        "completeness": 100.0,
+        "correctness": 100.0,
+        "groundedness": 30.0,
+        "coherence": 100.0,
+        "generation_score": 79,
+        "label": "partial",
+        "direction": "Bullish",
+        "confidence": 0.83,
+        "generation_time_ms": 2715.6
+      },
+      "retrieval_pass": true,
+      "generation_pass": true,
+      "overall_pass": true
     },
     {
       "ticker": "MSFT",
-      "total_chunks": 118,
-      "retrieved_chunks": 10,
-      "avg_relevance_score": 0.922,
-      "source_diversity": 2,
-      "unique_sources": [
-        "Google News",
-        "Seeking Alpha"
-      ],
-      "avg_credibility": 0.574,
-      "bloomberg_chunks": 0,
-      "retrieval_time_ms": 4070.98,
-      "coverage_ratio": 0.085
+      "retrieval": {
+        "recall_at_k": 100.0,
+        "precision_at_k": 59.7,
+        "mrr": 100.0,
+        "context_relevance": 59.7,
+        "retrieval_score": 86,
+        "relevant_count": 8,
+        "chunk_scores": [
+          0.647,
+          0.563,
+          0.685,
+          0.634,
+          0.612,
+          0.566,
+          0.511,
+          0.555
+        ],
+        "retrieval_time_ms": 1291.5,
+        "chunks_indexed": 101,
+        "chunks_retrieved": 8
+      },
+      "generation": {
+        "completeness": 100.0,
+        "correctness": 100.0,
+        "groundedness": 25.0,
+        "coherence": 100.0,
+        "generation_score": 78,
+        "label": "partial",
+        "direction": "Bullish",
+        "confidence": 0.67,
+        "generation_time_ms": 2091.9
+      },
+      "retrieval_pass": true,
+      "generation_pass": true,
+      "overall_pass": true
     },
     {
       "ticker": "GOOGL",
-      "total_chunks": 140,
-      "retrieved_chunks": 10,
-      "avg_relevance_score": 0.931,
-      "source_diversity": 1,
-      "unique_sources": [
-        "Google News"
-      ],
-      "avg_credibility": 0.657,
-      "bloomberg_chunks": 0,
-      "retrieval_time_ms": 1452.45,
-      "coverage_ratio": 0.071
+      "retrieval": {
+        "recall_at_k": 100.0,
+        "precision_at_k": 58.2,
+        "mrr": 100.0,
+        "context_relevance": 58.2,
+        "retrieval_score": 85,
+        "relevant_count": 8,
+        "chunk_scores": [
+          0.62,
+          0.587,
+          0.537,
+          0.6,
+          0.646,
+          0.566,
+          0.566,
+          0.532
+        ],
+        "retrieval_time_ms": 1386.6,
+        "chunks_indexed": 140,
+        "chunks_retrieved": 8
+      },
+      "generation": {
+        "completeness": 100.0,
+        "correctness": 100.0,
+        "groundedness": 30.0,
+        "coherence": 100.0,
+        "generation_score": 79,
+        "label": "partial",
+        "direction": "Bullish",
+        "confidence": 0.84,
+        "generation_time_ms": 2420.8
+      },
+      "retrieval_pass": true,
+      "generation_pass": true,
+      "overall_pass": true
     },
     {
       "ticker": "AMZN",
-      "total_chunks": 82,
-      "retrieved_chunks": 10,
-      "avg_relevance_score": 0.934,
-      "source_diversity": 1,
-      "unique_sources": [
-        "Google News"
-      ],
-      "avg_credibility": 0.633,
-      "bloomberg_chunks": 0,
-      "retrieval_time_ms": 1351.37,
-      "coverage_ratio": 0.122
+      "retrieval": {
+        "recall_at_k": 100.0,
+        "precision_at_k": 59.1,
+        "mrr": 100.0,
+        "context_relevance": 59.1,
+        "retrieval_score": 86,
+        "relevant_count": 8,
+        "chunk_scores": [
+          0.54,
+          0.603,
+          0.643,
+          0.652,
+          0.609,
+          0.555,
+          0.553,
+          0.573
+        ],
+        "retrieval_time_ms": 1332.5,
+        "chunks_indexed": 115,
+        "chunks_retrieved": 8
+      },
+      "generation": {
+        "completeness": 100.0,
+        "correctness": 100.0,
+        "groundedness": 50.0,
+        "coherence": 100.0,
+        "generation_score": 85,
+        "label": "correct",
+        "direction": "Bullish",
+        "confidence": 0.83,
+        "generation_time_ms": 2756.7
+      },
+      "retrieval_pass": true,
+      "generation_pass": true,
+      "overall_pass": true
     },
     {
       "ticker": "META",
-      "total_chunks": 210,
-      "retrieved_chunks": 10,
-      "avg_relevance_score": 0.986,
-      "source_diversity": 1,
-      "unique_sources": [
-        "Google News"
-      ],
-      "avg_credibility": 0.618,
-      "bloomberg_chunks": 0,
-      "retrieval_time_ms": 1388.82,
-      "coverage_ratio": 0.048
+      "retrieval": {
+        "recall_at_k": 100.0,
+        "precision_at_k": 51.9,
+        "mrr": 100.0,
+        "context_relevance": 51.9,
+        "retrieval_score": 83,
+        "relevant_count": 8,
+        "chunk_scores": [
+          0.52,
+          0.513,
+          0.513,
+          0.507,
+          0.566,
+          0.493,
+          0.551,
+          0.493
+        ],
+        "retrieval_time_ms": 1333.7,
+        "chunks_indexed": 97,
+        "chunks_retrieved": 8
+      },
+      "generation": {
+        "completeness": 100.0,
+        "correctness": 100.0,
+        "groundedness": 16.7,
+        "coherence": 100.0,
+        "generation_score": 75,
+        "label": "partial",
+        "direction": "Bullish",
+        "confidence": 0.68,
+        "generation_time_ms": 2210.6
+      },
+      "retrieval_pass": true,
+      "generation_pass": true,
+      "overall_pass": true
     },
     {
       "ticker": "SPY",
-      "total_chunks": 93,
-      "retrieved_chunks": 10,
-      "avg_relevance_score": 0.913,
-      "source_diversity": 1,
-      "unique_sources": [
-        "Google News"
-      ],
-      "avg_credibility": 0.515,
-      "bloomberg_chunks": 0,
-      "retrieval_time_ms": 1328.68,
-      "coverage_ratio": 0.108
+      "retrieval": {
+        "recall_at_k": 100.0,
+        "precision_at_k": 44.3,
+        "mrr": 100.0,
+        "context_relevance": 44.3,
+        "retrieval_score": 81,
+        "relevant_count": 8,
+        "chunk_scores": [
+          0.4,
+          0.4,
+          0.423,
+          0.493,
+          0.458,
+          0.427,
+          0.497,
+          0.444
+        ],
+        "retrieval_time_ms": 3376.9,
+        "chunks_indexed": 204,
+        "chunks_retrieved": 8
+      },
+      "generation": {
+        "completeness": 100.0,
+        "correctness": 100.0,
+        "groundedness": 0.0,
+        "coherence": 100.0,
+        "generation_score": 70,
+        "label": "partial",
+        "direction": "Neutral",
+        "confidence": 0.2,
+        "generation_time_ms": 2842.6
+      },
+      "retrieval_pass": true,
+      "generation_pass": true,
+      "overall_pass": true
     },
     {
       "ticker": "QQQ",
-      "total_chunks": 101,
-      "retrieved_chunks": 10,
-      "avg_relevance_score": 0.908,
-      "source_diversity": 1,
-      "unique_sources": [
-        "Google News"
-      ],
-      "avg_credibility": 0.547,
-      "bloomberg_chunks": 0,
-      "retrieval_time_ms": 1656.02,
-      "coverage_ratio": 0.099
+      "retrieval": {
+        "recall_at_k": 100.0,
+        "precision_at_k": 56.6,
+        "mrr": 100.0,
+        "context_relevance": 56.6,
+        "retrieval_score": 85,
+        "relevant_count": 8,
+        "chunk_scores": [
+          0.425,
+          0.594,
+          0.603,
+          0.545,
+          0.627,
+          0.627,
+          0.497,
+          0.61
+        ],
+        "retrieval_time_ms": 1433.8,
+        "chunks_indexed": 153,
+        "chunks_retrieved": 8
+      },
+      "generation": {
+        "completeness": 100.0,
+        "correctness": 100.0,
+        "groundedness": 33.3,
+        "coherence": 100.0,
+        "generation_score": 80,
+        "label": "partial",
+        "direction": "Bullish",
+        "confidence": 0.75,
+        "generation_time_ms": 2979.3
+      },
+      "retrieval_pass": true,
+      "generation_pass": true,
+      "overall_pass": true
     }
   ],
   "summary": {
-    "total_tests": 9,
-    "passed_tests": 0,
-    "avg_relevance": 0.9199533333333333,
-    "avg_source_diversity": 1.4444444444444444,
-    "avg_credibility": 0.5988444444444444
+    "total": 9,
+    "overall_pass": 9,
+    "retrieval_pass": 9,
+    "generation_pass": 9
   }
 }

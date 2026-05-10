@@ -13,3 +13,7 @@ vector_store/
 *.sqlite
 *.db
 streamlit.*.log
+*.log
+report_render/
+report_assets/
+final_project_report*.docx

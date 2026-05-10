@@ -1,544 +1,587 @@
 """
-RAG Quality Testing Suite for FinSight
+FinSight RAG Quality Evaluation Suite
 
-This module provides comprehensive testing for RAG retrieval quality including:
-- Relevance scoring of retrieved chunks
-- Source diversity metrics
-- Credibility-weighted ranking validation
-- Precision@K and Recall@K metrics
-- TF-IDF vs keyword retrieval comparison
-- Bloomberg high-authority chunk prioritization
-- Cross-ticker retrieval consistency
+Evaluates RAG quality in two independent dimensions:
+
+  1. RETRIEVAL QUALITY — Did the system retrieve the right evidence?
+     Metrics: Recall@K, Precision@K, MRR, Context Relevance Score (0-100)
+     A chunk is "relevant" if it mentions the ticker AND contains
+     financial vocabulary matching the query intent.
+
+  2. GENERATION QUALITY — Given the retrieved context, did the pipeline
+     produce a well-grounded answer?
+     Metrics: Groundedness, Completeness, Correctness, Coherence (0-100)
+     Evaluated from the heuristic pipeline output (no API key required).
 
 Usage:
     python test_rag_quality.py --ticker AAPL --verbose
     python test_rag_quality.py --run-all-tests
-    python test_rag_quality.py --benchmark
+    python test_rag_quality.py --run-all-tests --save-results demo_data/rag_eval_results.json
 """
 from __future__ import annotations
 
 import argparse
 import json
 import os
+import re
 import sys
 import time
-from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 
-# Force UTF-8 output on Windows so emoji / Unicode prints correctly
+# Force UTF-8 on Windows
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-# Add the parent directory to the path so we can import the modules
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from src.finance_news_analyzer.rag_pipeline import RAGPipeline
+from src.finance_news_analyzer.rag_pipeline import RAGPipeline, RAGChunk
 from src.finance_news_analyzer.agent_runner import run_full_pipeline
 
 
 # ---------------------------------------------------------------------------
-# Test Configuration
+# Vocabulary for relevance judgement
 # ---------------------------------------------------------------------------
 
-@dataclass
-class RAGTestConfig:
-    """Configuration for RAG quality tests"""
-    ticker: str = "AAPL"
-    top_k: int = 10
-    min_relevance_score: float = 0.3
-    min_source_diversity: int = 3
-    min_credibility_avg: float = 0.70
-    verbose: bool = False
-    test_tickers: List[str] = field(default_factory=lambda: [
-        "AAPL", "NVDA", "TSLA", "MSFT", "GOOGL", "AMZN", "META", "SPY", "QQQ"
-    ])
+FINANCIAL_TERMS = {
+    "earnings", "revenue", "profit", "loss", "guidance", "forecast",
+    "analyst", "price", "target", "upgrade", "downgrade", "beat", "miss",
+    "quarterly", "annual", "growth", "margin", "eps", "pe", "valuation",
+    "stock", "shares", "market", "cap", "buy", "sell", "hold", "neutral",
+    "bullish", "bearish", "rally", "decline", "surge", "drop", "acquisition",
+    "merger", "dividend", "buyback", "debt", "cash", "revenue", "sales",
+    "outlook", "results", "report", "q1", "q2", "q3", "q4", "fiscal",
+    "inflation", "rate", "fed", "interest", "gdp", "macro", "sector",
+    "competition", "product", "launch", "regulation", "risk", "volatility",
+}
+
+COMPANY_MAP = {
+    "AAPL": "Apple",
+    "NVDA": "NVIDIA",
+    "TSLA": "Tesla",
+    "MSFT": "Microsoft",
+    "GOOGL": "Alphabet Google",
+    "AMZN": "Amazon",
+    "META": "Meta",
+    "SPY": "S&P 500 index fund",
+    "QQQ": "Nasdaq ETF technology",
+}
+
+DEFAULT_TICKERS = list(COMPANY_MAP.keys())
 
 
 # ---------------------------------------------------------------------------
-# Metrics & Results
+# Relevance scoring (no LLM — pure lexical)
 # ---------------------------------------------------------------------------
 
-@dataclass
-class RAGQualityMetrics:
-    """Container for RAG quality test results"""
-    ticker: str
-    total_chunks: int
-    retrieved_chunks: int
-    avg_relevance_score: float
-    source_diversity: int
-    unique_sources: List[str]
-    avg_credibility: float
-    bloomberg_chunks: int
-    retrieval_time_ms: float
-    precision_at_5: Optional[float] = None
-    recall_at_10: Optional[float] = None
-    coverage_ratio: float = 0.0
-    
-    def to_dict(self) -> dict:
+def _tokenize(text: str) -> set[str]:
+    return set(re.findall(r"\b[a-z]{3,}\b", text.lower()))
+
+
+def _chunk_relevance(chunk: RAGChunk, ticker: str, query_tokens: set[str]) -> float:
+    """
+    Score a single chunk's relevance to the ticker query.
+
+    A chunk is considered relevant when it:
+    - Mentions the ticker symbol or company name    (weight 0.40)
+    - Shares financial vocabulary with the query    (weight 0.40)
+    - Contains at least one specific financial term (weight 0.20)
+
+    Returns a float in [0, 1].
+    """
+    text = chunk.text.lower()
+    text_tokens = _tokenize(chunk.text)
+
+    # 1. Ticker / company mention
+    ticker_names = COMPANY_MAP.get(ticker.upper(), ticker).lower().split()
+    mention_score = 1.0 if ticker.lower() in text else 0.0
+    if not mention_score:
+        mention_score = max(1.0 if n in text else 0.0 for n in ticker_names)
+
+    # 2. Query token overlap (Jaccard)
+    if query_tokens:
+        intersection = text_tokens & query_tokens
+        union = text_tokens | query_tokens
+        overlap = len(intersection) / max(len(union), 1)
+    else:
+        overlap = 0.0
+
+    # 3. Financial vocabulary density
+    fin_hits = text_tokens & FINANCIAL_TERMS
+    fin_score = min(len(fin_hits) / 5.0, 1.0)  # cap at 5 terms
+
+    score = mention_score * 0.40 + overlap * 0.40 + fin_score * 0.20
+    return round(score, 4)
+
+
+# ---------------------------------------------------------------------------
+# Retrieval metrics
+# ---------------------------------------------------------------------------
+
+RELEVANT_THRESHOLD = 0.25  # chunk is "relevant" if score >= this
+
+
+def compute_retrieval_metrics(
+    chunks: List[RAGChunk],
+    ticker: str,
+    query_tokens: set[str],
+) -> dict:
+    """
+    Compute Recall@K, Precision@K, MRR, and Context Relevance Score.
+    All scores are in [0, 100].
+    """
+    if not chunks:
         return {
-            "ticker": self.ticker,
-            "total_chunks": self.total_chunks,
-            "retrieved_chunks": self.retrieved_chunks,
-            "avg_relevance_score": round(self.avg_relevance_score, 3),
-            "source_diversity": self.source_diversity,
-            "unique_sources": self.unique_sources,
-            "avg_credibility": round(self.avg_credibility, 3),
-            "bloomberg_chunks": self.bloomberg_chunks,
-            "retrieval_time_ms": round(self.retrieval_time_ms, 2),
-            "coverage_ratio": round(self.coverage_ratio, 3),
+            "recall_at_k": 0,
+            "precision_at_k": 0,
+            "mrr": 0,
+            "context_relevance": 0,
+            "retrieval_score": 0,
+            "relevant_count": 0,
+            "chunk_scores": [],
         }
-    
-    def passed_quality_checks(self, config: RAGTestConfig) -> Tuple[bool, List[str]]:
-        """Check if metrics meet quality thresholds"""
-        failures = []
-        
-        if self.avg_relevance_score < config.min_relevance_score:
-            failures.append(
-                f"Low relevance: {self.avg_relevance_score:.3f} < {config.min_relevance_score}"
-            )
-        
-        if self.source_diversity < config.min_source_diversity:
-            failures.append(
-                f"Low source diversity: {self.source_diversity} < {config.min_source_diversity}"
-            )
-        
-        if self.avg_credibility < config.min_credibility_avg:
-            failures.append(
-                f"Low credibility: {self.avg_credibility:.3f} < {config.min_credibility_avg}"
-            )
-        
-        if self.retrieved_chunks == 0:
-            failures.append("No chunks retrieved")
-        
-        return len(failures) == 0, failures
+
+    scores = [_chunk_relevance(c, ticker, query_tokens) for c in chunks]
+    relevant_flags = [s >= RELEVANT_THRESHOLD for s in scores]
+    k = len(chunks)
+
+    # Recall@K: fraction of retrieved chunks that are relevant
+    recall_at_k = sum(relevant_flags) / k
+
+    # Precision@K: average relevance score (not binary — continuous)
+    precision_at_k = sum(scores) / k
+
+    # MRR: reciprocal rank of first relevant result
+    mrr = 0.0
+    for rank, is_rel in enumerate(relevant_flags, start=1):
+        if is_rel:
+            mrr = 1.0 / rank
+            break
+
+    # Context Relevance: avg score across all chunks
+    context_relevance = sum(scores) / k
+
+    # Combined retrieval score (0-100)
+    retrieval_score = round(
+        (recall_at_k * 0.35 + precision_at_k * 0.35 + mrr * 0.30) * 100
+    )
+
+    return {
+        "recall_at_k": round(recall_at_k * 100, 1),
+        "precision_at_k": round(precision_at_k * 100, 1),
+        "mrr": round(mrr * 100, 1),
+        "context_relevance": round(context_relevance * 100, 1),
+        "retrieval_score": retrieval_score,
+        "relevant_count": sum(relevant_flags),
+        "chunk_scores": [round(s, 3) for s in scores],
+    }
 
 
 # ---------------------------------------------------------------------------
-# Test Suite
+# Generation metrics
 # ---------------------------------------------------------------------------
 
-class RAGQualityTester:
-    """Comprehensive RAG quality testing suite"""
-    
-    def __init__(self, config: RAGTestConfig):
-        self.config = config
-        self.results: List[RAGQualityMetrics] = []
-    
-    def test_single_ticker(self, ticker: str) -> RAGQualityMetrics:
-        """Test RAG retrieval quality for a single ticker"""
-        if self.config.verbose:
-            print(f"\n{'='*60}")
-            print(f"Testing RAG quality for {ticker}")
-            print(f"{'='*60}")
-        
-        # Initialize pipeline
-        start_time = time.time()
-        
-        try:
-            # Get company name (simplified - in production would use yfinance)
-            company_map = {
-                "AAPL": "Apple Inc",
-                "NVDA": "NVIDIA Corporation",
-                "TSLA": "Tesla Inc",
-                "MSFT": "Microsoft Corporation",
-                "GOOGL": "Alphabet Inc",
-                "AMZN": "Amazon.com Inc",
-                "META": "Meta Platforms Inc",
-                "SPY": "S&P 500 ETF",
-                "QQQ": "Nasdaq-100 ETF"
-            }
-            company = company_map.get(ticker, ticker)
-            
-            # Create RAG pipeline
-            rag = RAGPipeline(
-                ticker=ticker,
-                company=company,
-                retrieval_query=f"{ticker} {company} stock news earnings",
-                top_k=self.config.top_k
-            )
-            
-            # Ingest news
-            if self.config.verbose:
-                print(f"Ingesting news for {ticker}...")
-            
-            rag.ingest()
-            
-            # Retrieve chunks
-            if self.config.verbose:
-                print(f"Retrieving top-{self.config.top_k} chunks...")
-            
-            chunks = rag.get_chunks(top_k=self.config.top_k)
-            retrieval_time = (time.time() - start_time) * 1000
-            
-            # Analyze chunks
-            if len(chunks) == 0:
-                if self.config.verbose:
-                    print(f"⚠️  No chunks retrieved for {ticker}")
-                return RAGQualityMetrics(
-                    ticker=ticker,
-                    total_chunks=rag.chunk_count,
-                    retrieved_chunks=0,
-                    avg_relevance_score=0.0,
-                    source_diversity=0,
-                    unique_sources=[],
-                    avg_credibility=0.0,
-                    bloomberg_chunks=0,
-                    retrieval_time_ms=retrieval_time,
-                    coverage_ratio=0.0
-                )
-            
-            # Calculate metrics
-            sources = [chunk.source for chunk in chunks]
-            credibilities = [chunk.credibility_weight for chunk in chunks]
-            bloomberg_count = sum(1 for chunk in chunks if chunk.is_bloomberg)
-            
-            # Compute relevance scores (simplified - based on text length and recency)
-            relevance_scores = self._compute_relevance_scores(chunks, ticker)
-            
-            metrics = RAGQualityMetrics(
-                ticker=ticker,
-                total_chunks=rag.chunk_count,
-                retrieved_chunks=len(chunks),
-                avg_relevance_score=sum(relevance_scores) / len(relevance_scores),
-                source_diversity=len(set(sources)),
-                unique_sources=list(set(sources)),
-                avg_credibility=sum(credibilities) / len(credibilities),
-                bloomberg_chunks=bloomberg_count,
-                retrieval_time_ms=retrieval_time,
-                coverage_ratio=len(chunks) / max(rag.chunk_count, 1)
-            )
-            
-            # Print results
-            if self.config.verbose:
-                self._print_metrics(metrics, chunks)
-            
-            return metrics
-            
-        except Exception as e:
-            if self.config.verbose:
-                print(f"❌ Error testing {ticker}: {str(e)}")
-            return RAGQualityMetrics(
-                ticker=ticker,
-                total_chunks=0,
-                retrieved_chunks=0,
-                avg_relevance_score=0.0,
-                source_diversity=0,
-                unique_sources=[],
-                avg_credibility=0.0,
-                bloomberg_chunks=0,
-                retrieval_time_ms=0.0,
-                coverage_ratio=0.0
-            )
-    
-    def _compute_relevance_scores(self, chunks, ticker: str) -> List[float]:
-        """Compute relevance scores for retrieved chunks"""
-        scores = []
-        ticker_lower = ticker.lower()
-        
-        for chunk in chunks:
-            score = 0.5  # Base score
-            
-            # Ticker mention bonus
-            text_lower = chunk.text.lower()
-            ticker_mentions = text_lower.count(ticker_lower)
-            score += min(ticker_mentions * 0.1, 0.3)
-            
-            # Length bonus (not too short, not too long)
-            text_len = len(chunk.text)
-            if 200 <= text_len <= 800:
-                score += 0.2
-            elif text_len > 100:
-                score += 0.1
-            
-            # Credibility bonus
-            score += chunk.credibility_weight * 0.2
-            
-            # Bloomberg bonus
-            if chunk.is_bloomberg:
-                score += 0.15
-            
-            scores.append(min(score, 1.0))
-        
-        return scores
-    
-    def _print_metrics(self, metrics: RAGQualityMetrics, chunks):
-        """Pretty-print metrics and sample chunks"""
-        print(f"\n📊 Retrieval Metrics:")
-        print(f"  Total chunks indexed:  {metrics.total_chunks}")
-        print(f"  Chunks retrieved:      {metrics.retrieved_chunks}")
-        print(f"  Avg relevance score:   {metrics.avg_relevance_score:.3f}")
-        print(f"  Source diversity:      {metrics.source_diversity} sources")
-        print(f"  Unique sources:        {', '.join(metrics.unique_sources)}")
-        print(f"  Avg credibility:       {metrics.avg_credibility:.3f}")
-        print(f"  Bloomberg chunks:      {metrics.bloomberg_chunks}")
-        print(f"  Retrieval time:        {metrics.retrieval_time_ms:.2f}ms")
-        print(f"  Coverage ratio:        {metrics.coverage_ratio:.3f}")
-        
-        # Quality check
-        passed, failures = metrics.passed_quality_checks(self.config)
-        if passed:
-            print(f"\n✅ All quality checks PASSED")
-        else:
-            print(f"\n❌ Quality check failures:")
-            for failure in failures:
-                print(f"   • {failure}")
-        
-        # Print sample chunks
-        print(f"\n📄 Sample Retrieved Chunks (top 3):")
-        for i, chunk in enumerate(chunks[:3], 1):
-            print(f"\n  [{i}] {chunk.source} | {chunk.title[:60]}...")
-            print(f"      Credibility: {chunk.credibility_weight:.2f} | Bloomberg: {chunk.is_bloomberg}")
-            print(f"      Text: {chunk.text[:150]}...")
-    
-    def test_multiple_tickers(self) -> Dict[str, RAGQualityMetrics]:
-        """Test RAG quality across multiple tickers"""
+def compute_generation_metrics(
+    packet: dict,
+    chunks: List[RAGChunk],
+    ticker: str,
+) -> dict:
+    """
+    Evaluate generation quality from the pipeline output packet.
+
+    Dimensions:
+      Completeness   — are all required fields present and non-empty?
+      Correctness    — is the direction valid, confidence in [0,1]?
+      Groundedness   — does the reasoning reference content from the chunks?
+      Coherence      — is the reasoning long and specific (not boilerplate)?
+    """
+    # ---- Completeness ----
+    # Packet fields: direction, confidence, reasoning, thesis_bullets
+    direction_val = packet.get("direction", "")
+    conf_val = packet.get("confidence")  # "confidence" key (not confidence_score)
+    reasoning_val = str(packet.get("reasoning", ""))
+    bullets_val = packet.get("thesis_bullets", [])
+
+    completeness = sum([
+        bool(direction_val),
+        conf_val is not None,
+        len(reasoning_val) >= 30,
+        len(bullets_val) >= 1,
+    ]) / 4.0
+
+    # ---- Correctness ----
+    direction_valid = str(direction_val).upper() in {
+        "BUY", "SELL", "HOLD", "NEUTRAL", "BULLISH", "BEARISH",
+        "STRONG_BUY", "STRONG_SELL"
+    }
+    conf = conf_val if conf_val is not None else -1
+    conf_valid = isinstance(conf, (int, float)) and 0.0 <= float(conf) <= 1.0
+    correctness = (int(direction_valid) + int(conf_valid)) / 2.0
+
+    # ---- Groundedness ----
+    # Check how much of the reasoning's financial vocabulary overlaps with chunks
+    reasoning_text = str(packet.get("reasoning", ""))
+    bullets = " ".join(str(b) for b in packet.get("thesis_bullets", []))
+    generated_tokens = _tokenize(reasoning_text + " " + bullets)
+    generated_fin = generated_tokens & FINANCIAL_TERMS
+
+    chunk_text_all = " ".join(c.text for c in chunks)
+    chunk_tokens = _tokenize(chunk_text_all)
+    chunk_fin = chunk_tokens & FINANCIAL_TERMS
+
+    if chunk_fin:
+        # What fraction of financial terms in generated output also appear in chunks?
+        overlap = generated_fin & chunk_fin
+        groundedness = len(overlap) / max(len(generated_fin), 1)
+        groundedness = min(groundedness, 1.0)
+    else:
+        groundedness = 0.0
+
+    # Penalize very short reasoning (likely boilerplate)
+    if len(reasoning_text) < 80:
+        groundedness *= 0.5
+
+    # ---- Coherence ----
+    # Is the reasoning specific (long enough, ticker mentioned, financial terms)?
+    ticker_in_reasoning = ticker.lower() in reasoning_text.lower()
+    reasoning_fin_terms = len(generated_tokens & FINANCIAL_TERMS)
+    reasoning_length_ok = len(reasoning_text) >= 100
+
+    coherence = (
+        int(ticker_in_reasoning) * 0.35
+        + min(reasoning_fin_terms / 5.0, 1.0) * 0.35
+        + int(reasoning_length_ok) * 0.30
+    )
+
+    # Combined generation score (0-100)
+    generation_score = round(
+        (completeness * 0.25 + correctness * 0.20 + groundedness * 0.30 + coherence * 0.25) * 100
+    )
+
+    # Label
+    if generation_score >= 70 and groundedness >= 0.5:
+        label = "correct"
+    elif generation_score >= 40:
+        label = "partial"
+    else:
+        label = "hallucination"
+
+    return {
+        "completeness": round(completeness * 100, 1),
+        "correctness": round(correctness * 100, 1),
+        "groundedness": round(groundedness * 100, 1),
+        "coherence": round(coherence * 100, 1),
+        "generation_score": generation_score,
+        "label": label,
+        "direction": packet.get("direction", "N/A"),
+        "confidence": conf,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Per-ticker evaluation
+# ---------------------------------------------------------------------------
+
+def evaluate_ticker(
+    ticker: str,
+    top_k: int = 8,
+    verbose: bool = False,
+) -> dict:
+    """
+    Full evaluation for a single ticker:
+    Retrieval quality + Generation quality.
+    """
+    company = COMPANY_MAP.get(ticker.upper(), ticker)
+    query = f"{ticker} {company} stock news earnings price analyst"
+    query_tokens = _tokenize(query)
+
+    if verbose:
         print(f"\n{'='*60}")
-        print(f"Running RAG Quality Tests on {len(self.config.test_tickers)} Tickers")
+        print(f"Evaluating: {ticker} ({company})")
+        print(f"Query: {query[:80]}")
         print(f"{'='*60}")
-        
-        results = {}
-        for ticker in self.config.test_tickers:
-            metrics = self.test_single_ticker(ticker)
-            results[ticker] = metrics
-            self.results.append(metrics)
-        
-        # Print summary
-        self._print_summary(results)
-        
-        return results
-    
-    def _print_summary(self, results: Dict[str, RAGQualityMetrics]):
-        """Print summary statistics across all tests"""
-        print(f"\n{'='*60}")
-        print(f"SUMMARY REPORT")
-        print(f"{'='*60}\n")
-        
-        # Aggregate stats
-        total_tests = len(results)
-        passed_tests = sum(1 for m in results.values() if m.passed_quality_checks(self.config)[0])
-        
-        avg_relevance = sum(m.avg_relevance_score for m in results.values()) / total_tests
-        avg_diversity = sum(m.source_diversity for m in results.values()) / total_tests
-        avg_credibility = sum(m.avg_credibility for m in results.values()) / total_tests
-        avg_retrieval_time = sum(m.retrieval_time_ms for m in results.values()) / total_tests
-        
-        print(f"Tests passed:           {passed_tests}/{total_tests} ({passed_tests/total_tests*100:.1f}%)")
-        print(f"Avg relevance score:    {avg_relevance:.3f}")
-        print(f"Avg source diversity:   {avg_diversity:.1f} sources")
-        print(f"Avg credibility:        {avg_credibility:.3f}")
-        print(f"Avg retrieval time:     {avg_retrieval_time:.2f}ms")
-        
-        # Per-ticker results
-        print(f"\n{'Ticker':<8} {'Retrieved':<11} {'Relevance':<11} {'Sources':<9} {'Credibility':<12} {'Status':<8}")
-        print(f"{'-'*8} {'-'*11} {'-'*11} {'-'*9} {'-'*12} {'-'*8}")
-        
-        for ticker, metrics in results.items():
-            passed, _ = metrics.passed_quality_checks(self.config)
-            status = "✅ PASS" if passed else "❌ FAIL"
-            print(f"{ticker:<8} {metrics.retrieved_chunks:<11} {metrics.avg_relevance_score:<11.3f} "
-                  f"{metrics.source_diversity:<9} {metrics.avg_credibility:<12.3f} {status:<8}")
-    
-    def benchmark_retrieval_methods(self, ticker: str):
-        """Compare TF-IDF vs keyword-based retrieval"""
-        print(f"\n{'='*60}")
-        print(f"Benchmarking Retrieval Methods for {ticker}")
-        print(f"{'='*60}")
-        
-        company_map = {
-            "AAPL": "Apple Inc",
-            "NVDA": "NVIDIA Corporation",
-            "TSLA": "Tesla Inc",
-        }
-        company = company_map.get(ticker, ticker)
-        
-        # Test TF-IDF (default)
-        print(f"\n1️⃣  Testing TF-IDF Retrieval...")
-        start = time.time()
-        rag_tfidf = RAGPipeline(ticker=ticker, company=company, retrieval_query=f"{ticker} stock news")
-        rag_tfidf.ingest()
-        chunks_tfidf = rag_tfidf.get_chunks(top_k=10)
-        time_tfidf = (time.time() - start) * 1000
-        
-        print(f"   Retrieved: {len(chunks_tfidf)} chunks in {time_tfidf:.2f}ms")
-        print(f"   Sources: {len(set(c.source for c in chunks_tfidf))}")
-        
-        print(f"\n📊 Comparison:")
-        print(f"   TF-IDF:    {len(chunks_tfidf)} chunks | {time_tfidf:.2f}ms")
-        print(f"\n   ✅ TF-IDF provides better semantic matching and source diversity")
-    
-    def test_source_credibility_ranking(self, ticker: str):
-        """Validate that high-credibility sources are prioritized"""
-        print(f"\n{'='*60}")
-        print(f"Testing Source Credibility Ranking for {ticker}")
-        print(f"{'='*60}")
-        
-        company_map = {"AAPL": "Apple Inc", "NVDA": "NVIDIA Corporation"}
-        company = company_map.get(ticker, ticker)
-        
-        rag = RAGPipeline(ticker=ticker, company=company, retrieval_query=f"{ticker} stock")
+
+    # ---- RETRIEVAL ----
+    t0 = time.time()
+    try:
+        rag = RAGPipeline(
+            ticker=ticker,
+            company=company,
+            retrieval_query=query,
+            top_k=top_k,
+        )
         rag.ingest()
-        chunks = rag.get_chunks(top_k=15)
-        
-        if len(chunks) == 0:
-            print("⚠️  No chunks retrieved")
-            return
-        
-        # Check Bloomberg prioritization
-        bloomberg_chunks = [c for c in chunks if c.is_bloomberg]
-        high_cred_chunks = [c for c in chunks if c.credibility_weight >= 0.85]
-        
-        print(f"\n📊 Credibility Analysis:")
-        print(f"   Total chunks:        {len(chunks)}")
-        print(f"   Bloomberg chunks:    {len(bloomberg_chunks)}")
-        print(f"   High credibility:    {len(high_cred_chunks)} (≥0.85)")
-        
-        # Show credibility distribution
-        cred_dist = Counter([round(c.credibility_weight, 1) for c in chunks])
-        print(f"\n   Credibility distribution:")
-        for cred in sorted(cred_dist.keys(), reverse=True):
-            bar = '█' * cred_dist[cred]
-            print(f"   {cred:.1f}: {bar} ({cred_dist[cred]})")
-        
-        # Validation
-        if len(bloomberg_chunks) > 0:
-            print(f"\n✅ Bloomberg high-authority chunks are included")
-        
-        avg_cred = sum(c.credibility_weight for c in chunks) / len(chunks)
-        if avg_cred >= 0.70:
-            print(f"✅ Average credibility {avg_cred:.3f} meets threshold (≥0.70)")
-        else:
-            print(f"⚠️  Average credibility {avg_cred:.3f} below threshold (≥0.70)")
-    
-    def save_results(self, filepath: str = "rag_test_results.json"):
-        """Save test results to JSON file"""
-        output = {
-            "test_config": {
-                "top_k": self.config.top_k,
-                "min_relevance_score": self.config.min_relevance_score,
-                "min_source_diversity": self.config.min_source_diversity,
-                "min_credibility_avg": self.config.min_credibility_avg,
-            },
-            "results": [m.to_dict() for m in self.results],
-            "summary": {
-                "total_tests": len(self.results),
-                "passed_tests": sum(1 for m in self.results if m.passed_quality_checks(self.config)[0]),
-                "avg_relevance": sum(m.avg_relevance_score for m in self.results) / len(self.results) if self.results else 0,
-                "avg_source_diversity": sum(m.source_diversity for m in self.results) / len(self.results) if self.results else 0,
-                "avg_credibility": sum(m.avg_credibility for m in self.results) / len(self.results) if self.results else 0,
-            }
+        chunks = rag.get_chunks(top_k=top_k)
+        retrieval_ms = round((time.time() - t0) * 1000, 1)
+        total_indexed = rag.chunk_count
+    except Exception as e:
+        return {
+            "ticker": ticker,
+            "error": str(e),
+            "retrieval": {},
+            "generation": {},
+            "retrieval_pass": False,
+            "generation_pass": False,
+            "overall_pass": False,
         }
-        
-        with open(filepath, 'w') as f:
-            json.dump(output, f, indent=2)
-        
-        print(f"\n💾 Results saved to {filepath}")
+
+    ret = compute_retrieval_metrics(chunks, ticker, query_tokens)
+    ret["retrieval_time_ms"] = retrieval_ms
+    ret["chunks_indexed"] = total_indexed
+    ret["chunks_retrieved"] = len(chunks)
+
+    # ---- GENERATION ----
+    t1 = time.time()
+    try:
+        packet = run_full_pipeline(
+            ticker=ticker,
+            openai_api_key=None,   # heuristic mode — no LLM, no API call
+            top_k=top_k,
+            include_rss=True,
+        )
+        generation_ms = round((time.time() - t1) * 1000, 1)
+    except Exception as e:
+        packet = {}
+        generation_ms = 0
+
+    gen = compute_generation_metrics(packet, chunks, ticker)
+    gen["generation_time_ms"] = generation_ms
+
+    # ---- PASS / FAIL thresholds ----
+    retrieval_pass = (
+        ret["retrieval_score"] >= 40           # Recall@K + Precision@K + MRR >= 40
+        and ret["relevant_count"] >= 1          # At least 1 relevant chunk
+    )
+    generation_pass = (
+        gen["generation_score"] >= 50          # Overall generation >= 50
+        and gen["completeness"] >= 75           # All key fields present
+    )
+    overall_pass = retrieval_pass and generation_pass
+
+    if verbose:
+        _print_verbose(ticker, ret, gen, chunks)
+
+    return {
+        "ticker": ticker,
+        "retrieval": ret,
+        "generation": gen,
+        "retrieval_pass": retrieval_pass,
+        "generation_pass": generation_pass,
+        "overall_pass": overall_pass,
+    }
+
+
+def _print_verbose(ticker: str, ret: dict, gen: dict, chunks: list):
+    """Pretty-print detailed results for a single ticker."""
+    print(f"\n--- RETRIEVAL QUALITY (top-{ret['chunks_retrieved']} chunks) ---")
+    print(f"  Chunks indexed:      {ret['chunks_indexed']}")
+    print(f"  Chunks retrieved:    {ret['chunks_retrieved']}")
+    print(f"  Relevant chunks:     {ret['relevant_count']}/{ret['chunks_retrieved']} "
+          f"(threshold >= {RELEVANT_THRESHOLD})")
+    print(f"  Recall@{ret['chunks_retrieved']}:         {ret['recall_at_k']:.1f}/100")
+    print(f"  Precision@{ret['chunks_retrieved']}:      {ret['precision_at_k']:.1f}/100")
+    print(f"  MRR:                 {ret['mrr']:.1f}/100")
+    print(f"  Context Relevance:   {ret['context_relevance']:.1f}/100")
+    print(f"  Retrieval Score:     {ret['retrieval_score']}/100")
+    print(f"  Retrieval time:      {ret['retrieval_time_ms']}ms")
+
+    print(f"\n  Chunk-level relevance scores:")
+    for i, (chunk, score) in enumerate(zip(chunks, ret['chunk_scores']), 1):
+        relevant = "RELEVANT" if score >= RELEVANT_THRESHOLD else "not relevant"
+        src = chunk.source[:20].ljust(20)
+        print(f"    [{i:2d}] {src}  score={score:.3f}  ({relevant})")
+        if score >= RELEVANT_THRESHOLD:
+            print(f"         {chunk.title[:70]}...")
+
+    print(f"\n--- GENERATION QUALITY ---")
+    print(f"  Direction:           {gen['direction']}")
+    print(f"  Confidence:          {gen['confidence']}")
+    print(f"  Completeness:        {gen['completeness']:.1f}/100")
+    print(f"  Correctness:         {gen['correctness']:.1f}/100")
+    print(f"  Groundedness:        {gen['groundedness']:.1f}/100")
+    print(f"  Coherence:           {gen['coherence']:.1f}/100")
+    print(f"  Generation Score:    {gen['generation_score']}/100")
+    print(f"  Label:               {gen['label'].upper()}")
+    print(f"  Generation time:     {gen['generation_time_ms']}ms")
 
 
 # ---------------------------------------------------------------------------
-# CLI Interface
+# Multi-ticker summary
+# ---------------------------------------------------------------------------
+
+def run_all_tests(top_k: int = 8, verbose: bool = False) -> List[dict]:
+    print(f"\n{'='*60}")
+    print(f"FinSight RAG Evaluation — {len(DEFAULT_TICKERS)} Tickers")
+    print(f"  Retrieval:  Recall@K, Precision@K, MRR, Context Relevance")
+    print(f"  Generation: Groundedness, Completeness, Correctness, Coherence")
+    print(f"{'='*60}")
+
+    results = []
+    for ticker in DEFAULT_TICKERS:
+        r = evaluate_ticker(ticker, top_k=top_k, verbose=verbose)
+        results.append(r)
+        if not verbose:
+            ret_s = r["retrieval"].get("retrieval_score", 0)
+            gen_s = r["generation"].get("generation_score", 0)
+            label = r["generation"].get("label", "N/A")
+            status = "PASS" if r["overall_pass"] else "FAIL"
+            print(f"  {ticker:<6}  Retrieval={ret_s:3d}  Generation={gen_s:3d}  "
+                  f"Label={label:<13} {status}")
+
+    _print_summary(results)
+    return results
+
+
+def _print_summary(results: List[dict]):
+    valid = [r for r in results if "error" not in r]
+    if not valid:
+        print("\nNo valid results.")
+        return
+
+    total = len(valid)
+    passed = sum(1 for r in valid if r["overall_pass"])
+    ret_pass = sum(1 for r in valid if r["retrieval_pass"])
+    gen_pass = sum(1 for r in valid if r["generation_pass"])
+
+    avg_ret = sum(r["retrieval"].get("retrieval_score", 0) for r in valid) / total
+    avg_recall = sum(r["retrieval"].get("recall_at_k", 0) for r in valid) / total
+    avg_prec = sum(r["retrieval"].get("precision_at_k", 0) for r in valid) / total
+    avg_mrr = sum(r["retrieval"].get("mrr", 0) for r in valid) / total
+    avg_ctx = sum(r["retrieval"].get("context_relevance", 0) for r in valid) / total
+
+    avg_gen = sum(r["generation"].get("generation_score", 0) for r in valid) / total
+    avg_ground = sum(r["generation"].get("groundedness", 0) for r in valid) / total
+    avg_complete = sum(r["generation"].get("completeness", 0) for r in valid) / total
+    avg_correct = sum(r["generation"].get("correctness", 0) for r in valid) / total
+    avg_coher = sum(r["generation"].get("coherence", 0) for r in valid) / total
+
+    print(f"\n{'='*60}")
+    print(f"SUMMARY")
+    print(f"{'='*60}")
+    print(f"  Overall PASS:        {passed}/{total}")
+    print(f"  Retrieval PASS:      {ret_pass}/{total}")
+    print(f"  Generation PASS:     {gen_pass}/{total}")
+
+    print(f"\n  --- Retrieval Averages ---")
+    print(f"  Recall@K:            {avg_recall:.1f}/100")
+    print(f"  Precision@K:         {avg_prec:.1f}/100")
+    print(f"  MRR:                 {avg_mrr:.1f}/100")
+    print(f"  Context Relevance:   {avg_ctx:.1f}/100")
+    print(f"  Retrieval Score:     {avg_ret:.1f}/100")
+
+    print(f"\n  --- Generation Averages ---")
+    print(f"  Groundedness:        {avg_ground:.1f}/100")
+    print(f"  Completeness:        {avg_complete:.1f}/100")
+    print(f"  Correctness:         {avg_correct:.1f}/100")
+    print(f"  Coherence:           {avg_coher:.1f}/100")
+    print(f"  Generation Score:    {avg_gen:.1f}/100")
+
+    label_counts = {}
+    for r in valid:
+        lbl = r["generation"].get("label", "N/A")
+        label_counts[lbl] = label_counts.get(lbl, 0) + 1
+    print(f"\n  --- Labels ---")
+    for lbl, cnt in sorted(label_counts.items()):
+        print(f"  {lbl:<15}: {cnt}/{total}")
+
+    print(f"\n{'='*60}")
+    header = f"{'Ticker':<6}  {'Ret Score':>9}  {'Recall@K':>8}  {'Prec@K':>6}  {'MRR':>5}  {'Ground':>6}  {'Complt':>6}  {'GenScr':>6}  {'Label':<13}  {'Status'}"
+    print(header)
+    print("-" * len(header))
+    for r in valid:
+        ret = r["retrieval"]
+        gen = r["generation"]
+        status = "PASS" if r["overall_pass"] else "FAIL"
+        print(
+            f"{r['ticker']:<6}  "
+            f"{ret.get('retrieval_score',0):>9}  "
+            f"{ret.get('recall_at_k',0):>8.1f}  "
+            f"{ret.get('precision_at_k',0):>6.1f}  "
+            f"{ret.get('mrr',0):>5.1f}  "
+            f"{gen.get('groundedness',0):>6.1f}  "
+            f"{gen.get('completeness',0):>6.1f}  "
+            f"{gen.get('generation_score',0):>6}  "
+            f"{gen.get('label','N/A'):<13}  "
+            f"{status}"
+        )
+
+
+# ---------------------------------------------------------------------------
+# CLI
 # ---------------------------------------------------------------------------
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Test RAG retrieval quality for FinSight",
+        description="FinSight RAG Quality Evaluation",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
+Evaluates retrieval quality and generation quality separately.
+
 Examples:
   python test_rag_quality.py --ticker AAPL --verbose
   python test_rag_quality.py --run-all-tests
-  python test_rag_quality.py --benchmark NVDA
-  python test_rag_quality.py --test-credibility TSLA
-        """
+  python test_rag_quality.py --run-all-tests --save-results demo_data/rag_eval_results.json
+        """,
     )
-    
-    parser.add_argument(
-        "--ticker",
-        type=str,
-        default="AAPL",
-        help="Stock ticker to test (default: AAPL)"
-    )
-    
-    parser.add_argument(
-        "--run-all-tests",
-        action="store_true",
-        help="Run tests on all default tickers"
-    )
-    
-    parser.add_argument(
-        "--benchmark",
-        type=str,
-        metavar="TICKER",
-        help="Benchmark retrieval methods for specified ticker"
-    )
-    
-    parser.add_argument(
-        "--test-credibility",
-        type=str,
-        metavar="TICKER",
-        help="Test source credibility ranking for specified ticker"
-    )
-    
-    parser.add_argument(
-        "--top-k",
-        type=int,
-        default=10,
-        help="Number of chunks to retrieve (default: 10)"
-    )
-    
-    parser.add_argument(
-        "--verbose",
-        action="store_true",
-        help="Enable verbose output"
-    )
-    
-    parser.add_argument(
-        "--save-results",
-        type=str,
-        metavar="FILE",
-        help="Save results to JSON file"
-    )
-    
+    parser.add_argument("--ticker", default="AAPL", help="Ticker to test (default: AAPL)")
+    parser.add_argument("--run-all-tests", action="store_true", help="Test all 9 default tickers")
+    parser.add_argument("--top-k", type=int, default=8, help="Chunks to retrieve (default: 8)")
+    parser.add_argument("--verbose", action="store_true", help="Show detailed chunk-level scores")
+    parser.add_argument("--save-results", metavar="FILE", help="Save results to JSON")
+
+    # Legacy compatibility flags (accepted but treated as no-ops or redirected)
+    parser.add_argument("--benchmark", metavar="TICKER", help="Run single-ticker verbose evaluation")
+    parser.add_argument("--test-credibility", metavar="TICKER", help="Alias for --ticker TICKER --verbose")
+
     args = parser.parse_args()
-    
-    # Create config
-    config = RAGTestConfig(
-        ticker=args.ticker,
-        top_k=args.top_k,
-        verbose=args.verbose
-    )
-    
-    # Create tester
-    tester = RAGQualityTester(config)
-    
-    # Run tests based on arguments
+
+    # Handle legacy flags
+    if args.benchmark:
+        args.ticker = args.benchmark
+        args.verbose = True
+    if args.test_credibility:
+        args.ticker = args.test_credibility
+        args.verbose = True
+
+    results = []
     if args.run_all_tests:
-        tester.test_multiple_tickers()
-    elif args.benchmark:
-        tester.benchmark_retrieval_methods(args.benchmark)
-    elif args.test_credibility:
-        tester.test_source_credibility_ranking(args.test_credibility)
+        results = run_all_tests(top_k=args.top_k, verbose=args.verbose)
     else:
-        # Single ticker test
-        metrics = tester.test_single_ticker(args.ticker)
-        tester.results.append(metrics)
-    
-    # Save results if requested
+        r = evaluate_ticker(args.ticker, top_k=args.top_k, verbose=args.verbose)
+        results = [r]
+        if not args.verbose:
+            ret_s = r["retrieval"].get("retrieval_score", 0)
+            gen_s = r["generation"].get("generation_score", 0)
+            label = r["generation"].get("label", "N/A")
+            status = "PASS" if r["overall_pass"] else "FAIL"
+            print(f"\n{args.ticker}: Retrieval={ret_s}/100  Generation={gen_s}/100  "
+                  f"Label={label}  {status}")
+
     if args.save_results:
-        tester.save_results(args.save_results)
-    
-    # Return exit code based on test results
-    if tester.results:
-        passed = sum(1 for m in tester.results if m.passed_quality_checks(config)[0])
-        if passed == len(tester.results):
-            print(f"\n✅ All tests passed!")
-            return 0
-        else:
-            print(f"\n⚠️  {len(tester.results) - passed}/{len(tester.results)} tests failed")
-            return 1
-    
-    return 0
+        # Build a clean summary for JSON
+        output = {
+            "tickers": results,
+            "summary": {
+                "total": len(results),
+                "overall_pass": sum(1 for r in results if r.get("overall_pass")),
+                "retrieval_pass": sum(1 for r in results if r.get("retrieval_pass")),
+                "generation_pass": sum(1 for r in results if r.get("generation_pass")),
+            }
+        }
+        with open(args.save_results, "w") as f:
+            json.dump(output, f, indent=2)
+        print(f"\nResults saved to {args.save_results}")
+
+    # Exit code
+    all_passed = all(r.get("overall_pass", False) for r in results)
+    if all_passed:
+        print(f"\nAll tests passed!")
+        return 0
+    else:
+        failed = [r["ticker"] for r in results if not r.get("overall_pass")]
+        print(f"\nFailed tickers: {', '.join(failed)}")
+        return 1
 
 
 if __name__ == "__main__":

@@ -14,6 +14,7 @@ from src.finance_news_analyzer.evaluation import (
     build_metric_table,
     load_prices,
     load_signals,
+    summarize_method,
 )
 
 # Lazy import so the UI loads even if optional agent deps are missing
@@ -28,6 +29,7 @@ def _try_import_runner():
 ROOT = Path(__file__).resolve().parent
 SIGNALS_PATH = ROOT / "demo_data" / "signals.json"
 PRICES_PATH = ROOT / "demo_data" / "prices.csv"
+EVALUATION_SIGNALS_PATH = ROOT / "demo_data" / "evaluation_signals.json"
 
 
 # ── Helpers for market-scan research-packet creation ──────────────────────────
@@ -404,6 +406,82 @@ def load_demo_data() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     return signals, prices, evaluated
 
 
+@st.cache_data
+def load_historical_evaluation_sample() -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Load the bundled historical sample used when live signals are too recent to score."""
+    if not EVALUATION_SIGNALS_PATH.exists():
+        return pd.DataFrame(), pd.DataFrame()
+
+    sample_signals = load_signals(EVALUATION_SIGNALS_PATH)
+    sample_prices = load_prices(PRICES_PATH)
+    sample_evaluated = attach_forward_returns(sample_signals, sample_prices)
+    return sample_signals, sample_evaluated
+
+
+def has_forward_coverage(evaluated_df: pd.DataFrame, horizon_days: int = 5) -> bool:
+    ret_col = f"return_{horizon_days}d"
+    return (
+        not evaluated_df.empty
+        and ret_col in evaluated_df.columns
+        and evaluated_df[ret_col].notna().any()
+    )
+
+
+def build_dashboard_metrics(evaluated_df: pd.DataFrame) -> pd.DataFrame:
+    """Build the Evaluation tab table from actual attached forward returns."""
+    rows = []
+    method_map = {
+        "direction": "Multi-Agent RAG",
+        "baseline_sentiment": "Sentiment Baseline",
+        "baseline_random": "Random Baseline",
+    }
+
+    for horizon in (5, 20):
+        return_col = f"return_{horizon}d"
+        coverage = (
+            evaluated_df[return_col].notna().mean()
+            if return_col in evaluated_df.columns and len(evaluated_df)
+            else 0.0
+        )
+        for column, label in method_map.items():
+            summary = summarize_method(evaluated_df, column, horizon)
+            rows.append(
+                {
+                    "method": label,
+                    "horizon": f"{horizon}d",
+                    "signals": summary.signals,
+                    "hit_rate": summary.hit_rate,
+                    "avg_signed_return": summary.avg_signed_return,
+                    "avg_raw_return": summary.avg_raw_return,
+                    "signal_coverage": coverage,
+                }
+            )
+    return pd.DataFrame(rows)
+
+
+def outcome_display_frame(evaluated_df: pd.DataFrame) -> pd.DataFrame:
+    """Format signal-level RAG outcomes for the Evaluation tab."""
+    if evaluated_df.empty:
+        return pd.DataFrame()
+
+    rows = []
+    for _, row in evaluated_df.iterrows():
+        ret5 = row.get("return_5d")
+        ret20 = row.get("return_20d")
+        rows.append(
+            {
+                "ticker": row.get("ticker"),
+                "direction": row.get("direction"),
+                "Confidence": pct(row.get("confidence"), 0),
+                "5d Return": "" if pd.isna(ret5) else pct(ret5, 2),
+                "5d Hit": "" if pd.isna(ret5) else ("Pass" if summarize_method(pd.DataFrame([row]), "direction", 5).hit_rate == 1 else "Miss"),
+                "20d Return": "" if pd.isna(ret20) else pct(ret20, 2),
+                "20d Hit": "" if pd.isna(ret20) else ("Pass" if summarize_method(pd.DataFrame([row]), "direction", 20).hit_rate == 1 else "Miss"),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def pct(value: float | int | None, decimals: int = 1) -> str:
     if value is None or pd.isna(value):
         return "n/a"
@@ -550,6 +628,8 @@ except Exception:
         {"method": "Sentiment Baseline", "horizon": "5d", "signals": 0, "hit_rate": 0.5, "avg_signed_return": 0.0, "avg_raw_return": 0.0},
         {"method": "Random Baseline", "horizon": "5d", "signals": 0, "hit_rate": 0.5, "avg_signed_return": 0.0, "avg_raw_return": 0.0},
     ])
+
+eval_sample_signals, eval_sample_evaluated = load_historical_evaluation_sample()
 
 with st.sidebar:
     _title_col, _gear_col = st.columns([0.82, 0.18])
@@ -781,9 +861,25 @@ def _header_hit(df, hz):
 _hdr_hr5  = _header_hit(_header_real_eval, 5)
 _hdr_hr20 = _header_hit(_header_real_eval, 20)
 
-# Fall back to demo-data metric if no real eval data yet
-best_metric = metrics[(metrics["method"] == "Multi-Agent RAG") & (metrics["horizon"] == "5d")]
-hit_rate_5d = _hdr_hr5 if _hdr_hr5 > 0 else (best_metric["hit_rate"].iloc[0] if len(best_metric) else 0)
+# Fall back to the bundled historical evaluation sample when current live
+# signals are too recent to have realized forward-return labels.
+_header_has_live_5d = (
+    not _header_real_eval.empty
+    and "ret5d" in _header_real_eval.columns
+    and _header_real_eval["ret5d"].notna().any()
+)
+if _header_has_live_5d:
+    hit_rate_5d = _hdr_hr5
+elif has_forward_coverage(eval_sample_evaluated, 5):
+    _sample_header_metrics = build_dashboard_metrics(eval_sample_evaluated)
+    _sample_best_metric = _sample_header_metrics[
+        (_sample_header_metrics["method"] == "Multi-Agent RAG")
+        & (_sample_header_metrics["horizon"] == "5d")
+    ]
+    hit_rate_5d = _sample_best_metric["hit_rate"].iloc[0] if len(_sample_best_metric) else 0
+else:
+    best_metric = metrics[(metrics["method"] == "Multi-Agent RAG") & (metrics["horizon"] == "5d")]
+    hit_rate_5d = best_metric["hit_rate"].iloc[0] if len(best_metric) else 0
 
 st.markdown(
     f"""
@@ -1854,12 +1950,12 @@ with tab_evidence:
 with tab_evaluation:
     st.markdown("#### Backtest Diagnostics")
 
-    # ── De-duplicate signals: keep only non-scan, best (highest conf) per ticker ──
     @st.cache_data(ttl=3600)
     def _compute_real_eval(signal_rows: tuple) -> pd.DataFrame:
-        """Compute real forward returns from yfinance for each (ticker, direction, date, horizon)."""
+        """Compute live forward returns from yfinance when enough future data exists."""
         import yfinance as yf
         from datetime import datetime, timezone
+
         rows = []
         for tkr, direction, pub_at, horizon, confidence in signal_rows:
             try:
@@ -1867,139 +1963,146 @@ with tab_evaluation:
                     sig_date = datetime.fromisoformat(str(pub_at)).date()
                 except Exception:
                     sig_date = datetime.now(timezone.utc).date()
+
                 h = yf.Ticker(tkr).history(period="1y")
                 if h.empty or len(h) < 3:
                     continue
                 h.index = [d.date() if hasattr(d, "date") else d for d in h.index]
-                h.index = sorted(h.index)
+                h = h.sort_index()
                 future = h[h.index >= sig_date]
-                if future.empty or len(future) < 3:
-                    future = h.tail(25)
+                if future.empty:
+                    continue
+
                 entry = float(future["Close"].iloc[0])
-                # 5d forward return
-                ret5d, hit5d = None, None
-                if len(future) >= 6:
-                    exit5 = float(future["Close"].iloc[5])
-                    ret5d = (exit5 - entry) / entry if entry else 0.0
-                    hit5d = (direction == "Bullish" and ret5d > 0) or                             (direction == "Bearish" and ret5d < 0) or                             (direction == "Neutral")
-                # 20d forward return
-                ret20d, hit20d = None, None
-                if len(future) >= 21:
-                    exit20 = float(future["Close"].iloc[20])
-                    ret20d = (exit20 - entry) / entry if entry else 0.0
-                    hit20d = (direction == "Bullish" and ret20d > 0) or                              (direction == "Bearish" and ret20d < 0) or                              (direction == "Neutral")
-                # Signed return: positive if direction was correct
-                signed5d = ret5d if hit5d else (-ret5d if ret5d is not None else None)
-                signed20d = ret20d if hit20d else (-ret20d if ret20d is not None else None)
-                rows.append({
+                row = {
                     "ticker": tkr,
                     "direction": direction,
                     "confidence": confidence,
                     "horizon_days": horizon,
-                    "ret5d": ret5d,
-                    "ret20d": ret20d,
-                    "hit5d": hit5d,
-                    "hit20d": hit20d,
-                    "signed5d": signed5d,
-                    "signed20d": signed20d,
-                })
+                }
+                for hz in (5, 20):
+                    ret_col = f"ret{hz}d"
+                    hit_col = f"hit{hz}d"
+                    signed_col = f"signed{hz}d"
+                    if len(future) >= hz + 1:
+                        exit_price = float(future["Close"].iloc[hz])
+                        ret = (exit_price - entry) / entry if entry else 0.0
+                        hit = (
+                            (direction == "Bullish" and ret > 0)
+                            or (direction == "Bearish" and ret < 0)
+                            or (direction == "Neutral" and abs(ret) < 0.01)
+                        )
+                        row[ret_col] = ret
+                        row[hit_col] = hit
+                        row[signed_col] = ret if hit else -ret
+                    else:
+                        row[ret_col] = None
+                        row[hit_col] = None
+                        row[signed_col] = None
+                rows.append(row)
             except Exception:
                 continue
         return pd.DataFrame(rows) if rows else pd.DataFrame()
 
-    # Build de-duplicated signal list (non-scan, best per ticker)
     _eval_signals = signals[~signals["id"].str.contains("scan", na=False)].copy()
-    # Keep highest confidence per ticker
     _eval_signals = _eval_signals.sort_values("confidence", ascending=False).drop_duplicates(subset=["ticker"], keep="first")
-
     _sig_rows_eval = tuple(
-        (r["ticker"], r["direction"], str(r.get("published_at","")),
-         int(r.get("horizon_days", 5)), float(r.get("confidence", 0.5)))
+        (r["ticker"], r["direction"], str(r.get("published_at", "")), int(r.get("horizon_days", 5)), float(r.get("confidence", 0.5)))
         for _, r in _eval_signals.iterrows()
     )
 
-    with st.spinner("Computing real-world forward returns from yfinance…"):
+    with st.spinner("Computing forward-return evaluation..."):
         _real_eval = _compute_real_eval(_sig_rows_eval)
 
-    # ── Compute quantitative metrics ─────────────────────────────────────────
-    def _eval_metrics(df: "pd.DataFrame", hz: int):
-        """Compute hit rate, avg signed return, avg raw return, signal coverage for a horizon."""
-        col_ret = f"ret{hz}d"; col_hit = f"hit{hz}d"; col_sgn = f"signed{hz}d"
-        if df.empty or col_ret not in df.columns:
-            return 0.0, 0.0, 0.0, 0.0
-        valid = df[df[col_ret].notna()]
-        coverage = len(valid) / len(df) if len(df) else 0.0
-        hit_rate = valid[col_hit].mean() if len(valid) else 0.0
-        avg_signed = valid[col_sgn].mean() if len(valid) else 0.0
-        avg_raw = valid[col_ret].abs().mean() if len(valid) else 0.0
-        return hit_rate, avg_signed, avg_raw, coverage
+    _live_has_returns = (
+        not _real_eval.empty
+        and (
+            ("ret5d" in _real_eval.columns and _real_eval["ret5d"].notna().any())
+            or ("ret20d" in _real_eval.columns and _real_eval["ret20d"].notna().any())
+        )
+    )
 
-    if not _real_eval.empty:
-        _hr5, _asr5, _arr5, _cov5   = _eval_metrics(_real_eval, 5)
-        _hr20, _asr20, _arr20, _cov20 = _eval_metrics(_real_eval, 20)
+    def _live_metric_rows(df: pd.DataFrame) -> pd.DataFrame:
+        rows = []
+        for hz in (5, 20):
+            ret_col = f"ret{hz}d"
+            hit_col = f"hit{hz}d"
+            signed_col = f"signed{hz}d"
+            valid = df[df[ret_col].notna()] if ret_col in df.columns else pd.DataFrame()
+            coverage = len(valid) / len(df) if len(df) else 0.0
+            hit_rate = float(valid[hit_col].mean()) if len(valid) else 0.0
+            avg_signed = float(valid[signed_col].mean()) if len(valid) else 0.0
+            avg_raw = float(valid[ret_col].mean()) if len(valid) else 0.0
+            rows.append({
+                "method": "Multi-Agent RAG",
+                "horizon": f"{hz}d",
+                "signals": len(valid),
+                "hit_rate": hit_rate,
+                "avg_signed_return": avg_signed,
+                "avg_raw_return": avg_raw,
+                "signal_coverage": coverage,
+            })
+        return pd.DataFrame(rows)
+
+    if _live_has_returns:
+        _chart_metrics = _live_metric_rows(_real_eval)
+        _eval_source_note = "Live signal evaluation using available realized yfinance forward returns."
+        _outcome_rows = pd.DataFrame()
         _n = len(_real_eval)
+        _avg_confidence = _eval_signals["confidence"].mean() if len(_eval_signals) else 0.0
     else:
-        _hr5 = _hr20 = 0.0
-        _asr5 = _asr20 = _arr5 = _arr20 = _cov5 = _cov20 = 0.0
-        _n = len(_eval_signals)
+        _chart_metrics = build_dashboard_metrics(eval_sample_evaluated)
+        _eval_source_note = (
+            "Current live signals are too recent for realized 5d/20d outcomes, so this panel uses "
+            "the bundled historical demo evaluation sample aligned with demo_data/prices.csv."
+        )
+        _outcome_rows = outcome_display_frame(eval_sample_evaluated)
+        _n = int(eval_sample_evaluated["id"].nunique()) if "id" in eval_sample_evaluated.columns else len(eval_sample_evaluated)
+        _avg_confidence = eval_sample_evaluated["confidence"].mean() if len(eval_sample_evaluated) else 0.0
 
-    # ── Metric cards ────────────────────────────────────────────────────────
+    def _metric_value(method: str, horizon: str, col: str, default=0.0):
+        row = _chart_metrics[(_chart_metrics["method"] == method) & (_chart_metrics["horizon"] == horizon)]
+        return row[col].iloc[0] if len(row) else default
+
+    _hr5 = float(_metric_value("Multi-Agent RAG", "5d", "hit_rate"))
+    _hr20 = float(_metric_value("Multi-Agent RAG", "20d", "hit_rate"))
+
+    st.caption(_eval_source_note)
+
     mc = st.columns(4)
-    mc[0].metric("RAG 5d hit rate",  pct(_hr5,  0), help="Directional accuracy vs real yfinance returns")
+    mc[0].metric("RAG 5d hit rate", pct(_hr5, 0), help="Directional accuracy against realized forward returns in the displayed evaluation source.")
     mc[1].metric("RAG 20d hit rate", pct(_hr20, 0))
-    mc[2].metric("Avg confidence",   pct(_eval_signals["confidence"].mean() if len(_eval_signals) else 0.0, 0))
+    mc[2].metric("Avg confidence", pct(_avg_confidence, 0))
     mc[3].metric("Signals evaluated", _n)
 
-    # ── Hit rate comparison bar chart ─────────────────────────────────────────
-    _chart_real = pd.DataFrame([
-        {"method": "Multi-Agent RAG", "horizon": "5d",  "hit_rate": _hr5},
-        {"method": "Multi-Agent RAG", "horizon": "20d", "hit_rate": _hr20},
-        {"method": "Sentiment Baseline", "horizon": "5d",  "hit_rate": 0.50},
-        {"method": "Sentiment Baseline", "horizon": "20d", "hit_rate": 0.50},
-        {"method": "Random Baseline", "horizon": "5d",  "hit_rate": 0.50},
-        {"method": "Random Baseline", "horizon": "20d", "hit_rate": 0.50},
-    ])
     fig_eval = px.bar(
-        _chart_real, x="method", y="hit_rate", color="horizon",
-        barmode="group", range_y=[0, 1],
+        _chart_metrics,
+        x="method",
+        y="hit_rate",
+        color="horizon",
+        barmode="group",
+        range_y=[0, 1],
         color_discrete_sequence=["#126c83", "#7a5c00"],
-        labels={"method": "", "hit_rate": "Directional hit rate (real yfinance data)"},
+        labels={"method": "", "hit_rate": "Directional hit rate"},
     )
     fig_eval.update_layout(height=310, margin=dict(l=8, r=8, t=20, b=8), legend_title_text="")
     st.plotly_chart(fig_eval, use_container_width=True)
 
-    # ── Quantitative metrics table ────────────────────────────────────────────
-    _metrics_df = pd.DataFrame([
-        {"method": "Multi-Agent RAG", "horizon": "5d",
-         "signals": _n, "hit_rate": pct(_hr5, 0),
-         "avg_signed_return": pct(_asr5, 2), "avg_raw_return": pct(_arr5, 2),
-         "signal_coverage": pct(_cov5, 0)},
-        {"method": "Multi-Agent RAG", "horizon": "20d",
-         "signals": _n, "hit_rate": pct(_hr20, 0),
-         "avg_signed_return": pct(_asr20, 2), "avg_raw_return": pct(_arr20, 2),
-         "signal_coverage": pct(_cov20, 0)},
-        {"method": "Sentiment Baseline", "horizon": "5d",
-         "signals": _n, "hit_rate": "50%",
-         "avg_signed_return": pct(_arr5 * 0.5, 2) if _arr5 else "n/a",
-         "avg_raw_return": pct(_arr5, 2) if _arr5 else "n/a", "signal_coverage": pct(_cov5, 0)},
-        {"method": "Random Baseline", "horizon": "5d",
-         "signals": _n, "hit_rate": "50%",
-         "avg_signed_return": "0.00%",
-         "avg_raw_return": pct(_arr5, 2) if _arr5 else "n/a", "signal_coverage": pct(_cov5, 0)},
-    ])
+    _metrics_df = _chart_metrics.copy()
+    _metrics_df["hit_rate"] = _metrics_df["hit_rate"].map(lambda x: pct(x, 0))
+    _metrics_df["avg_signed_return"] = _metrics_df["avg_signed_return"].map(lambda x: pct(x, 2))
+    _metrics_df["avg_raw_return"] = _metrics_df["avg_raw_return"].map(lambda x: pct(x, 2))
+    _metrics_df["signal_coverage"] = _metrics_df["signal_coverage"].map(lambda x: pct(x, 0))
     st.dataframe(_metrics_df, use_container_width=True, hide_index=True)
 
-    # ── Signal-Level Outcomes ─────────────────────────────────────────────────
     st.markdown("#### Signal-Level Outcomes")
-    if not _real_eval.empty:
+    if not _outcome_rows.empty:
+        st.dataframe(_outcome_rows, use_container_width=True, hide_index=True)
+    elif not _real_eval.empty:
         _disp = _real_eval.copy()
-        _disp["5d Return"]  = _disp["ret5d"].map(lambda x: "" if (x is None or (isinstance(x, float) and pd.isna(x))) else pct(x, 2))
-        _disp["20d Return"] = _disp["ret20d"].map(lambda x: "" if (x is None or (isinstance(x, float) and pd.isna(x))) else pct(x, 2))
-        _disp["5d Hit"]  = _disp["hit5d"].map(lambda x: "✅" if x is True else ("❌" if x is False else "—"))
-        _disp["20d Hit"] = _disp["hit20d"].map(lambda x: "✅" if x is True else ("❌" if x is False else "—"))
         _disp["Confidence"] = _disp["confidence"].map(lambda x: pct(x, 0) if x is not None else "n/a")
-        _disp_show = _disp[["ticker", "direction", "Confidence", "5d Return", "5d Hit", "20d Return", "20d Hit"]]
-        st.dataframe(_disp_show, use_container_width=True, hide_index=True)
+        _disp["5d Return"] = _disp["ret5d"].map(lambda x: "" if pd.isna(x) else pct(x, 2))
+        _disp["20d Return"] = _disp["ret20d"].map(lambda x: "" if pd.isna(x) else pct(x, 2))
+        st.dataframe(_disp[["ticker", "direction", "Confidence", "5d Return", "20d Return"]], use_container_width=True, hide_index=True)
     else:
-        st.info("No real forward returns available yet — run Live Analysis on tickers to generate signals with real data.")
-
+        st.info("No evaluation rows are available yet.")
