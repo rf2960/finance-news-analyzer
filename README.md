@@ -11,6 +11,15 @@ FinSight RAG converts financial news into structured short-horizon investment hy
 
 This is an educational research project. It is not financial advice.
 
+## Quick Links
+
+| Need | Where to Go |
+|---|---|
+| Run the interactive demo UI | See [Access the Demo UI](#access-the-demo-ui). |
+| Read the final report | Open [`docs/final_report.pdf`](docs/final_report.pdf). |
+| View the system architecture | See [System Architecture](#system-architecture). |
+| Check metrics and visualization inputs | See [Metrics and Visualization Assets](#metrics-and-visualization-assets). |
+
 ## Why This Project
 
 Financial headlines are noisy. A positive article does not automatically imply a positive forward return, and simple sentiment scores usually miss source credibility, novelty, counter-evidence, and market context.
@@ -32,7 +41,18 @@ FinSight RAG was built to test a narrower question:
 
 ## Demo
 
-The app includes five main views:
+### Access the Demo UI
+
+The project UI is a local Streamlit dashboard. After setup, run:
+
+```bash
+cd FinSight_RAG
+streamlit run app.py
+```
+
+Then open the local URL printed by Streamlit, usually `http://localhost:8501`.
+
+The dashboard includes five main views:
 
 | View | Purpose |
 |---|---|
@@ -42,27 +62,18 @@ The app includes five main views:
 | Evidence Audit | Review retrieved evidence, citations, and source credibility. |
 | Evaluation Lab | Compare multi-agent RAG signals against baselines. |
 
-Demo media placeholders are organized in [`docs/demo/`](docs/demo/) and [`docs/screenshots/`](docs/screenshots/). Add the final GIF/video or UI screenshots there before public release.
+Demo media is organized in [`docs/demo/`](docs/demo/) and [`docs/screenshots/`](docs/screenshots/). The current repository includes the system architecture image; final UI screenshots or a short walkthrough video can be added there when available.
 
 ## Project Artifacts
 
 - [Final Report](docs/final_report.pdf)
 - [Project Proposal](docs/project_proposal.pdf)
 - [Archived Project Plan](docs/archive/final_project_plan_0423.docx)
+- [System Architecture Image](docs/screenshots/system-architecture.png)
 
-## System Workflow
+## System Architecture
 
-```mermaid
-flowchart LR
-    A["Ticker / market event"] --> B["News ingestion"]
-    B --> C["RAG retrieval<br/>TF-IDF + source weighting"]
-    C --> D["Evidence enrichment<br/>technical factors + macro context"]
-    D --> E["Analyst Agent<br/>extract claims and evidence"]
-    E --> F["Strategist Agent<br/>build thesis and counter-evidence"]
-    F --> G["Decision Agent<br/>direction + confidence"]
-    G --> H["Signal packet<br/>citations + agent trace"]
-    H --> I["Dashboard + evaluation"]
-```
+![FinSight RAG system architecture](docs/screenshots/system-architecture.png)
 
 The implementation supports two execution modes:
 
@@ -137,6 +148,20 @@ The final report currently includes:
 
 The current numbers are intended as a project evaluation sample, not a production trading result.
 
+## Metrics and Visualization Assets
+
+The evaluation tables and charts shown in the report come from the bundled demo data and app evaluation view:
+
+| Asset | Location | Use |
+|---|---|---|
+| Historical signal sample | [`FinSight_RAG/demo_data/evaluation_signals.json`](FinSight_RAG/demo_data/evaluation_signals.json) | Demo signals used for 5-day and 20-day forward-return evaluation. |
+| Price sample | [`FinSight_RAG/demo_data/prices.csv`](FinSight_RAG/demo_data/prices.csv) | Price data used to attach realized returns to demo signals. |
+| RAG quality results | [`FinSight_RAG/demo_data/rag_eval_results.json`](FinSight_RAG/demo_data/rag_eval_results.json) | Retrieval and generation quality metrics for the report. |
+| Evaluation code | [`FinSight_RAG/src/finance_news_analyzer/evaluation.py`](FinSight_RAG/src/finance_news_analyzer/evaluation.py) | Computes directional hit rate, signed return, and baseline comparisons. |
+| RAG quality test | [`FinSight_RAG/test_rag_quality.py`](FinSight_RAG/test_rag_quality.py) | Produces retrieval/generation quality results. |
+
+For visual inspection, run the Streamlit app and open the **Evaluation Lab** tab. That tab displays the metric charts used to support the report discussion.
+
 ## Repository Structure
 
 ```text
@@ -148,6 +173,7 @@ The current numbers are intended as a project evaluation sample, not a productio
 |   |-- project_proposal.pdf
 |   |-- demo/
 |   |-- screenshots/
+|   |   `-- system-architecture.png
 |   `-- archive/
 |-- FinSight_RAG/
 |   |-- app.py

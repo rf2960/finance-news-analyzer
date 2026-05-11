@@ -1,6 +1,10 @@
 # Screenshots
 
-Place polished UI screenshots here before public release.
+This folder stores visual assets referenced by the GitHub README and report materials.
+
+Current asset:
+
+- `system-architecture.png`: high-resolution FinSight RAG system architecture diagram.
 
 Recommended filenames:
 
@@ -9,4 +13,4 @@ Recommended filenames:
 - `evaluation-lab.png`
 - `market-monitor.png`
 
-The README is already structured to reference demo media once these assets are added.
+Future UI screenshots can be added with these names and linked from the README demo section.
