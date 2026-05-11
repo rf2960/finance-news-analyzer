@@ -68,7 +68,6 @@ Demo media is organized in [`docs/demo/`](docs/demo/) and [`docs/screenshots/`](
 
 - [Final Report](docs/final_report.pdf)
 - [Project Proposal](docs/project_proposal.pdf)
-- [Archived Project Plan](docs/archive/final_project_plan_0423.docx)
 - [System Architecture Image](docs/screenshots/system-architecture.png)
 
 ## System Architecture
@@ -174,7 +173,6 @@ For visual inspection, run the Streamlit app and open the **Evaluation Lab** tab
 |   |-- demo/
 |   |-- screenshots/
 |   |   `-- system-architecture.png
-|   `-- archive/
 |-- FinSight_RAG/
 |   |-- app.py
 |   |-- run_analysis.py
