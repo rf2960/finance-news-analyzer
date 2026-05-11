@@ -1,19 +1,33 @@
+# Python
 __pycache__/
 *.py[cod]
-.venv/
-venv/
-.env
-.streamlit/secrets.toml
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+
+# Virtual environments and secrets
+.venv/
+venv/
+env/
+.env
+.streamlit/secrets.toml
+
+# Generated data and local caches
 data/raw/
 data/processed/
 vector_store/
 *.sqlite
 *.db
-streamlit.*.log
 *.log
+streamlit.*.log
+
+# Generated report artifacts
 report_render/
 report_assets/
 final_project_report*.docx
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,19 +1,42 @@
+# Python
 __pycache__/
 *.py[cod]
-.venv/
-venv/
-.env
-.streamlit/secrets.toml
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local secrets
+.env
+.streamlit/secrets.toml
+FinSight_RAG/.env
+FinSight_RAG/.streamlit/secrets.toml
+
+# Generated data and caches
 data/raw/
 data/processed/
 vector_store/
 *.sqlite
 *.db
-streamlit.*.log
 *.log
+streamlit.*.log
+
+# Generated report artifacts
 report_render/
+FinSight_RAG/report_render/
 report_assets/
+FinSight_RAG/report_assets/
 final_project_report*.docx
+FinSight_RAG/final_project_report*.docx
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

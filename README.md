@@ -1,472 +1,201 @@
-# FinSight — Multi-Agent Financial News Intelligence Platform
+# FinSight RAG
 
-<div align="center">
+Multi-agent financial news analysis with retrieval grounding, source audit, and forward-return evaluation.
 
-**Evidence-grounded signal generation with RAG-powered multi-agent analysis**
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/UI-Streamlit-ff4b4b)](https://streamlit.io/)
+[![RAG](https://img.shields.io/badge/RAG-TF--IDF%20retrieval-4257f5)](#system-workflow)
+[![Status](https://img.shields.io/badge/Status-final%20project%20draft-green)](#project-artifacts)
 
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.28%2B-FF4B4B.svg)](https://streamlit.io/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+FinSight RAG converts financial news into structured short-horizon investment hypotheses. It retrieves ticker-relevant evidence, enriches it with technical and macro context, routes it through a three-stage analysis workflow, and evaluates generated signals against realized 5-day and 20-day returns.
 
-[Features](#features) • [Quick Start](#quick-start) • [Testing](#testing-rag-quality) • [Documentation](FinSight_RAG/README.md)
+This is an educational research project. It is not financial advice.
 
-</div>
+## Why This Project
 
----
+Financial headlines are noisy. A positive article does not automatically imply a positive forward return, and simple sentiment scores usually miss source credibility, novelty, counter-evidence, and market context.
 
-## 🚀 Quick Start
+FinSight RAG was built to test a narrower question:
 
-### Prerequisites
+> Can a retrieval-grounded, multi-agent workflow produce more interpretable and testable financial signals than simple sentiment or random baselines?
 
-- Python 3.8 or higher
-- pip package manager
-- (Optional) OpenAI API key for LLM-powered agents
-- (Optional) Bloomberg Terminal for B-PIPE integration
+## Key Features
 
-### Installation
+- **Ticker-level live analysis** through a Streamlit dashboard.
+- **RAG evidence retrieval** from Yahoo Finance and public RSS-style sources, with optional Bloomberg B-PIPE integration.
+- **Three-stage reasoning workflow**: Analyst, Strategist, and Decision Agent.
+- **Structured signal packets** with direction, confidence, catalyst, risks, counter-evidence, citations, and agent trace.
+- **Technical and macro enrichment** using price indicators and macro/geopolitical event context.
+- **Evidence audit view** for inspecting retrieved chunks and source credibility.
+- **Forward-return evaluation** against random and keyword-sentiment baselines.
+- **RAG quality testing** for retrieval relevance, completeness, correctness, groundedness, and coherence.
 
-1️⃣ **Clone the repository**
-```bash
-git clone https://github.com/Yikai-Li/FinSight.git
-cd FinSight
+## Demo
+
+The app includes five main views:
+
+| View | Purpose |
+|---|---|
+| Live Analysis | Run the full pipeline for a ticker and inspect the generated signal. |
+| Market Scan | Discover tickers from market activity and news mentions. |
+| Market Monitor | Track signal queue, market pulse, and disagreement flags. |
+| Evidence Audit | Review retrieved evidence, citations, and source credibility. |
+| Evaluation Lab | Compare multi-agent RAG signals against baselines. |
+
+Demo media placeholders are organized in [`docs/demo/`](docs/demo/) and [`docs/screenshots/`](docs/screenshots/). Add the final GIF/video or UI screenshots there before public release.
+
+## Project Artifacts
+
+- [Final Report](docs/final_report.pdf)
+- [Project Proposal](docs/project_proposal.pdf)
+- [Archived Project Plan](docs/archive/final_project_plan_0423.docx)
+
+## System Workflow
+
+```mermaid
+flowchart LR
+    A["Ticker / market event"] --> B["News ingestion"]
+    B --> C["RAG retrieval<br/>TF-IDF + source weighting"]
+    C --> D["Evidence enrichment<br/>technical factors + macro context"]
+    D --> E["Analyst Agent<br/>extract claims and evidence"]
+    E --> F["Strategist Agent<br/>build thesis and counter-evidence"]
+    F --> G["Decision Agent<br/>direction + confidence"]
+    G --> H["Signal packet<br/>citations + agent trace"]
+    H --> I["Dashboard + evaluation"]
 ```
 
-2️⃣ **Navigate to the main application directory**
-```bash
-cd FinSight_RAG
-```
+The implementation supports two execution modes:
 
-3️⃣ **Install dependencies**
+| Mode | When to Use | Notes |
+|---|---|---|
+| Heuristic mode | Default local demo and reproducible testing | No API key required. Uses keyword/rule-based reasoning and technical bias. |
+| LLM mode | Richer agent reasoning | Uses the included `person2_agent_system_handoff` workflow with an OpenAI API key. |
+
+## Quick Start
+
 ```bash
+git clone https://github.com/rf2960/finance-news-analyzer.git
+cd finance-news-analyzer/FinSight_RAG
+python -m venv .venv
+
+# Windows
+.venv\Scripts\activate
+
+# macOS/Linux
+source .venv/bin/activate
+
 pip install -r requirements.txt
+streamlit run app.py
 ```
 
-4️⃣ **Configure environment variables (Optional)**
+The app opens at `http://localhost:8501`.
+
+Optional environment setup:
+
 ```bash
-# Copy the example environment file
 cp .env.example .env
-
-# Edit .env and add your API keys
-# OPENAI_API_KEY=sk-...          # Optional - enables GPT-4o-mini agents
-# BLOOMBERG_HOST=localhost        # B-PIPE host (default: localhost)
-# BLOOMBERG_PORT=8194             # B-PIPE port (default: 8194)
+# Add OPENAI_API_KEY only if you want LLM-backed agents.
 ```
 
-### Starting the Application
+## Command-Line Usage
 
-#### Option 1: Streamlit Web UI (Recommended)
-
-Launch the interactive web interface:
-
-```bash
-streamlit run app.py
-```
-
-The application will open in your browser at `http://localhost:8501`
-
-**Windows users can also use:**
-```bash
-start.bat
-```
-
-#### Option 2: CLI Mode
-
-Run analysis from the command line without the UI:
-
-```bash
-python run_analysis.py --ticker AAPL --verbose
-```
-
-**CLI Options:**
-```bash
-python run_analysis.py --help
-
-Options:
-  --ticker TICKER       Stock ticker to analyze (e.g., AAPL, NVDA)
-  --top-k K            Number of news chunks to retrieve (default: 10)
-  --horizon {5,20}     Investment horizon in days (default: 5)
-  --verbose            Enable detailed output
-  --save-signal        Save signal to demo_data/signals.json
-```
-
----
-
-## 📋 Features
-
-### 🔴 Live Analysis
-- Real-time stock signal generation for any ticker
-- Multi-source news aggregation (Yahoo, Bloomberg, Reuters, CNBC, MarketWatch)
-- Evidence-based reasoning with full source citation
-- Technical factor integration (RSI, MACD, Bollinger Bands, etc.)
-- Macro event context (geopolitical news, Fed decisions, sanctions, etc.)
-
-### 📊 Market Scan
-- Top 100 stocks by volume/price/market cap
-- News-driven ticker discovery
-- Quick signal queue generation
-
-### 📈 Market Monitor
-- Real-time index tracking (SPY, QQQ, DIA, IWM)
-- Sector heatmap visualization
-- Signal queue management
-- Market pulse scatter plots
-- Disagreement flag detection
-
-### 🔍 Evidence Audit
-- Thematic market sector analysis
-- 8 pre-configured market themes (Semiconductors, Tech, Gold, Energy, etc.)
-- One-click AI analysis per theme
-- Full agent trace visibility
-
-### 🔬 Evaluation & Backtesting
-- Real forward return computation (5d and 20d horizons)
-- Hit rate vs random/sentiment baselines
-- Signal-level outcome tracking
-- Performance metrics dashboard
-
----
-
-## 🧪 Testing RAG Quality
-
-FinSight includes a comprehensive RAG quality testing suite to evaluate retrieval performance, source diversity, and credibility-weighted ranking.
-
-### Running RAG Tests
-
-**Test a single ticker:**
-```bash
-cd FinSight_RAG
-python test_rag_quality.py --ticker AAPL --verbose
-```
-
-**Run comprehensive multi-ticker tests:**
-```bash
-python test_rag_quality.py --run-all-tests
-```
-
-**Benchmark retrieval methods:**
-```bash
-python test_rag_quality.py --benchmark NVDA
-```
-
-**Test source credibility ranking:**
-```bash
-python test_rag_quality.py --test-credibility TSLA
-```
-
-**Save results to JSON:**
-```bash
-python test_rag_quality.py --run-all-tests --save-results test_results.json
-```
-
-### What Gets Tested
-
-The RAG quality test suite evaluates:
-
-| Metric | Description | Threshold |
-|--------|-------------|-----------|
-| **Relevance Score** | How relevant retrieved chunks are to the ticker | ≥ 0.30 |
-| **Source Diversity** | Number of unique news sources in top-K | ≥ 3 sources |
-| **Avg Credibility** | Weighted credibility of retrieved sources | ≥ 0.70 |
-| **Bloomberg Priority** | High-authority chunks included in results | Present |
-| **Retrieval Time** | Speed of TF-IDF indexing and retrieval | < 3000ms |
-| **Coverage Ratio** | Retrieved chunks vs total indexed chunks | Reported |
-
-### Sample Output
-
-```
-============================================================
-Testing RAG quality for AAPL
-============================================================
-Ingesting news for AAPL...
-Retrieving top-10 chunks...
-
-📊 Retrieval Metrics:
-  Total chunks indexed:  47
-  Chunks retrieved:      10
-  Avg relevance score:   0.782
-  Source diversity:      5 sources
-  Unique sources:        Yahoo Finance, Reuters, CNBC, Bloomberg, MarketWatch
-  Avg credibility:       0.754
-  Bloomberg chunks:      2
-  Retrieval time:        1247.32ms
-  Coverage ratio:        0.213
-
-✅ All quality checks PASSED
-
-📄 Sample Retrieved Chunks (top 3):
-  [1] Bloomberg | Apple Inc. Reports Record Q3 Earnings Beat...
-      Credibility: 0.95 | Bloomberg: True
-      Text: Apple Inc. (NASDAQ: AAPL) reported third-quarter earnings...
-
-  [2] Reuters | Apple shares surge on AI product roadmap announcement
-      Credibility: 0.85 | Bloomberg: False
-      Text: Shares of Apple rose 3.2% in after-hours trading following...
-
-  [3] CNBC | iPhone 16 pre-orders exceed analyst expectations
-      Credibility: 0.78 | Bloomberg: False
-      Text: Pre-order data for Apple's latest iPhone 16 lineup shows...
-```
-
-### Advanced Testing Options
-
-```bash
-# Custom top-K retrieval
-python test_rag_quality.py --ticker MSFT --top-k 15 --verbose
-
-# Test specific tickers with result saving
-python test_rag_quality.py --ticker NVDA --save-results nvda_test.json
-
-# Full benchmark suite (all default tickers)
-python test_rag_quality.py --run-all-tests --verbose
-```
-
-### Understanding Test Results
-
-**✅ PASS Criteria:**
-- All quality thresholds met
-- Multiple diverse sources retrieved
-- High-credibility sources prioritized
-- Fast retrieval performance
-
-**❌ FAIL Indicators:**
-- Low relevance scores (< 0.30) → Query tuning needed
-- Low source diversity (< 3) → Ingestion pipeline issue
-- Low avg credibility (< 0.70) → Source weighting problem
-- No chunks retrieved → Connection or ticker issue
-
----
-
-## 🏗️ Project Structure
-
-```
-FinS/
-│
-├── README.md                          # This file — main documentation
-│
-├── FinSight_RAG/                      # Main application directory
-│   ├── app.py                         # Streamlit UI (5 tabs)
-│   ├── run_analysis.py                # CLI runner
-│   ├── test_rag_quality.py            # RAG quality test suite ⭐
-│   ├── requirements.txt               # Python dependencies
-│   ├── .env.example                   # Environment template
-│   ├── start.bat                      # Windows launcher
-│   │
-│   ├── .streamlit/
-│   │   └── config.toml                # Streamlit configuration
-│   │
-│   ├── demo_data/
-│   │   ├── signals.json               # Generated signals
-│   │   └── prices.csv                 # Historical price data
-│   │
-│   ├── docs/                          # Additional documentation
-│   │
-│   └── src/finance_news_analyzer/     # Core modules
-│       ├── agent_runner.py            # Pipeline orchestrator
-│       ├── rag_pipeline.py            # News ingestion & retrieval
-│       ├── news_ingester.py           # RSS/Bloomberg fetcher
-│       ├── technical_factors.py       # Quant indicators
-│       ├── macro_events.py            # Geopolitical scanner
-│       ├── stock_screener.py          # Market scanner
-│       ├── evaluation.py              # Backtesting engine
-│       ├── bloomberg_api.py           # B-PIPE integration
-│       └── schemas.py                 # Data models
-│
-├── person2_agent_system_handoff/      # LLM agent system (GPT-4o-mini)
-│   └── person2_agent_system/
-│       ├── src/orchestration/         # LangGraph workflow
-│       └── prompts/                   # Agent prompts
-│
-└── old_scripts/                       # Archived utility scripts
-```
-
----
-
-## 🎯 Usage Examples
-
-### Example 1: Quick Stock Analysis
+Run a single ticker in local heuristic mode:
 
 ```bash
 cd FinSight_RAG
-streamlit run app.py
+python run_analysis.py --ticker NVDA --verbose
 ```
 
-1. Navigate to **🔴 Live Analysis** tab
-2. Enter ticker (e.g., `NVDA`)
-3. Click **Run Analysis**
-4. Review signal card, evidence sources, and agent reasoning
-
-### Example 2: Market Scan
-
-1. Go to **📊 Market Scan** tab
-2. Click **Scan Top 100 by Volume**
-3. Review discovered tickers
-4. Click **Save to Tickers** for interesting signals
-
-### Example 3: Evaluate Performance
-
-1. Generate several signals over time
-2. Go to **🔬 Evaluation** tab
-3. Click **Evaluate Signals**
-4. Compare hit rate vs baselines
-
-### Example 4: CLI Batch Analysis
+Run with LLM-backed agents:
 
 ```bash
-# Analyze multiple tickers
-for ticker in AAPL NVDA TSLA MSFT; do
-  python run_analysis.py --ticker $ticker --save-signal --verbose
-done
-
-# View saved signals
-cat demo_data/signals.json | python -m json.tool
+python run_analysis.py --ticker NVDA --openai-key sk-your-key --model gpt-4o-mini
 ```
 
----
+Save a generated signal:
 
-## ⚙️ Configuration
-
-### Pipeline Modes
-
-**Heuristic Mode (Default - No API Key)**
-- Offline operation, < 2s per ticker
-- Keyword-based sentiment scoring
-- Rule-based technical bias
-- Fast batch processing
-
-**LLM Mode (OpenAI API Key Required)**
-- GPT-4o-mini powered agents
-- Full reasoning & thesis formation
-- Evidence citation with credibility weighting
-- LangGraph multi-agent workflow
-
-### Streamlit Settings (⚙️ Sidebar)
-
-| Setting | Options | Description |
-|---------|---------|-------------|
-| OpenAI API Key | Text input | Enables LLM mode when provided |
-| Bloomberg B-PIPE | Toggle | Enable Bloomberg Terminal integration |
-| Ticker List | Dropdown | Session-persistent ticker selection |
-| Analysis Horizon | 5d / 20d | Forward return evaluation period |
-
----
-
-## 📊 Architecture Overview
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        INPUT SOURCES                            │
-│  Yahoo • Bloomberg • Reuters • CNBC • MarketWatch • Google News  │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                     RAG PIPELINE (TF-IDF)                       │
-│  Article Fetch → Chunking → Indexing → Top-K Retrieval         │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    ENRICHMENT LAYER                             │
-│  Technical Factors (RSI, MACD, Bollinger)                      │
-│  Macro Events (Fed, Wars, Sanctions, Summits)                  │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                  THREE-AGENT PIPELINE                           │
-│  Analyst → Evidence extraction, sentiment scoring               │
-│  Strategist → Thesis formation, direction setting               │
-│  Decision → Confidence calibration, final signal                │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      SIGNAL PACKET                              │
-│  Direction • Confidence • Reasoning • Citations • Metrics       │
-└─────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 🔧 Troubleshooting
-
-### Common Issues
-
-**Issue: "No module named 'src.finance_news_analyzer'"**
 ```bash
-# Make sure you're in the FinSight_RAG directory
-cd FinSight_RAG
-python app.py  # or streamlit run app.py
+python run_analysis.py --ticker AAPL --save-signal
 ```
 
-**Issue: "No chunks retrieved"**
-- Check internet connection
-- Verify ticker symbol is valid (use yfinance convention)
-- Try a more popular ticker (AAPL, MSFT, NVDA)
+Run RAG quality tests:
 
-**Issue: Bloomberg connection failed**
-- Ensure Bloomberg Terminal is running
-- Check BLOOMBERG_HOST and BLOOMBERG_PORT in .env
-- Bloomberg B-PIPE requires paid subscription
+```bash
+python test_rag_quality.py --run-all-tests --save-results demo_data/rag_eval_results.json
+```
 
-**Issue: Slow retrieval (> 5s)**
-- Reduce `--top-k` value
-- Check network latency to news sources
-- Consider caching articles locally
+## Evaluation Snapshot
 
----
+The final report currently includes:
 
-## 📈 Performance Benchmarks
+| Evaluation | Current Status |
+|---|---|
+| Historical demo forward-return evaluation | Completed on bundled sample signals and prices. |
+| 5-day / 20-day directional hit-rate comparison | Completed for the historical demo sample. |
+| RAG retrieval and generation quality test | Completed on nine tickers. |
+| Larger live-data evaluation | Future work once more signals have realized forward returns. |
 
-| Operation | Time (avg) | Notes |
-|-----------|------------|-------|
-| News ingestion (10 sources) | 1.2s | Network dependent |
-| TF-IDF indexing (50 chunks) | 0.15s | Local computation |
-| Top-K retrieval (K=10) | 0.05s | Sub-100ms typical |
-| Heuristic pipeline (full) | 1.8s | Offline mode |
-| LLM pipeline (GPT-4o-mini) | 4.5s | API latency + reasoning |
-| RAG quality test (1 ticker) | 1.5s | Includes ingestion |
+The current numbers are intended as a project evaluation sample, not a production trading result.
 
----
+## Repository Structure
 
-## 🤝 Contributing
+```text
+.
+|-- README.md
+|-- LICENSE
+|-- docs/
+|   |-- final_report.pdf
+|   |-- project_proposal.pdf
+|   |-- demo/
+|   |-- screenshots/
+|   `-- archive/
+|-- FinSight_RAG/
+|   |-- app.py
+|   |-- run_analysis.py
+|   |-- test_rag_quality.py
+|   |-- requirements.txt
+|   |-- .env.example
+|   |-- demo_data/
+|   |-- docs/
+|   `-- src/finance_news_analyzer/
+|       |-- agent_runner.py
+|       |-- rag_pipeline.py
+|       |-- news_ingester.py
+|       |-- technical_factors.py
+|       |-- macro_events.py
+|       |-- stock_screener.py
+|       |-- evaluation.py
+|       |-- bloomberg_api.py
+|       `-- schemas.py
+`-- person2_agent_system_handoff/
+    `-- person2_agent_system/
+```
 
-Contributions are welcome! Areas for improvement:
+`person2_agent_system_handoff` is retained because LLM mode imports that workflow for the Analyst/Strategist/Decision agent path.
 
-- Additional news sources (Wall Street Journal, Financial Times, Barron's)
-- Enhanced evaluation metrics (Sharpe ratio, max drawdown)
-- Alternative LLM backends (Claude, Llama, Gemini)
-- Real-time WebSocket news feeds
-- Portfolio-level signal aggregation
+## Tech Stack
 
----
+- Python, Streamlit, Pandas, Plotly
+- yfinance for market data
+- feedparser and requests for news ingestion
+- scikit-learn TF-IDF retrieval
+- Pydantic data models
+- Optional LangGraph / LangChain / OpenAI path for LLM-backed agents
 
-## 📄 License
+## Team
 
-MIT License - see [LICENSE](LICENSE) for details
+- Ruochen Feng
+- Andrew Chen
+- Yikai Li
 
----
+## Future Work
 
-## 📚 Additional Resources
+- Replace TF-IDF retrieval with a dense vector index such as FAISS or Chroma.
+- Add a larger live-data evaluation once more forward-return windows close.
+- Integrate a domain-adapted sentiment model such as FinBERT.
+- Expand beyond large-cap technology tickers.
+- Add final demo video, GIF, and polished screenshots.
 
-- **[Full Technical Documentation](FinSight_RAG/README.md)** — Detailed architecture, API reference, and evaluation methodology
-- **[Project Proposal](FinSight_RAG/Project_Proposal.pdf)** — Original design document
-- **[Project Plan](FinSight_RAG/final_project_plan_0423.docx)** — Development roadmap
+## Disclaimer
 
----
-
-## ⚠️ Disclaimer
-
-FinSight is an **educational research platform** for institutional-quality financial signal generation. It is **not financial advice**. All investment decisions should be made with proper due diligence and consultation with qualified financial advisors.
-
-Market data and news sources may have delays, inaccuracies, or biases. Past performance does not guarantee future results.
-
----
-
-<div align="center">
-
-**Built with ❤️ for evidence-grounded investment research**
-
-[⬆ Back to Top](#finsight--multi-agent-financial-news-intelligence-platform)
-
-</div>
+FinSight RAG is a research and class-project system for evaluating news-grounded signal generation. It should not be used as investment advice or as an automated trading system.
