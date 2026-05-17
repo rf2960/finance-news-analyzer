@@ -1,6 +1,6 @@
 # Screenshots
 
-This folder stores visual assets referenced by the GitHub README and report materials.
+This folder stores deterministic visual assets referenced by the GitHub README and report materials. The polished hero preview is also exported to `docs/images/live-analysis-polished.png` for the README landing section.
 
 Current assets:
 
@@ -12,6 +12,6 @@ Current assets:
 
 Generator:
 
-- `generate_visual_assets.py`: deterministic Pillow renderer for the README visuals.
+- `generate_visual_assets.py`: deterministic Pillow renderer for the README visuals and polished `docs/images/` preview.
 
 Future UI captures or walkthrough media can be added here and linked from the README demo section.

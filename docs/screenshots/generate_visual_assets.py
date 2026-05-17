@@ -7,6 +7,8 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 OUT = Path(__file__).resolve().parent
+OUT_IMAGES = OUT.parent / "images"
+OUT_IMAGES.mkdir(exist_ok=True)
 
 INK = "#15222e"
 MUTED = "#657282"
@@ -208,7 +210,13 @@ def live_analysis():
     pill(d, (455, 220), "62% confidence", TEAL)
     pill(d, (635, 220), "8 retrieved chunks", BLUE)
 
-    card(d, (340, 300, 960, 540), "Signal Thesis", "The bullish thesis is supported by AI demand, raised analyst targets, and constructive data-center revenue evidence. Verifier flags valuation risk as the main counterweight.", GREEN)
+    card(
+        d,
+        (340, 300, 960, 540),
+        "Signal Thesis",
+        "AI demand and data-center revenue support a constructive near-term setup. Valuation remains the primary risk to monitor.",
+        GREEN,
+    )
     rounded(d, (995, 300, 1510, 540), radius=20, fill=PANEL)
     text(d, (1030, 330), "Market Snapshot", fnt=F["bold_lg"])
     metrics = [("Last price", "$139.20"), ("Relative strength", "+1.8%"), ("Volume vs avg", "1.42x"), ("RSI-14", "63")]
@@ -219,26 +227,30 @@ def live_analysis():
         text(d, (x + 16, y + 8), k, fill=MUTED, fnt=F["xs"])
         text(d, (x + 16, y + 27), v, fnt=F["bold_sm"])
 
-    rounded(d, (340, 585, 1510, 885), radius=20, fill=PANEL)
+    rounded(d, (340, 585, 1510, 950), radius=20, fill=PANEL)
     text(d, (375, 620), "Evidence Ledger", fnt=F["bold_lg"])
-    headers = ["Rank", "Stance", "Source", "Retrieval", "Credibility", "Evidence"]
-    cols = [375, 455, 590, 760, 900, 1060]
-    for x, h in zip(cols, headers):
-        text(d, (x, 670), h, fill=MUTED, fnt=F["bold_sm"])
+    text(d, (375, 660), "Ranked source passages with stance, retrieval score, and credibility.", fill=MUTED, fnt=F["sm"])
     rows = [
-        ("1", "supports", "Reuters", "0.94", "85%", "AI data-center demand supports raised guidance."),
-        ("2", "supports", "CNBC", "0.75", "78%", "Analysts lift price targets after earnings beat."),
-        ("3", "challenges", "MarketWatch", "0.54", "70%", "Valuation risk may limit near-term upside."),
+        ("#1", "supports", "Reuters", "retrieval 0.94 | credibility 85%", "AI chip demand and data-center revenue support the raised guidance case."),
+        ("#2", "supports", "CNBC", "retrieval 0.75 | credibility 78%", "Analyst target revisions point to improving short-term expectations."),
+        ("#3", "challenges", "MarketWatch", "retrieval 0.54 | credibility 70%", "Premium valuation could limit upside if earnings momentum slows."),
     ]
-    y = 715
-    for row in rows:
-        d.line((370, y - 18, 1485, y - 18), fill=LINE, width=2)
-        for x, value in zip(cols, row):
-            col = GREEN if value == "supports" else RED if value == "challenges" else INK
-            text(d, (x, y), value, fill=col, fnt=F["sm"])
-        y += 58
+    y = 708
+    for rank, stance, source, meta, evidence in rows:
+        rounded(d, (375, y, 1475, y + 70), radius=14, fill="#f8fafc")
+        text(d, (400, y + 24), rank, fill=MUTED, fnt=F["bold_sm"])
+        d.rounded_rectangle((455, y + 22, 555, y + 48), radius=13, fill=GREEN if stance == "supports" else RED)
+        text(d, (505, y + 26), stance, fill="#ffffff", fnt=F["xs"], anchor="ma")
+        text(d, (585, y + 13), source, fnt=F["bold_sm"])
+        text(d, (585, y + 38), meta, fill=MUTED, fnt=F["xs"])
+        ey = y + 12
+        for line in wrap(d, evidence, 520, F["sm"])[:2]:
+            text(d, (900, ey), line, fill=INK, fnt=F["sm"])
+            ey += 25
+        y += 82
 
     img.save(OUT / "live-analysis.png", quality=94)
+    img.save(OUT_IMAGES / "live-analysis-polished.png", quality=94)
 
 
 def evidence_audit():

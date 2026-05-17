@@ -11,7 +11,7 @@ FinSight RAG converts financial news into structured short-horizon investment hy
 
 This is an educational research project. It is not financial advice.
 
-![FinSight RAG live analysis preview](docs/screenshots/live-analysis.png)
+![FinSight RAG live analysis preview](docs/images/live-analysis-polished.png)
 
 ## Quick Links
 
@@ -67,13 +67,13 @@ The dashboard is designed as an evidence-first financial intelligence workstatio
 | Evidence Audit | Inspect retrieval architecture, ranked evidence, citations, and verifier flags. |
 | Evaluation Lab | Compare multi-agent RAG signals against baselines. |
 
-Demo media is organized in [`docs/demo/`](docs/demo/) and [`docs/screenshots/`](docs/screenshots/).
+Demo media is organized in [`docs/demo/`](docs/demo/), [`docs/images/`](docs/images/), and [`docs/screenshots/`](docs/screenshots/).
 
 ## Demo Gallery
 
 | Live Analysis | Evidence Audit |
 |---|---|
-| ![Live analysis screen](docs/screenshots/live-analysis.png) | ![Evidence audit screen](docs/screenshots/evidence-audit.png) |
+| ![Live analysis screen](docs/images/live-analysis-polished.png) | ![Evidence audit screen](docs/screenshots/evidence-audit.png) |
 
 | Market Monitor | Evaluation Lab |
 |---|---|
@@ -201,6 +201,8 @@ For visual inspection, run the Streamlit app and open the **Evaluation Lab** tab
 |   |-- final_report.pdf
 |   |-- project_proposal.pdf
 |   |-- demo/
+|   |-- images/
+|   |   `-- live-analysis-polished.png
 |   |-- screenshots/
 |   |   |-- system-architecture.png
 |   |   |-- live-analysis.png

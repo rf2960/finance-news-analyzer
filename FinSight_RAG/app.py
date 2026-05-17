@@ -369,6 +369,8 @@ st.markdown(
         margin-bottom: 0.5rem;
         background: #fff;
         color: var(--ink);
+        overflow-wrap: anywhere;
+        word-break: normal;
     }
     .source-title {
         font-size: 0.84rem;
@@ -422,6 +424,61 @@ st.markdown(
         color: #664500;
         font-size: 0.78rem;
         margin-bottom: 0.55rem;
+        line-height: 1.35;
+        overflow-wrap: anywhere;
+    }
+    .evidence-ledger {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.58rem;
+        margin-top: 0.55rem;
+    }
+    .evidence-row {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        padding: 0.7rem 0.78rem;
+        color: var(--ink);
+        overflow-wrap: anywhere;
+    }
+    .evidence-row-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.7rem;
+        margin-bottom: 0.45rem;
+    }
+    .evidence-source {
+        font-weight: 750;
+        font-size: 0.84rem;
+        color: var(--ink);
+    }
+    .evidence-meta {
+        color: var(--muted);
+        font-size: 0.69rem;
+        line-height: 1.25;
+        white-space: normal;
+    }
+    .evidence-text {
+        color: #263544;
+        font-size: 0.8rem;
+        line-height: 1.42;
+        margin-top: 0.25rem;
+    }
+    .stance-supports {
+        background: #e9f8f0;
+        color: var(--good);
+        border: 1px solid #bde7ce;
+    }
+    .stance-challenges {
+        background: #fff0ee;
+        color: var(--bad);
+        border: 1px solid #ffd0ca;
+    }
+    .stance-context {
+        background: #f2f4f7;
+        color: #475467;
+        border: 1px solid #d0d5dd;
     }
     @media (max-width: 900px) {
         .terminal-strip,
@@ -586,6 +643,59 @@ def _evidence_rows(profile: dict) -> pd.DataFrame:
             }
         )
     return pd.DataFrame(rows)
+
+
+def _compact_text(value: str, limit: int = 360) -> str:
+    value = " ".join(str(value or "").split())
+    if len(value) <= limit:
+        return value
+    return value[: limit - 1].rsplit(" ", 1)[0].rstrip(".,;:") + "."
+
+
+def _stance_class(stance: str) -> str:
+    normalized = (stance or "context").lower()
+    if normalized in {"supports", "supporting"}:
+        return "stance-supports"
+    if normalized in {"challenges", "challenging", "contradicting"}:
+        return "stance-challenges"
+    return "stance-context"
+
+
+def render_evidence_cards(profile: dict, limit: int = 6) -> None:
+    items = (profile or {}).get("top_evidence", [])[:limit]
+    if not items:
+        st.caption("No ranked evidence items are available for this signal.")
+        return
+
+    cards = []
+    for item in items:
+        stance = item.get("stance_vs_signal", item.get("role", "context"))
+        source = item.get("source", "Unknown source")
+        title = item.get("title", "")
+        date = _short_date(item.get("published_at"))
+        method = item.get("retrieval_method", "hybrid") or "hybrid"
+        rank = item.get("retrieval_rank") or "-"
+        retrieval = float(item.get("retrieval_score", 0.0) or 0.0)
+        credibility = float(item.get("credibility", 0.0) or 0.0)
+        excerpt = _compact_text(item.get("excerpt", ""), 360)
+        cards.append(
+            f"""
+            <div class="evidence-row">
+              <div class="evidence-row-head">
+                <div>
+                  <div class="evidence-source">#{_safe_text(rank)} | {_safe_text(source)}</div>
+                  <div class="evidence-meta">{_safe_text(title)}{(" | " + _safe_text(date)) if date else ""}</div>
+                </div>
+                <span class="pill {_stance_class(stance)}">{_safe_text(stance)}</span>
+              </div>
+              <div class="evidence-meta">
+                method {_safe_text(method)} | retrieval {retrieval:.2f} | credibility {credibility:.0%}
+              </div>
+              <div class="evidence-text">{_safe_text(excerpt)}</div>
+            </div>
+            """
+        )
+    st.markdown("<div class='evidence-ledger'>" + "".join(cards) + "</div>", unsafe_allow_html=True)
 
 
 def render_workflow(trace: list[dict], meta: dict | None = None) -> None:
@@ -1342,9 +1452,7 @@ with tab_live:
                 ep_cols[3].metric("Avg retrieval", f"{evidence_profile.get('avg_retrieval_score', 0):.2f}")
                 for flag in evidence_profile.get("verifier_flags", [])[:3]:
                     st.markdown(f"<div class='verifier-box'>{_safe_text(flag)}</div>", unsafe_allow_html=True)
-                ev_df = _evidence_rows(evidence_profile)
-                if not ev_df.empty:
-                    st.dataframe(ev_df, use_container_width=True, hide_index=True)
+                render_evidence_cards(evidence_profile)
             else:
                 st.caption("Run a live analysis to populate the retrieval evidence ledger.")
 
@@ -1830,9 +1938,7 @@ with tab_evidence:
         render_workflow(selected.get("agent_trace", []))
         for flag in selected_profile.get("verifier_flags", [])[:4]:
             st.markdown(f"<div class='verifier-box'>{_safe_text(flag)}</div>", unsafe_allow_html=True)
-        selected_ev_df = _evidence_rows(selected_profile)
-        if not selected_ev_df.empty:
-            st.dataframe(selected_ev_df, use_container_width=True, hide_index=True)
+        render_evidence_cards(selected_profile)
         if selected_diag:
             st.caption(
                 selected_diag.get("retrieval_strategy", "Metadata-aware retrieval")
