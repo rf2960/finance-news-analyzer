@@ -4,6 +4,8 @@ This folder contains the runnable Streamlit app, command-line runner, evaluation
 
 For the polished project overview, report links, and portfolio-facing description, see the repository-level [README](../README.md).
 
+![FinSight RAG evidence workstation](../docs/screenshots/live-analysis.png)
+
 ## Run the App
 
 ```bash
@@ -64,6 +66,14 @@ Run the RAG quality evaluation:
 ```bash
 python test_rag_quality.py --run-all-tests --save-results demo_data/rag_eval_results.json
 ```
+
+Run retrieval architecture case studies:
+
+```bash
+python retrieval_case_studies.py --method all --verbose
+```
+
+These fixtures are deterministic regression checks, not production metrics.
 
 ## Data Files
 

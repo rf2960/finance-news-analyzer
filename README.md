@@ -4,12 +4,14 @@ Multi-agent financial news analysis with retrieval grounding, source audit, and 
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/UI-Streamlit-ff4b4b)](https://streamlit.io/)
-[![RAG](https://img.shields.io/badge/RAG-TF--IDF%20retrieval-4257f5)](#system-workflow)
-[![Status](https://img.shields.io/badge/Status-final%20project%20draft-green)](#project-artifacts)
+[![RAG](https://img.shields.io/badge/RAG-BM25%20%2B%20TF--IDF%20hybrid-4257f5)](#system-architecture)
+[![Status](https://img.shields.io/badge/Status-portfolio%20prototype-green)](#project-artifacts)
 
-FinSight RAG converts financial news into structured short-horizon investment hypotheses. It retrieves ticker-relevant evidence, enriches it with technical and macro context, routes it through a three-stage analysis workflow, and evaluates generated signals against realized 5-day and 20-day returns.
+FinSight RAG converts financial news into structured short-horizon investment hypotheses. It retrieves ticker-relevant evidence, enriches it with technical and macro context, routes it through a verifier-backed analyst workflow, and evaluates generated signals against realized 5-day and 20-day returns.
 
 This is an educational research project. It is not financial advice.
+
+![FinSight RAG live analysis preview](docs/screenshots/live-analysis.png)
 
 ## Quick Links
 
@@ -18,6 +20,7 @@ This is an educational research project. It is not financial advice.
 | Run the interactive demo UI | See [Access the Demo UI](#access-the-demo-ui). |
 | Read the final report | Open [`docs/final_report.pdf`](docs/final_report.pdf). |
 | View the system architecture | See [System Architecture](#system-architecture). |
+| See demo screenshots | See [Demo Gallery](#demo-gallery). |
 | Check metrics and visualization inputs | See [Metrics and Visualization Assets](#metrics-and-visualization-assets). |
 
 ## Why This Project
@@ -54,17 +57,27 @@ streamlit run app.py
 
 Then open the local URL printed by Streamlit, usually `http://localhost:8501`.
 
-The dashboard includes five main views:
+The dashboard is designed as an evidence-first financial intelligence workstation, not a chat interface. It includes five main views:
 
 | View | Purpose |
 |---|---|
 | Live Analysis | Run the full pipeline for a ticker and inspect the generated signal. |
 | Market Scan | Discover tickers from market activity and news mentions. |
 | Market Monitor | Track signal queue, market pulse, and disagreement flags. |
-| Evidence Audit | Review retrieved evidence, citations, and source credibility. |
+| Evidence Audit | Inspect retrieval architecture, ranked evidence, citations, and verifier flags. |
 | Evaluation Lab | Compare multi-agent RAG signals against baselines. |
 
-Demo media is organized in [`docs/demo/`](docs/demo/) and [`docs/screenshots/`](docs/screenshots/). The current repository includes the system architecture image; final UI screenshots or a short walkthrough video can be added there when available.
+Demo media is organized in [`docs/demo/`](docs/demo/) and [`docs/screenshots/`](docs/screenshots/).
+
+## Demo Gallery
+
+| Live Analysis | Evidence Audit |
+|---|---|
+| ![Live analysis screen](docs/screenshots/live-analysis.png) | ![Evidence audit screen](docs/screenshots/evidence-audit.png) |
+
+| Market Monitor | Evaluation Lab |
+|---|---|
+| ![Market monitor screen](docs/screenshots/market-monitor.png) | ![Evaluation lab screen](docs/screenshots/evaluation-lab.png) |
 
 ## Latest Technical Upgrade
 
@@ -81,18 +94,6 @@ See [`FinSight_RAG/docs/technical_audit.md`](FinSight_RAG/docs/technical_audit.m
 ## System Architecture
 
 ![FinSight RAG system architecture](docs/screenshots/system-architecture.png)
-
-```mermaid
-flowchart LR
-    A["Ticker / analyst query"] --> B["News ingestion"]
-    B --> C["Chunking + metadata"]
-    C --> D["BM25 + TF-IDF/keyword hybrid retrieval"]
-    D --> E["Metadata reranking"]
-    E --> F["Evidence ledger"]
-    F --> G["Analyst + verifier workflow"]
-    G --> H["Signal packet + dashboard"]
-    H --> I["Forward-return evaluation"]
-```
 
 The implementation supports two execution modes:
 
@@ -201,7 +202,11 @@ For visual inspection, run the Streamlit app and open the **Evaluation Lab** tab
 |   |-- project_proposal.pdf
 |   |-- demo/
 |   |-- screenshots/
-|   |   `-- system-architecture.png
+|   |   |-- system-architecture.png
+|   |   |-- live-analysis.png
+|   |   |-- evidence-audit.png
+|   |   |-- market-monitor.png
+|   |   `-- evaluation-lab.png
 |-- FinSight_RAG/
 |   |-- app.py
 |   |-- run_analysis.py
@@ -250,7 +255,7 @@ For visual inspection, run the Streamlit app and open the **Evaluation Lab** tab
 - Add a larger live-data evaluation once more forward-return windows close.
 - Integrate a domain-adapted sentiment model such as FinBERT.
 - Expand beyond large-cap technology tickers.
-- Add final demo video, GIF, and polished screenshots.
+- Add a short narrated demo video or GIF using the polished screenshot flow.
 
 ## Disclaimer
 
