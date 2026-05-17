@@ -360,19 +360,48 @@ def evaluation_lab():
         text(d, (x + 24, 322), label, fill=MUTED, fnt=F["sm"])
         text(d, (x + 24, 354), value, fnt=F["bold_lg"])
 
-    rounded(d, (70, 525, 1530, 900), radius=22, fill=PANEL)
+    rounded(d, (70, 525, 1530, 930), radius=22, fill=PANEL)
     text(d, (105, 560), "Baseline Comparison", fnt=F["bold_lg"])
-    groups = [("Multi-Agent RAG", 0.67, 0.56, TEAL), ("Sentiment Baseline", 0.44, 0.44, BLUE), ("Random Baseline", 0.33, 0.33, AMBER)]
-    x0, y0 = 170, 800
-    for idx, (label, v5, v20, col) in enumerate(groups):
-        x = x0 + idx * 420
-        d.rounded_rectangle((x, y0 - int(v5 * 270), x + 80, y0), radius=12, fill=col)
-        d.rounded_rectangle((x + 105, y0 - int(v20 * 270), x + 185, y0), radius=12, fill="#9aa8b5")
-        text(d, (x - 20, 830), label, fnt=F["sm"])
-        text(d, (x + 8, y0 - int(v5 * 270) - 30), f"{v5:.0%}", fill=col, fnt=F["bold_sm"])
-        text(d, (x + 118, y0 - int(v20 * 270) - 30), f"{v20:.0%}", fill=MUTED, fnt=F["bold_sm"])
-    pill(d, (1220, 560), "5d", TEAL)
-    pill(d, (1280, 560), "20d", "#9aa8b5")
+    text(d, (105, 600), "Directional hit rate on the bundled historical sample. Higher is better.", fill=MUTED, fnt=F["sm"])
+
+    legend_y = 558
+    d.rounded_rectangle((1055, legend_y + 7, 1077, legend_y + 29), radius=6, fill=TEAL)
+    text(d, (1088, legend_y + 2), "5-day horizon", fill=INK, fnt=F["xs"])
+    d.rounded_rectangle((1218, legend_y + 7, 1240, legend_y + 29), radius=6, fill=BLUE)
+    text(d, (1251, legend_y + 2), "20-day horizon", fill=INK, fnt=F["xs"])
+    d.line((1395, legend_y + 18, 1445, legend_y + 18), fill="#9aa8b5", width=3)
+    text(d, (1458, legend_y + 2), "50% reference", fill=MUTED, fnt=F["xs"])
+
+    chart_left, chart_top, chart_bottom, chart_right = 145, 660, 855, 1085
+    chart_h = chart_bottom - chart_top
+    for tick in (0.0, 0.25, 0.50, 0.75):
+        y = chart_bottom - int(tick * chart_h)
+        d.line((chart_left, y, chart_right, y), fill="#e7edf3", width=2)
+        text(d, (95, y - 10), f"{tick:.0%}", fill=MUTED, fnt=F["xs"])
+    d.line((chart_left, chart_bottom - int(0.50 * chart_h), chart_right, chart_bottom - int(0.50 * chart_h)), fill="#9aa8b5", width=3)
+    text(d, (94, chart_top - 30), "Hit rate", fill=MUTED, fnt=F["xs"])
+
+    groups = [
+        ("Multi-Agent RAG", 0.67, 0.56),
+        ("Sentiment Baseline", 0.44, 0.44),
+        ("Random Baseline", 0.33, 0.33),
+    ]
+    x0 = 220
+    for idx, (label, v5, v20) in enumerate(groups):
+        x = x0 + idx * 320
+        for offset, value, col, horizon in ((0, v5, TEAL, "5d"), (88, v20, BLUE, "20d")):
+            bar_h = int(value * chart_h)
+            d.rounded_rectangle((x + offset, chart_bottom - bar_h, x + offset + 66, chart_bottom), radius=12, fill=col)
+            text(d, (x + offset + 33, chart_bottom - bar_h - 28), f"{value:.0%}", fill=col, fnt=F["bold_sm"], anchor="mm")
+            text(d, (x + offset + 33, chart_bottom + 12), horizon, fill=MUTED, fnt=F["xs"], anchor="ma")
+        text(d, (x + 34, chart_bottom + 50), label, fnt=F["sm"], anchor="ma")
+
+    rounded(d, (1165, 665, 1475, 850), radius=18, fill="#f8fafc")
+    text(d, (1190, 690), "RAG Lift", fnt=F["bold_md"])
+    text(d, (1190, 727), "+23 pp vs sentiment at 5d", fill=TEAL, fnt=F["bold_sm"])
+    text(d, (1190, 758), "+12 pp vs sentiment at 20d", fill=BLUE, fnt=F["bold_sm"])
+    text(d, (1190, 795), "+34 pp vs random at 5d", fill=TEAL, fnt=F["xs"])
+    text(d, (1190, 820), "+23 pp vs random at 20d", fill=BLUE, fnt=F["xs"])
     img.save(OUT / "evaluation-lab.png", quality=94)
 
 

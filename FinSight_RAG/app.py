@@ -2391,17 +2391,65 @@ with tab_evaluation:
     mc[2].metric("Avg confidence", pct(_avg_confidence, 0))
     mc[3].metric("Signals evaluated", _n)
 
+    _chart_for_plot = _chart_metrics.copy()
+    _chart_for_plot["hit_label"] = _chart_for_plot["hit_rate"].map(lambda x: pct(x, 0))
+    _chart_for_plot["horizon_label"] = _chart_for_plot["horizon"].map({"5d": "5-day horizon", "20d": "20-day horizon"}).fillna(_chart_for_plot["horizon"])
+
+    _rag_5 = float(_metric_value("Multi-Agent RAG", "5d", "hit_rate"))
+    _rag_20 = float(_metric_value("Multi-Agent RAG", "20d", "hit_rate"))
+    _sent_5 = float(_metric_value("Sentiment Baseline", "5d", "hit_rate"))
+    _sent_20 = float(_metric_value("Sentiment Baseline", "20d", "hit_rate"))
+    _rand_5 = float(_metric_value("Random Baseline", "5d", "hit_rate"))
+    _rand_20 = float(_metric_value("Random Baseline", "20d", "hit_rate"))
+    def _pp(value: float) -> str:
+        return f"{value * 100:+.0f} pp"
+
+    _has_baselines = {"Sentiment Baseline", "Random Baseline"}.issubset(set(_chart_metrics["method"]))
+    if _has_baselines:
+        _lift_text = (
+            f"RAG lift: {_pp(_rag_5 - _sent_5)} vs sentiment at 5d, "
+            f"{_pp(_rag_20 - _sent_20)} at 20d; "
+            f"{_pp(_rag_5 - _rand_5)} vs random at 5d, "
+            f"{_pp(_rag_20 - _rand_20)} at 20d."
+        )
+    else:
+        _lift_text = "Live evaluation currently has realized RAG outcomes only; baseline lift appears when historical comparison rows are available."
+    st.markdown(f"<div class='analysis-box'>{_safe_text(_lift_text)} Higher bars mean better directional hit rate on the displayed evaluation source.</div>", unsafe_allow_html=True)
+
     fig_eval = px.bar(
-        _chart_metrics,
+        _chart_for_plot,
         x="method",
         y="hit_rate",
-        color="horizon",
+        color="horizon_label",
+        text="hit_label",
         barmode="group",
-        range_y=[0, 1],
-        color_discrete_sequence=["#126c83", "#7a5c00"],
-        labels={"method": "", "hit_rate": "Directional hit rate"},
+        range_y=[0, min(1.0, max(0.72, float(_chart_for_plot["hit_rate"].max()) + 0.18))],
+        category_orders={
+            "method": ["Multi-Agent RAG", "Sentiment Baseline", "Random Baseline"],
+            "horizon_label": ["5-day horizon", "20-day horizon"],
+        },
+        color_discrete_map={"5-day horizon": "#0f766e", "20-day horizon": "#2563eb"},
+        labels={"method": "", "hit_rate": "Directional hit rate", "horizon_label": "Horizon"},
+        hover_data={"hit_label": False, "signals": True, "avg_signed_return": ":.2%", "signal_coverage": ":.0%"},
     )
-    fig_eval.update_layout(height=310, margin=dict(l=8, r=8, t=20, b=8), legend_title_text="")
+    fig_eval.update_traces(textposition="outside", cliponaxis=False)
+    fig_eval.add_hline(
+        y=0.5,
+        line_dash="dot",
+        line_color="#9aa8b5",
+        annotation_text="50% reference",
+        annotation_position="top left",
+    )
+    fig_eval.update_layout(
+        height=380,
+        margin=dict(l=10, r=10, t=34, b=8),
+        legend=dict(title="Horizon", orientation="h", yanchor="bottom", y=1.04, xanchor="right", x=1),
+        yaxis_tickformat=".0%",
+        yaxis_gridcolor="#e7edf3",
+        plot_bgcolor="#ffffff",
+        bargap=0.28,
+        bargroupgap=0.12,
+    )
     st.plotly_chart(fig_eval, use_container_width=True)
 
     _metrics_df = _chart_metrics.copy()
