@@ -79,13 +79,35 @@ python test_rag_quality.py --run-all-tests --save-results demo_data/rag_eval_res
 | Module | Role |
 |---|---|
 | `agent_runner.py` | Coordinates retrieval, enrichment, heuristic mode, and optional LLM mode. |
-| `rag_pipeline.py` | Builds TF-IDF retrieval over normalized news chunks. |
+| `rag_pipeline.py` | Builds metadata-aware BM25, TF-IDF, keyword, or hybrid retrieval over normalized news chunks. |
 | `news_ingester.py` | Collects and normalizes news from public sources. |
 | `technical_factors.py` | Computes RSI, MACD, moving averages, volatility, and momentum context. |
 | `macro_events.py` | Adds macro and geopolitical event context. |
 | `stock_screener.py` | Supports market scan and ticker discovery. |
 | `evaluation.py` | Attaches forward returns and computes baseline metrics. |
 | `schemas.py` | Defines the structured signal packet and citation models. |
+
+## Retrieval and Evidence Audit
+
+The default retrieval path is an explainable lexical hybrid rather than embedding-first RAG. For short financial news, exact ticker, company, product, earnings, guidance, and regulatory terms are often more reliable than broad semantic similarity. The retrieval layer attaches an inspectable score breakdown to each chunk:
+
+- BM25 sparse event match
+- semantic query match
+- ticker/company match
+- source credibility
+- source authority
+- recency
+- financial-intent overlap
+
+The agent runner packages these into an `evidence_profile` with top evidence rows, support/challenge/context counts, average retrieval score, and skeptical verifier flags. The Streamlit Live Analysis and Evidence Audit tabs render this ledger so reviewers can inspect why a signal was produced.
+
+For the architecture rationale, see [`docs/retrieval_architecture.md`](docs/retrieval_architecture.md). For a deterministic retrieval regression harness, run:
+
+```bash
+python retrieval_case_studies.py --method all --verbose
+```
+
+The case-study script uses synthetic labeled fixtures; it is a regression sanity check, not a production benchmark.
 
 ## Output Contract
 
@@ -96,7 +118,8 @@ The final signal packet includes:
 - confidence, novelty, sentiment, and source-quality scores
 - reasoning, catalyst, thesis bullets, risk factors, counter-evidence, watch items
 - market snapshot
-- citations
+- citations with retrieval rank and score breakdown
+- evidence profile and retrieval diagnostics
 - agent trace
 - random and keyword-sentiment baselines
 

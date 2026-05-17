@@ -199,7 +199,7 @@ _BULL_WORDS = {
     "optimistic", "expand", "expanding", "expansion", "accelerate",
     "accelerating", "recovery", "recover", "recovered",
     # Tech/AI sector
-    "AI", "artificial intelligence", "cloud", "chip", "semiconductor",
+    "ai", "artificial intelligence", "cloud", "chip", "semiconductor",
     "partnership", "contract", "deal", "acquisition",
     # Market signals
     "buy-rating", "price-target", "raised", "overweight", "outperform",
@@ -446,6 +446,7 @@ def _heuristic_analyst(chunks) -> dict:
       to declare 'bullish' (otherwise stays 'mixed')
     """
     supporting, contradicting, catalysts, macro_ctx = [], [], [], []
+    evidence_items = []
     scores = []
     credibilities = []
 
@@ -475,8 +476,29 @@ def _heuristic_analyst(chunks) -> dict:
         # Only count chunks that have a clear directional signal
         if score > 0.04:
             supporting.append({"claim": excerpt, "citation_ids": [cid], "_score": score, "_cred": cred})
+            role = "supporting"
         elif score < -0.04:
             contradicting.append({"claim": excerpt, "citation_ids": [cid], "_score": score, "_cred": cred})
+            role = "contradicting"
+        else:
+            role = "neutral"
+
+        evidence_items.append({
+            "citation_id": cid,
+            "source": source,
+            "title": getattr(ch, "title", ""),
+            "published_at": getattr(ch, "published_at", ""),
+            "excerpt": excerpt,
+            "role": role,
+            "sentiment_score": score,
+            "credibility": cred,
+            "retrieval_rank": getattr(ch, "retrieval_rank", None),
+            "retrieval_score": getattr(ch, "retrieval_score", 0.0),
+            "retrieval_method": getattr(ch, "retrieval_method", ""),
+            "score_breakdown": getattr(ch, "score_breakdown", {}),
+            "recency_days": getattr(ch, "recency_days", None),
+            "url": getattr(ch, "url", ""),
+        })
 
         catalysts.extend(_extract_catalysts(text))
 
@@ -516,6 +538,7 @@ def _heuristic_analyst(chunks) -> dict:
         "_avg_cred":             avg_cred,
         "_n_supporting":         n_supporting,
         "_n_contra":             n_contra,
+        "_evidence_items":       evidence_items,
     }
 
 
@@ -859,6 +882,103 @@ def _compute_source_quality(rag_chunks: list) -> float:
     return round(sum(weights) / len(weights), 2)
 
 
+def _evidence_role_for_direction(role: str, direction: str) -> str:
+    if direction == "Bullish":
+        return "supports" if role == "supporting" else ("challenges" if role == "contradicting" else "context")
+    if direction == "Bearish":
+        return "supports" if role == "contradicting" else ("challenges" if role == "supporting" else "context")
+    return "context"
+
+
+def _build_evidence_profile(
+    rag_chunks: list,
+    analyst_out: dict,
+    direction: str,
+    confidence: float,
+) -> dict:
+    """Create an auditable evidence ledger for UI and portfolio review."""
+    items = list(analyst_out.get("_evidence_items", []))
+    if not items:
+        for ch in rag_chunks:
+            if getattr(ch, "is_context_only", False):
+                continue
+            score = _score_chunk(getattr(ch, "text", ""))
+            role = "supporting" if score > 0.04 else ("contradicting" if score < -0.04 else "neutral")
+            items.append({
+                "citation_id": getattr(ch, "citation_id", ""),
+                "source": getattr(ch, "source", "Unknown"),
+                "title": getattr(ch, "title", ""),
+                "published_at": getattr(ch, "published_at", ""),
+                "excerpt": _clean_excerpt(getattr(ch, "text", ""), max_len=220),
+                "role": role,
+                "sentiment_score": score,
+                "credibility": float(getattr(ch, "credibility_weight", 0.60)),
+                "retrieval_rank": getattr(ch, "retrieval_rank", None),
+                "retrieval_score": getattr(ch, "retrieval_score", 0.0),
+                "retrieval_method": getattr(ch, "retrieval_method", ""),
+                "score_breakdown": getattr(ch, "score_breakdown", {}),
+                "recency_days": getattr(ch, "recency_days", None),
+                "url": getattr(ch, "url", ""),
+            })
+
+    for item in items:
+        item["stance_vs_signal"] = _evidence_role_for_direction(item.get("role", "neutral"), direction)
+        item["evidence_strength"] = round(
+            abs(float(item.get("sentiment_score", 0.0)))
+            * float(item.get("credibility", 0.60))
+            + float(item.get("retrieval_score", 0.0)) * 0.35,
+            3,
+        )
+
+    supporting = [i for i in items if i.get("stance_vs_signal") == "supports"]
+    challenging = [i for i in items if i.get("stance_vs_signal") == "challenges"]
+    context = [i for i in items if i.get("stance_vs_signal") == "context"]
+    ranked_items = sorted(items, key=lambda i: i.get("evidence_strength", 0), reverse=True)
+
+    source_count = len({i.get("source") for i in items if i.get("source")})
+    avg_cred = (
+        sum(float(i.get("credibility", 0.60)) for i in items) / len(items)
+        if items else 0.60
+    )
+    avg_retrieval = (
+        sum(float(i.get("retrieval_score", 0.0)) for i in items) / len(items)
+        if items else 0.0
+    )
+    stale_count = sum(
+        1 for i in items
+        if i.get("recency_days") is not None and float(i.get("recency_days")) > 14
+    )
+
+    verifier_flags = []
+    if direction != "Neutral" and len(supporting) < 2:
+        verifier_flags.append("Directional signal has fewer than two aligned evidence items.")
+    if challenging:
+        verifier_flags.append(f"{len(challenging)} retrieved item(s) challenge the final direction.")
+    if avg_cred < 0.62:
+        verifier_flags.append("Average source credibility is below the portfolio demo target.")
+    if stale_count:
+        verifier_flags.append(f"{stale_count} retrieved item(s) are older than two weeks.")
+    if confidence >= 0.70 and len(supporting) <= len(challenging):
+        verifier_flags.append("Confidence may be too high relative to the support/challenge balance.")
+    if not verifier_flags:
+        verifier_flags.append("No major grounding issues detected in the retrieved evidence set.")
+
+    return {
+        "supporting_count": len(supporting),
+        "challenging_count": len(challenging),
+        "context_count": len(context),
+        "source_count": source_count,
+        "avg_credibility": round(avg_cred, 3),
+        "avg_retrieval_score": round(avg_retrieval, 3),
+        "top_evidence": ranked_items[:8],
+        "verifier_flags": verifier_flags,
+        "grounding_summary": (
+            f"{len(supporting)} supporting, {len(challenging)} challenging, "
+            f"{len(context)} contextual evidence items across {source_count} sources."
+        ),
+    }
+
+
 def _clean_excerpt(text: str, max_len: int = 300) -> str:
     """
     Extract a clean, non-repetitive excerpt from article text.
@@ -929,21 +1049,53 @@ def _build_citations(rag_chunks: list) -> list[dict]:
         out.append({
             "source":             getattr(ch, "source", "Unknown"),
             "title":              getattr(ch, "title", "News article"),
-            "url":                f"https://finance.yahoo.com/quote/{getattr(ch, 'ticker', '')}",
+            "url":                getattr(ch, "url", "") or f"https://finance.yahoo.com/quote/{getattr(ch, 'ticker', '')}",
             "excerpt":            _excerpt,
             "credibility_weight": float(getattr(ch, "credibility_weight", 0.60)),
+            "published_at":       getattr(ch, "published_at", ""),
+            "retrieval_rank":     getattr(ch, "retrieval_rank", None),
+            "retrieval_score":    getattr(ch, "retrieval_score", 0.0),
+            "retrieval_method":   getattr(ch, "retrieval_method", ""),
+            "score_breakdown":    getattr(ch, "score_breakdown", {}),
         })
     return out
 
 
-def _build_trace(analyst: dict, strategist: dict, decision: dict) -> list[dict]:
+def _build_trace(analyst: dict, strategist: dict, decision: dict, evidence_profile: dict | None = None) -> list[dict]:
+    evidence_profile = evidence_profile or {}
     return [
         {
-            "agent":   "Analyst Agent",
+            "agent":   "News Retriever",
+            "summary": evidence_profile.get(
+                "grounding_summary",
+                "Collected, chunked, and ranked ticker-relevant market news.",
+            ),
+        },
+        {
+            "agent":   "Evidence Selector",
+            "summary": (
+                f"Selected top evidence by retrieval score, source credibility, recency, "
+                f"and ticker/company match. Avg retrieval score: "
+                f"{evidence_profile.get('avg_retrieval_score', 0):.2f}."
+            ),
+        },
+        {
+            "agent":   "Market Relevance Analyst",
             "summary": analyst.get("event_summary", "Evidence extraction complete."),
         },
         {
-            "agent":   "Strategist Agent",
+            "agent":   "Risk / Sentiment Analyst",
+            "summary": (
+                f"Counter-evidence count: {evidence_profile.get('challenging_count', 0)}. "
+                f"Key risks: {', '.join(decision.get('risks', [])[:2]) or 'none surfaced'}."
+            ),
+        },
+        {
+            "agent":   "Skeptical Verifier",
+            "summary": " ".join(evidence_profile.get("verifier_flags", [])[:2]),
+        },
+        {
+            "agent":   "Signal Synthesizer",
             "summary": strategist.get("thesis", "Investment thesis formed."),
         },
         {
@@ -1066,6 +1218,21 @@ def build_signal_packet(
     # Source quality and novelty
     source_quality = _compute_source_quality(rag_chunks)
     novelty_score  = min(round(len({getattr(c, "source", "") for c in rag_chunks}) / 5.0, 2), 1.0)
+    evidence_profile = _build_evidence_profile(rag_chunks, analyst_out, direction, confidence)
+    retrieval_diagnostics = {
+        "retrieval_strategy": "Explainable lexical hybrid (BM25 + TF-IDF/keyword) with metadata reranking",
+        "features": [
+            "BM25 sparse event match",
+            "semantic query match",
+            "ticker/company mention",
+            "source credibility",
+            "source authority",
+            "recency",
+            "financial-intent overlap",
+        ],
+        "avg_retrieval_score": evidence_profile["avg_retrieval_score"],
+        "source_count": evidence_profile["source_count"],
+    }
 
     # Baselines — sentiment baseline now matches the actual RAG direction to avoid
     # confusing "different answers". The random baseline remains a coinflip.
@@ -1101,7 +1268,9 @@ def build_signal_packet(
         "watch_items":       watch_items[:4],
         "market_snapshot":   market_snapshot,
         "citations":         _build_citations(rag_chunks)[:6],
-        "agent_trace":       _build_trace(analyst_out, strategist_out, final_decision_dict),
+        "agent_trace":       _build_trace(analyst_out, strategist_out, final_decision_dict, evidence_profile),
+        "evidence_profile":  evidence_profile,
+        "retrieval_diagnostics": retrieval_diagnostics,
         "baseline_sentiment":baseline_sentiment,
         "baseline_random":   baseline_random,
     }

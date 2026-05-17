@@ -32,8 +32,10 @@ FinSight RAG was built to test a narrower question:
 
 - **Ticker-level live analysis** through a Streamlit dashboard.
 - **RAG evidence retrieval** from Yahoo Finance and public RSS-style sources, with optional Bloomberg B-PIPE integration.
-- **Three-stage reasoning workflow**: Analyst, Strategist, and Decision Agent.
+- **Explainable lexical-hybrid RAG retrieval** with BM25, TF-IDF/keyword fallback, ticker/company matching, source credibility, source authority, recency, and financial-intent scoring.
+- **Seven-step research workflow**: News Retriever, Evidence Selector, Market Relevance Analyst, Risk / Sentiment Analyst, Skeptical Verifier, Signal Synthesizer, and Decision Agent.
 - **Structured signal packets** with direction, confidence, catalyst, risks, counter-evidence, citations, and agent trace.
+- **Evidence ledger** showing retrieved snippets, retrieval rank, score breakdown, stance versus the final signal, and verifier flags.
 - **Technical and macro enrichment** using price indicators and macro/geopolitical event context.
 - **Evidence audit view** for inspecting retrieved chunks and source credibility.
 - **Forward-return evaluation** against random and keyword-sentiment baselines.
@@ -64,6 +66,12 @@ The dashboard includes five main views:
 
 Demo media is organized in [`docs/demo/`](docs/demo/) and [`docs/screenshots/`](docs/screenshots/). The current repository includes the system architecture image; final UI screenshots or a short walkthrough video can be added there when available.
 
+## Latest Technical Upgrade
+
+The RAG layer now returns auditable retrieval diagnostics instead of opaque source cards. Each retrieved chunk carries a blended score and feature breakdown across semantic match, ticker/company match, source credibility, source authority, recency, and financial intent. The agent layer converts those chunks into an evidence profile with supporting/challenging/context counts and skeptical verifier flags.
+
+See [`FinSight_RAG/docs/technical_audit.md`](FinSight_RAG/docs/technical_audit.md) for the project audit and [`FinSight_RAG/docs/retrieval_architecture.md`](FinSight_RAG/docs/retrieval_architecture.md) for the TF-IDF vs BM25 vs embedding tradeoff discussion.
+
 ## Project Artifacts
 
 - [Final Report](docs/final_report.pdf)
@@ -73,6 +81,18 @@ Demo media is organized in [`docs/demo/`](docs/demo/) and [`docs/screenshots/`](
 ## System Architecture
 
 ![FinSight RAG system architecture](docs/screenshots/system-architecture.png)
+
+```mermaid
+flowchart LR
+    A["Ticker / analyst query"] --> B["News ingestion"]
+    B --> C["Chunking + metadata"]
+    C --> D["BM25 + TF-IDF/keyword hybrid retrieval"]
+    D --> E["Metadata reranking"]
+    E --> F["Evidence ledger"]
+    F --> G["Analyst + verifier workflow"]
+    G --> H["Signal packet + dashboard"]
+    H --> I["Forward-return evaluation"]
+```
 
 The implementation supports two execution modes:
 
@@ -134,6 +154,14 @@ Run RAG quality tests:
 python test_rag_quality.py --run-all-tests --save-results demo_data/rag_eval_results.json
 ```
 
+Compare retrieval methods on deterministic sanity fixtures:
+
+```bash
+python retrieval_case_studies.py --method all --verbose
+```
+
+These case studies are regression fixtures, not live production metrics.
+
 ## Evaluation Snapshot
 
 The final report currently includes:
@@ -158,6 +186,7 @@ The evaluation tables and charts shown in the report come from the bundled demo 
 | RAG quality results | [`FinSight_RAG/demo_data/rag_eval_results.json`](FinSight_RAG/demo_data/rag_eval_results.json) | Retrieval and generation quality metrics for the report. |
 | Evaluation code | [`FinSight_RAG/src/finance_news_analyzer/evaluation.py`](FinSight_RAG/src/finance_news_analyzer/evaluation.py) | Computes directional hit rate, signed return, and baseline comparisons. |
 | RAG quality test | [`FinSight_RAG/test_rag_quality.py`](FinSight_RAG/test_rag_quality.py) | Produces retrieval/generation quality results. |
+| Retrieval case studies | [`FinSight_RAG/retrieval_case_studies.py`](FinSight_RAG/retrieval_case_studies.py) | Synthetic regression fixtures comparing keyword, TF-IDF, BM25, and hybrid retrieval. |
 
 For visual inspection, run the Streamlit app and open the **Evaluation Lab** tab. That tab displays the metric charts used to support the report discussion.
 
@@ -177,10 +206,13 @@ For visual inspection, run the Streamlit app and open the **Evaluation Lab** tab
 |   |-- app.py
 |   |-- run_analysis.py
 |   |-- test_rag_quality.py
+|   |-- retrieval_case_studies.py
 |   |-- requirements.txt
 |   |-- .env.example
 |   |-- demo_data/
 |   |-- docs/
+|   |   |-- retrieval_architecture.md
+|   |   `-- technical_audit.md
 |   `-- src/finance_news_analyzer/
 |       |-- agent_runner.py
 |       |-- rag_pipeline.py
@@ -202,7 +234,7 @@ For visual inspection, run the Streamlit app and open the **Evaluation Lab** tab
 - Python, Streamlit, Pandas, Plotly
 - yfinance for market data
 - feedparser and requests for news ingestion
-- scikit-learn TF-IDF retrieval
+- BM25 / TF-IDF / keyword lexical retrieval with metadata reranking
 - Pydantic data models
 - Optional LangGraph / LangChain / OpenAI path for LLM-backed agents
 
@@ -214,7 +246,7 @@ For visual inspection, run the Streamlit app and open the **Evaluation Lab** tab
 
 ## Future Work
 
-- Replace TF-IDF retrieval with a dense vector index such as FAISS or Chroma.
+- Build a labeled real-news retrieval benchmark before adding optional embedding or cross-encoder reranking.
 - Add a larger live-data evaluation once more forward-return windows close.
 - Integrate a domain-adapted sentiment model such as FinBERT.
 - Expand beyond large-cap technology tickers.

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import threading
+import html
 from pathlib import Path
 
 import pandas as pd
@@ -382,9 +383,50 @@ st.markdown(
     .small-list li {
         margin-bottom: 0.18rem;
     }
+    .workflow-grid {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 0.45rem;
+        margin: 0.65rem 0 0.85rem 0;
+    }
+    .workflow-step {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        padding: 0.5rem 0.55rem;
+        min-height: 78px;
+    }
+    .workflow-num {
+        color: var(--accent);
+        font-weight: 800;
+        font-size: 0.7rem;
+        margin-bottom: 0.2rem;
+    }
+    .workflow-title {
+        color: var(--ink);
+        font-weight: 750;
+        font-size: 0.76rem;
+        line-height: 1.15;
+    }
+    .workflow-copy {
+        color: var(--muted);
+        font-size: 0.68rem;
+        line-height: 1.25;
+        margin-top: 0.18rem;
+    }
+    .verifier-box {
+        border: 1px solid #f0d28a;
+        border-radius: 8px;
+        background: #fff8e6;
+        padding: 0.55rem 0.65rem;
+        color: #664500;
+        font-size: 0.78rem;
+        margin-bottom: 0.55rem;
+    }
     @media (max-width: 900px) {
         .terminal-strip,
-        .compact-grid {
+        .compact-grid,
+        .workflow-grid {
             grid-template-columns: 1fr;
         }
     }
@@ -509,7 +551,64 @@ def render_pill(label: str) -> str:
 def list_html(items: list[str]) -> str:
     if not items:
         return "<span class='company'>No items.</span>"
-    return "<ul class='small-list'>" + "".join(f"<li>{item}</li>" for item in items) + "</ul>"
+    return "<ul class='small-list'>" + "".join(f"<li>{html.escape(str(item))}</li>" for item in items) + "</ul>"
+
+
+def _safe_text(value) -> str:
+    return html.escape("" if value is None else str(value))
+
+
+def _short_date(value) -> str:
+    if value is None or pd.isna(value):
+        return ""
+    try:
+        return pd.to_datetime(value).strftime("%Y-%m-%d")
+    except Exception:
+        return str(value)[:10]
+
+
+def _evidence_rows(profile: dict) -> pd.DataFrame:
+    rows = []
+    for item in (profile or {}).get("top_evidence", []):
+        breakdown = item.get("score_breakdown") or {}
+        rows.append(
+            {
+                "Rank": item.get("retrieval_rank") or "",
+                "Stance": item.get("stance_vs_signal", item.get("role", "context")),
+                "Source": item.get("source", ""),
+                "Date": _short_date(item.get("published_at")),
+                "Method": item.get("retrieval_method", ""),
+                "Retrieval": item.get("retrieval_score", 0.0),
+                "Credibility": item.get("credibility", 0.0),
+                "Semantic": breakdown.get("semantic", 0.0),
+                "Ticker Match": breakdown.get("ticker_company", 0.0),
+                "Evidence": item.get("excerpt", "")[:240],
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def render_workflow(trace: list[dict], meta: dict | None = None) -> None:
+    trace = trace or [
+        {"agent": "News Retriever", "summary": "Fetch and normalize articles."},
+        {"agent": "Evidence Selector", "summary": "Rank chunks by relevance and metadata."},
+        {"agent": "Market Relevance Analyst", "summary": "Classify supporting and challenging evidence."},
+        {"agent": "Risk / Sentiment Analyst", "summary": "Score sentiment, risks, and market context."},
+        {"agent": "Skeptical Verifier", "summary": "Check grounding and confidence calibration."},
+        {"agent": "Signal Synthesizer", "summary": "Build thesis and investment signal."},
+        {"agent": "Decision Agent", "summary": "Emit final structured packet."},
+    ]
+    cells = []
+    for idx, step in enumerate(trace[:7], start=1):
+        summary = _safe_text(step.get("summary", ""))[:118]
+        cells.append(
+            "<div class='workflow-step'>"
+            f"<div class='workflow-num'>{idx:02d}</div>"
+            f"<div class='workflow-title'>{_safe_text(step.get('agent', 'Agent'))}</div>"
+            f"<div class='workflow-copy'>{summary}</div>"
+            "</div>"
+        )
+    st.markdown("<div class='workflow-grid'>" + "".join(cells) + "</div>", unsafe_allow_html=True)
 
 
 def selected_prices(prices: pd.DataFrame, ticker: str) -> pd.DataFrame:
@@ -557,6 +656,50 @@ METHODOLOGY_CHECKS = [
     ("Calibration", "Bucket hit rate by confidence to test whether confidence means anything."),
     ("Contrarian value", "Flag cases where sentiment and RAG direction disagree."),
     ("Presentation maturity", "Show thesis, risk, source audit, and outcome in one continuous workflow."),
+]
+
+
+RETRIEVAL_DECISION_ROWS = [
+    {
+        "Method": "Keyword",
+        "Finance fit": "Fallback",
+        "Explainability": "Very high",
+        "Latency": "Very low",
+        "Risk": "Brittle phrasing",
+        "Decision": "Keep as dependency-free fallback",
+    },
+    {
+        "Method": "TF-IDF",
+        "Finance fit": "Strong baseline",
+        "Explainability": "High",
+        "Latency": "Low",
+        "Risk": "Vocabulary-sensitive",
+        "Decision": "Use in lexical blend",
+    },
+    {
+        "Method": "BM25",
+        "Finance fit": "Best first-stage sparse retriever",
+        "Explainability": "High",
+        "Latency": "Low",
+        "Risk": "Still lexical",
+        "Decision": "Use in default hybrid",
+    },
+    {
+        "Method": "Embeddings",
+        "Finance fit": "Useful for paraphrase recall",
+        "Explainability": "Medium",
+        "Latency": "Medium",
+        "Risk": "Ticker-wrong semantic matches",
+        "Decision": "Future reranker after labeled eval",
+    },
+    {
+        "Method": "Cross-encoder",
+        "Finance fit": "High-precision reranking",
+        "Explainability": "Medium-low",
+        "Latency": "Higher",
+        "Risk": "Cost/dependency complexity",
+        "Decision": "Production extension, not demo default",
+    },
 ]
 
 
@@ -1048,6 +1191,18 @@ with tab_live:
         sector = result.get("sector", "n/a")
         catalyst = result.get("catalyst", "")
         snap = result.get("market_snapshot") or {}
+        evidence_profile = result.get("evidence_profile") or {}
+        retrieval_diagnostics = result.get("retrieval_diagnostics") or {}
+
+        st.markdown("#### Workflow")
+        render_workflow(result.get("agent_trace", []), meta)
+        if retrieval_diagnostics:
+            st.caption(
+                "Retrieval: "
+                + retrieval_diagnostics.get("retrieval_strategy", "metadata-aware ranking")
+                + " | features: "
+                + ", ".join(retrieval_diagnostics.get("features", [])[:6])
+            )
 
         # ── Signal headline card ───────────────────────────────────────────
         res_left, res_right = st.columns([1.1, 0.9], gap="medium")
@@ -1058,11 +1213,11 @@ with tab_live:
                   <div class="signal-head">
                     <div>
                       <div class="ticker">{result["ticker"]} {render_pill(direction)}</div>
-                      <div class="company">{company} | {sector}</div>
+                      <div class="company">{_safe_text(company)} | {_safe_text(sector)}</div>
                     </div>
                     <div class="company">{horizon}-day horizon</div>
                   </div>
-                  <div class="analysis-box">{reasoning}</div>
+                  <div class="analysis-box">{_safe_text(reasoning)}</div>
                   <div class="compact-grid">
                     <div class="mini-stat"><div class="mini-label">Confidence</div>
                       <div class="mini-value">{pct(confidence, 0)}</div></div>
@@ -1071,7 +1226,7 @@ with tab_live:
                     <div class="mini-stat"><div class="mini-label">Novelty</div>
                       <div class="mini-value">{pct(result.get("novelty_score"), 0)}</div></div>
                   </div>
-                  <div class="company" style="margin-top:0.35rem">Catalyst: {catalyst}</div>
+                  <div class="company" style="margin-top:0.35rem">Catalyst: {_safe_text(catalyst)}</div>
                 </div>
                 """,
                 unsafe_allow_html=True,
@@ -1178,6 +1333,21 @@ with tab_live:
                 )
                 st.plotly_chart(fig_cit, use_container_width=True)
 
+            st.markdown("#### Evidence Ledger")
+            if evidence_profile:
+                ep_cols = st.columns(4)
+                ep_cols[0].metric("Supports", evidence_profile.get("supporting_count", 0))
+                ep_cols[1].metric("Challenges", evidence_profile.get("challenging_count", 0))
+                ep_cols[2].metric("Sources", evidence_profile.get("source_count", 0))
+                ep_cols[3].metric("Avg retrieval", f"{evidence_profile.get('avg_retrieval_score', 0):.2f}")
+                for flag in evidence_profile.get("verifier_flags", [])[:3]:
+                    st.markdown(f"<div class='verifier-box'>{_safe_text(flag)}</div>", unsafe_allow_html=True)
+                ev_df = _evidence_rows(evidence_profile)
+                if not ev_df.empty:
+                    st.dataframe(ev_df, use_container_width=True, hide_index=True)
+            else:
+                st.caption("Run a live analysis to populate the retrieval evidence ledger.")
+
         # ── Agent trace ────────────────────────────────────────────────────
         st.markdown("#### Agent Pipeline Trace")
         trace = result.get("agent_trace", [])
@@ -1185,8 +1355,8 @@ with tab_live:
             st.markdown(
                 f"""
                 <div class="source-card">
-                  <div class="source-title">{idx}. {step.get("agent","Agent")}</div>
-                  <div style="font-size:0.83rem">{step.get("summary","")}</div>
+                  <div class="source-title">{idx}. {_safe_text(step.get("agent","Agent"))}</div>
+                  <div style="font-size:0.83rem">{_safe_text(step.get("summary",""))}</div>
                 </div>
                 """,
                 unsafe_allow_html=True,
@@ -1636,6 +1806,46 @@ with tab_monitor:
                     st.rerun()
 
 with tab_evidence:
+    st.markdown("#### Retrieval Architecture Decision")
+    st.markdown(
+        "<div class='section-note'>FinSight uses lexical-first hybrid retrieval because financial news often depends on exact ticker, company, event, date, and source constraints. Embeddings are treated as a future reranking option, not a default upgrade.</div>",
+        unsafe_allow_html=True,
+    )
+    st.dataframe(pd.DataFrame(RETRIEVAL_DECISION_ROWS), use_container_width=True, hide_index=True)
+    st.divider()
+
+    st.markdown("#### Selected Signal Evidence")
+    st.markdown(
+        "<div class='section-note'>Inspect the exact source ledger behind the currently selected research packet.</div>",
+        unsafe_allow_html=True,
+    )
+    selected_profile = selected.get("evidence_profile") or {}
+    selected_diag = selected.get("retrieval_diagnostics") or {}
+    if selected_profile:
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Supporting", selected_profile.get("supporting_count", 0))
+        c2.metric("Challenging", selected_profile.get("challenging_count", 0))
+        c3.metric("Source count", selected_profile.get("source_count", 0))
+        c4.metric("Avg retrieval", f"{selected_profile.get('avg_retrieval_score', 0):.2f}")
+        render_workflow(selected.get("agent_trace", []))
+        for flag in selected_profile.get("verifier_flags", [])[:4]:
+            st.markdown(f"<div class='verifier-box'>{_safe_text(flag)}</div>", unsafe_allow_html=True)
+        selected_ev_df = _evidence_rows(selected_profile)
+        if not selected_ev_df.empty:
+            st.dataframe(selected_ev_df, use_container_width=True, hide_index=True)
+        if selected_diag:
+            st.caption(
+                selected_diag.get("retrieval_strategy", "Metadata-aware retrieval")
+                + ": "
+                + ", ".join(selected_diag.get("features", [])[:6])
+            )
+    else:
+        st.info(
+            "The bundled demo packets predate the evidence ledger. Run Live Analysis and save the result "
+            "to inspect rank-level retrieval diagnostics here."
+        )
+    st.divider()
+
     left, right = st.columns([1.05, 0.95], gap="medium")
     with left:
         st.markdown("#### Source Audit")

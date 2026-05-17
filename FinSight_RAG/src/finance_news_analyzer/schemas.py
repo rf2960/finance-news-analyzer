@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field, HttpUrl
 
@@ -15,6 +15,11 @@ class Citation(BaseModel):
     url: HttpUrl | str
     excerpt: str
     credibility_weight: float = Field(ge=0.0, le=1.0)
+    published_at: str | None = None
+    retrieval_rank: int | None = None
+    retrieval_score: float | None = None
+    retrieval_method: str | None = None
+    score_breakdown: dict[str, float] = Field(default_factory=dict)
 
 
 class AgentTraceStep(BaseModel):
@@ -47,12 +52,14 @@ class SignalPacket(BaseModel):
     published_at: str
     reasoning: str
     catalyst: str
-    thesis_bullets: list[str] = []
-    risk_factors: list[str] = []
-    counter_evidence: list[str] = []
-    watch_items: list[str] = []
+    thesis_bullets: list[str] = Field(default_factory=list)
+    risk_factors: list[str] = Field(default_factory=list)
+    counter_evidence: list[str] = Field(default_factory=list)
+    watch_items: list[str] = Field(default_factory=list)
     market_snapshot: MarketSnapshot | None = None
     citations: list[Citation]
     agent_trace: list[AgentTraceStep]
+    evidence_profile: dict[str, Any] | None = None
+    retrieval_diagnostics: dict[str, Any] | None = None
     baseline_sentiment: Direction
     baseline_random: Direction
