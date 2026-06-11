@@ -5,7 +5,7 @@ Multi-agent financial news analysis with retrieval grounding, source audit, and 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/UI-Streamlit-ff4b4b)](https://streamlit.io/)
 [![RAG](https://img.shields.io/badge/RAG-BM25%20%2B%20TF--IDF%20hybrid-4257f5)](#system-architecture)
-[![Status](https://img.shields.io/badge/Status-portfolio%20prototype-green)](#project-artifacts)
+[![Status](https://img.shields.io/badge/Status-research%20prototype-green)](#project-artifacts)
 
 FinSight RAG converts financial news into structured short-horizon investment hypotheses. It retrieves ticker-relevant evidence, enriches it with technical and macro context, routes it through a verifier-backed analyst workflow, and evaluates generated signals against realized 5-day and 20-day returns.
 
@@ -57,7 +57,7 @@ streamlit run app.py
 
 Then open the local URL printed by Streamlit, usually `http://localhost:8501`.
 
-The dashboard is designed as an evidence-first financial intelligence workstation, not a chat interface. It includes five main views:
+The dashboard is designed around evidence review rather than chat. It includes five main views:
 
 | View | Purpose |
 |---|---|
@@ -79,13 +79,13 @@ Demo media is organized in [`docs/demo/`](docs/demo/), [`docs/images/`](docs/ima
 |---|---|
 | ![Market monitor screen](docs/screenshots/market-monitor.png) | ![Evaluation lab screen](docs/screenshots/evaluation-lab.png) |
 
-## Latest Technical Upgrade
+## Retrieval Diagnostics
 
 The RAG layer now returns auditable retrieval diagnostics instead of opaque source cards. Each retrieved chunk carries a blended score and feature breakdown across semantic match, ticker/company match, source credibility, source authority, recency, and financial intent. The agent layer converts those chunks into an evidence profile with supporting/challenging/context counts and skeptical verifier flags.
 
 See [`FinSight_RAG/docs/technical_audit.md`](FinSight_RAG/docs/technical_audit.md) for the project audit and [`FinSight_RAG/docs/retrieval_architecture.md`](FinSight_RAG/docs/retrieval_architecture.md) for the TF-IDF vs BM25 vs embedding tradeoff discussion.
 
-## Project Artifacts
+## Project Materials
 
 - [Final Report](docs/final_report.pdf)
 - [Project Proposal](docs/project_proposal.pdf)

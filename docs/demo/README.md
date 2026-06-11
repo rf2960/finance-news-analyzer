@@ -1,6 +1,6 @@
 # Demo Assets
 
-Place final demo media here.
+This folder is reserved for a narrated demo video or GIF. The current repository uses screenshots in `docs/screenshots/` and `docs/images/` for the public README.
 
 Recommended filenames:
 
@@ -15,4 +15,4 @@ Suggested demo flow:
 4. Open Evaluation Lab and show baseline comparison.
 5. Briefly mention heuristic mode vs. optional LLM mode.
 
-If no video is available, keep this folder as a placeholder and link screenshots from `docs/screenshots/`.
+No narrated demo video is committed yet.

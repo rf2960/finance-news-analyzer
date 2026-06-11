@@ -2,7 +2,7 @@
 
 This folder contains the runnable Streamlit app, command-line runner, evaluation data, and core Python modules for FinSight RAG.
 
-For the polished project overview, report links, and portfolio-facing description, see the repository-level [README](../README.md).
+For the project overview, report links, and screenshots, see the repository-level [README](../README.md).
 
 ![FinSight RAG evidence workstation](../docs/screenshots/live-analysis.png)
 
@@ -133,7 +133,7 @@ The final signal packet includes:
 - agent trace
 - random and keyword-sentiment baselines
 
-## Notes for Reviewers
+## Project Notes
 
 - The Streamlit app is the primary interface.
 - The CLI runner is useful for reproducible single-ticker checks.
